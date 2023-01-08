@@ -1154,8 +1154,8 @@ end
 function SurvivalGame.cl_e_onTaskFinished( self , data )
 	print(data)
 	data.player = sm.localPlayer.getPlayer()
-	local isAllTaskFinish = g_taskManager:cl_onTaskFinished(data)
 	self.network:sendToServer("sv_e_onTaskFinished", data)
+	local isAllTaskFinish = g_taskManager:cl_onTaskFinished(data)
 	if isAllTaskFinish == true then
 		g_taskManager:cl_onAllTaskFinished()
 	end

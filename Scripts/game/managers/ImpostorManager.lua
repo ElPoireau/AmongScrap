@@ -8,7 +8,7 @@ function ImpostorManager.sv_onCreate( self )
 	self.sv = {}
 	self.sv.allImpostor = {}
 
-	self.sv.howManyImpostor = 0
+	self.sv.howManyImpostor = 1
 end
 
 function ImpostorManager.sv_onInitImpostor( self )
@@ -23,7 +23,7 @@ function ImpostorManager.sv_onInitImpostor( self )
 		local impostor = nil
 		repeat
 			local isPlayerAlreadyImpostor = false
-			impostor = players[sm.noise.randomRange(1, playerIndex)]
+			impostor = players[math.floor(sm.noise.randomRange(1, playerIndex))]
 			for i2,v2 in ipairs(self.sv.allImpostor) do
 				if v2 == impostor then
 					isPlayerAlreadyImpostor = true

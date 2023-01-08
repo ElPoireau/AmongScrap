@@ -399,10 +399,12 @@ function TaskManager.sv_onTaskFinished( self , data )
 	print(taskIndex)
 	print(self.sv.activeTask)
 	print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)]]
-	---if self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished == false then
-	self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished = true
-	self.sv.taskFinished = self.sv.taskFinished + 1
-	--end
+	print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)
+	if self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished == false then
+		print("TRUEEEE")
+		self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished = true
+		self.sv.taskFinished = self.sv.taskFinished + 1
+	end
 	print(self.sv.totalTask)
 	print(self.sv.taskFinished)
 	if self.sv.taskFinished == self.sv.totalTask then
@@ -453,23 +455,25 @@ function TaskManager.cl_onTaskFinished( self , data )
 		end
 	end
 	if haveTheTask then
-		self.cl.activeClientTask.tasks[taskIndex].isFinished = true
-		if self.cl.activeClientTask.tasks[taskIndex].hasManyState == true then
-			if self.cl.activeClientTask.tasks[taskIndex].parentTaskIndex == taskIndex then
-				local aShorterVar = self.cl.activeClientTask.tasks[self.cl.activeClientTask.tasks[taskIndex].parentTaskIndex].childTaskInfo.howManyFinished
-				self.cl.activeClientTask.tasks[self.cl.activeClientTask.tasks[taskIndex].parentTaskIndex].childTaskInfo.howManyFinished = aShorterVar + 1
-			else
-				local aShorterVar = self.cl.activeClientTask.tasks[self.cl.activeClientTask.tasks[taskIndex].grandParentTaskIndex].childTaskInfo.howManyFinished
-				self.cl.activeClientTask.tasks[self.cl.activeClientTask.tasks[taskIndex].grandParentTaskIndex].childTaskInfo.howManyFinished = aShorterVar + 1
+		if self.cl.activeClientTask.tasks[taskIndex].isFinished == false then
+			self.cl.activeClientTask.tasks[taskIndex].isFinished = true
+			if self.cl.activeClientTask.tasks[taskIndex].hasManyState == true then
+				if self.cl.activeClientTask.tasks[taskIndex].parentTaskIndex == taskIndex then
+					local aShorterVar = self.cl.activeClientTask.tasks[self.cl.activeClientTask.tasks[taskIndex].parentTaskIndex].childTaskInfo.howManyFinished
+					self.cl.activeClientTask.tasks[self.cl.activeClientTask.tasks[taskIndex].parentTaskIndex].childTaskInfo.howManyFinished = aShorterVar + 1
+				else
+					local aShorterVar = self.cl.activeClientTask.tasks[self.cl.activeClientTask.tasks[taskIndex].grandParentTaskIndex].childTaskInfo.howManyFinished
+					self.cl.activeClientTask.tasks[self.cl.activeClientTask.tasks[taskIndex].grandParentTaskIndex].childTaskInfo.howManyFinished = aShorterVar + 1
+				end
 			end
-		end
-		self.cl.finishedClientTask = self.cl.finishedClientTask + 1
-		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_refreshTaskText", self.cl.activeClientTask)
-		print("client: ")
-		print(self.cl.howManyTaskPerPlayer)
-		print(self.cl.finishedClientTask)
-		if self.cl.finishedClientTask == self.cl.howManyTaskPerPlayer then
-			return true
+			self.cl.finishedClientTask = self.cl.finishedClientTask + 1
+			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_refreshTaskText", self.cl.activeClientTask)
+			print("client: ")
+			print(self.cl.howManyTaskPerPlayer)
+			print(self.cl.finishedClientTask)
+			if self.cl.finishedClientTask == self.cl.howManyTaskPerPlayer then
+				return true
+			end
 		end
 	end
 	return false
