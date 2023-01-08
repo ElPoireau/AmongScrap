@@ -367,6 +367,7 @@ function TaskManager.sv_onResetTask( self )
 end
 
 function TaskManager.sv_onTaskFinished( self , data )
+	print(data)
 	local playerId = data.player:getId()
 
 	local haveTheTask = false
@@ -395,6 +396,8 @@ function TaskManager.sv_onTaskFinished( self , data )
 		self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished = true
 		self.sv.taskFinished = self.sv.taskFinished + 1
 	end
+	print(self.sv.totalTask)
+	print(self.sv.taskFinished)
 	if self.sv.taskFinished == self.sv.totalTask then
 		print("[AMONG SCRAP] Game over - All tasks are finish")
 	end
@@ -432,7 +435,7 @@ end
 --CONTENT--
 
 function TaskManager.cl_onTaskFinished( self , data )
-
+	print(data)
 	local haveTheTask = false
 	local taskIndex = nil
 
