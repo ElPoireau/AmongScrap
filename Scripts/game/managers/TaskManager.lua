@@ -380,6 +380,7 @@ function TaskManager.sv_onTaskFinished( self , data )
 			break
 		end
 	end
+
 	for i,v in ipairs(self.sv.activeTask[playerIndex].tasks) do
 		if data.taskId == v.taskId then
 			haveTheTask = true
@@ -459,6 +460,9 @@ function TaskManager.cl_onTaskFinished( self , data )
 		end
 		self.cl.finishedClientTask = self.cl.finishedClientTask + 1
 		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_refreshTaskText", self.cl.activeClientTask)
+		print("client: ")
+		print(self.cl.howManyTaskPerPlayer)
+		print(self.cl.finishedClientTask)
 		if self.cl.finishedClientTask == self.cl.howManyTaskPerPlayer then
 			return true
 		end
