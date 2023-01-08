@@ -370,14 +370,14 @@ function TaskManager.sv_onTaskFinished( self , data )
 	print("server Data :")
 	print(data)
 	print(self.sv.activeTask)
-	local playerId = data.player:getId()
+	local player = data.player
 
 	local haveTheTask = false
 	local playerIndex = nil
 	local taskIndex = nil
 
 	for i,v in ipairs(self.sv.activeTask) do
-		if playerId == v.player.id then
+		if player == v.player then
 			playerIndex = i
 			break
 		end
