@@ -47,7 +47,7 @@ local shortTasksTable = {
 	{
 		{
 			taskId = "2_1",
-			taskLabel = "Stabilize the motors",
+			taskLabel = "2_1", ---"Stabilize the motors",
 			isFinished = false,
 			hasManyState = false
 		}
@@ -56,7 +56,7 @@ local shortTasksTable = {
 	{
 		{
 			taskId = "3_1",
-			taskLabel = "Increase the speed",
+			taskLabel = "3_1", --"Increase the speed",
 			isFinished = false,
 			hasManyState = false
 		}
@@ -65,7 +65,7 @@ local shortTasksTable = {
 	{
 		{
 			taskId = "4_1",
-			taskLabel = "Decrease the speed",
+			taskLabel = "4_1", --"Decrease the speed",
 			isFinished = false,
 			hasManyState = false
 		}
@@ -74,7 +74,7 @@ local shortTasksTable = {
 	{
 		{
 			taskId = "7_1",
-			taskLabel = "Check the Hydrolics",
+			taskLabel = "7_1", --"Check the Hydrolics",
 			isFinished = false,
 			hasManyState = false
 		}
@@ -83,7 +83,7 @@ local shortTasksTable = {
 	{
 		{
 			taskId = "8_1",
-			taskLabel = "Check the O2 level",
+			taskLabel ="8_1", --"Check the O2 level",
 			isFinished = false,
 			hasManyState = false
 		}
@@ -92,7 +92,7 @@ local shortTasksTable = {
 	{
 		{
 			taskId = "9_1",
-			taskLabel = "Check the motor leak level",
+			taskLabel = "9_1", --"Check the motor leak level",
 			isFinished = false,
 			hasManyState = false
 		}
@@ -101,7 +101,7 @@ local shortTasksTable = {
 	{
 		{
 			taskId = "10_1",
-			taskLabel = "Enter the Ship key",
+			taskLabel = "10_1", --"Enter the Ship key",
 			isFinished = false,
 			hasManyState = false
 		}
@@ -110,7 +110,7 @@ local shortTasksTable = {
 	{
 		{
 			taskId = "11_1",
-			taskLabel = "Check the battery voltage",
+			taskLabel = "11_1",--"Check the battery voltage",
 			isFinished = false,
 			hasManyState = false
 		}
@@ -123,7 +123,7 @@ local normalTasksTable = {
 	{
 		{
 			taskId = "1_1",
-			taskLabel = "Repair the Craftbot",
+			taskLabel = "1_1", --"Repair the Craftbot",
 			isFinished = false,
 			hasManyState = true,
 			parentTaskIndex = false,
@@ -132,7 +132,7 @@ local normalTasksTable = {
 
 		{
 			taskId = "1_2",
-			taskLabel = "Check the Craftbot",
+			taskLabel = "1_2", --"Check the Craftbot",
 			isFinished = false,
 			hasManyState = true,
 			parentTaskIndex = "1_1",
@@ -144,7 +144,7 @@ local normalTasksTable = {
 	{
 		{
 			taskId = "6_1",
-			taskLabel = "Cook Revival Bagutte",
+			taskLabel = "6_1", --"Cook Revival Bagutte",
 			isFinished = false,
 			hasManyState = true,
 			parentTaskIndex = false,
@@ -153,7 +153,7 @@ local normalTasksTable = {
 
 		{
 			taskId = "6_2",
-			taskLabel = "Cook some rly good BURRRGERRRRR",
+			taskLabel = "6_2", --"Cook some rly good BURRRGERRRRR",
 			isFinished = false,
 			hasManyState = true,
 			parentTaskIndex = "6_1",
@@ -169,7 +169,7 @@ local longTasksTable = {
 	{
 		{
 			taskId = "5_1",
-			taskLabel = "Check oil level of the motors",
+			taskLabel = "5_1", --"Check oil level of the motors",
 			isFinished = false,
 			hasManyState = true,
 			parentTaskIndex = false,
@@ -178,7 +178,7 @@ local longTasksTable = {
 
 		{
 			taskId = "5_2",
-			taskLabel = "Check oil level of the motors",
+			taskLabel = "5_2", --"Check oil level of the motors",
 			isFinished = false,
 			hasManyState = true,
 			parentTaskIndex = "5_1",
@@ -188,7 +188,7 @@ local longTasksTable = {
 
 		{
 			taskId = "5_3",
-			taskLabel = "Check oil level of the motors",
+			taskLabel = "5_3", --"Check oil level of the motors",
 			isFinished = false,
 			hasManyState = true,
 			parentTaskIndex = "5_2",
@@ -198,7 +198,7 @@ local longTasksTable = {
 
 		{
 			taskId = "5_4",
-			taskLabel = "Check oil level of the motors",
+			taskLabel = "5_4", -- "Check oil level of the motors",
 			isFinished = false,
 			hasManyState = true,
 			parentTaskIndex = "5_3",
@@ -392,17 +392,17 @@ function TaskManager.sv_onTaskFinished( self , data )
 			break
 		end
 	end
-	print("P Index:")
+	print("R Index:")
 	print(taskIndex)
 	--[[print(data.taskId)
 	print(playerIndex)
 	print(taskIndex)
 	print(self.sv.activeTask)
 	print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)]]
-	if self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished == false then
-		self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished = true
-		self.sv.taskFinished = self.sv.taskFinished + 1
-	end
+	---if self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished == false then
+	self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished = true
+	self.sv.taskFinished = self.sv.taskFinished + 1
+	--end
 	print(self.sv.totalTask)
 	print(self.sv.taskFinished)
 	if self.sv.taskFinished == self.sv.totalTask then
