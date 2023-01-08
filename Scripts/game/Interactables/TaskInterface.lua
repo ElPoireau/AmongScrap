@@ -423,7 +423,7 @@ end
 
 function TaskInterface.cl_onHudTaskButton( self )
 	self:cl_onTaskFinished()
-
+end
 
 function TaskInterface.cl_onTaskFinished( self )
 	local taskIndex = nil
@@ -459,7 +459,6 @@ end
 -- slave (receving) function --
 function TaskInterface.cl_receiveTaskId( self , data )
 	self.cl.taskId = data.taskId
-
 end
 
 function TaskInterface.cl_receiveTaskState( self , data )

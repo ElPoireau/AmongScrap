@@ -116,6 +116,7 @@ function MettingManager.cl_onCreate( self , player )
 	self.cl.isOpen = false
 	self.cl.hasVoted = false
 	self.cl.isInit = false
+	self.cl.canVote = false
 
 	--g_survivalHudMetting = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Tasks/Gui_TaskTemplateCraftBot.layout",false, {isHud = false, isInteractive = true, needsCursor = true})
 	self.cl.g_survivalHudMetting = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Hud/Hud_MettingVotes.layout",false, {isHud = false, isInteractive = true, needsCursor = true})
@@ -161,6 +162,7 @@ function MettingManager.cl_onInitMetting( self , data )
 	end
 
 	self.cl.isInit = true
+	self.cl.canVote = true
 end
 
 
@@ -182,9 +184,13 @@ function MettingManager.cl_openMettingGui( self , data )
 end
 
 function MettingManager.cl_onVoteButtonCallback( self , data )
-	if self.cl.hasVoted == false then
-		self.cl.hasVoted = true
-		return true
+	if self.cl.canVote == true then
+		if self.cl.hasVoted == false then
+			self.cl.hasVoted = true
+			return true
+		else
+			return false
+		end
 	else
 		return false
 	end
@@ -218,6 +224,7 @@ function MettingManager.cl_onResetMetting( self )
 	self.cl.isOpen = false
 	self.cl.hasVoted = false
 	self.cl.isInit = false
+	self.cl.canVote = false
 
 	for i = 1,10 do
 		self.cl.g_survivalHudMetting:setText(string.format("MettingPlayerText%d", i),"")
@@ -226,6 +233,9 @@ function MettingManager.cl_onResetMetting( self )
 end
 
 function MettingManager.cl_onPlayerKilled( self , data )
+	if data.player == sm.localPlayer.getPlayer() then
+		self.cl.canVote = false
+	end
 	for i,v in ipairs(self.cl.mettingGuiOrder) do
 		if v.isEmpty == false then
 			if data.player == v.player then
