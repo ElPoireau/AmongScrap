@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<MyGUI type="Layout" version="3.2.0">
+	<Widget type="Widget" skin="PanelEmpty" name="TaskListPanel" position_real="0 0.06 0.4 0.4">
+		<Property key="NeedKey" value="false" />
+		<Property key="NeedMouse" value="false" />
+		<Widget type="Widget" skin="HudBackgroundLarge" name="TaskList" position_real="0 0 0.7 0.9">
+			<Widget type="TextBox" skin="TextBox" name="WTaskText1" position_real="0.02 0.01 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText2" position_real="0.02 0.08 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText3" position_real="0.02 0.15 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText4" position_real="0.02 0.22 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText5" position_real="0.02 0.29 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText6" position_real="0.02 0.36 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText7" position_real="0.02 0.43 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText8" position_real="0.02 0.50 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText9" position_real="0.02 0.57 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText10" position_real="0.02 0.64 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText11" position_real="0.02 0.71 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText12" position_real="0.02 0.78 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText13" position_real="0.02 0.85 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="WTaskText14" position_real="0.02 0.92 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+
+
+
+
+
+			<Widget type="TextBox" skin="TextBox" name="YTaskText1" position_real="0.02 0.01 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText2" position_real="0.02 0.08 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText3" position_real="0.02 0.15 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText4" position_real="0.02 0.22 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText5" position_real="0.02 0.29 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText6" position_real="0.02 0.36 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText7" position_real="0.02 0.43 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText8" position_real="0.02 0.50 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText9" position_real="0.02 0.57 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText10" position_real="0.02 0.64 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText11" position_real="0.02 0.71 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText12" position_real="0.02 0.78 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText13" position_real="0.02 0.85 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="YTaskText14" position_real="0.02 0.92 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+
+
+
+
+			<Widget type="TextBox" skin="TextBox" name="GTaskText1" position_real="0.02 0.01 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText2" position_real="0.02 0.08 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText3" position_real="0.02 0.15 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText4" position_real="0.02 0.22 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText5" position_real="0.02 0.29 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText6" position_real="0.02 0.36 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText7" position_real="0.02 0.43 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText8" position_real="0.02 0.50 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText9" position_real="0.02 0.57 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText10" position_real="0.02 0.64 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText11" position_real="0.02 0.71 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText12" position_real="0.02 0.78 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText13" position_real="0.02 0.85 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="GTaskText14" position_real="0.02 0.92 1 0.07">
+				<Property key="TextAlign" value="Left VCenter" />
+				<Property key="Caption" value=""/>
+				<Property key="FontName" value="SM_Text" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+
+
+
+
+
+		</Widget>
+		<Widget type="ImageBox" skin="ImageBox" align="Right Bottom" name="TaskListBarNotification" position_real="0.23 0 0.03 0.09">
+			<Property key="ImageTexture" value="gui_logbook_item_exclamation.png" />
+			<Property key="Visible" value="true" />
+		</Widget>
+		<Widget type="Widget" skin="HudBackgroundLarge" name="TaskListBar" position_real="0 0 0.23 0.12">
+			<Widget type="TextBox" skin="TextBox" name="TaskListBarText" position_real="0 0 1 1">
+				<Property key="TextAlign" value="Center VCenter" />
+				<Property key="Caption" value="Tasks"/>
+				<Property key="FontName" value="SM_IntlText" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+		</Widget>
+	</Widget>
+<CodeGeneratorSettings />
+</MyGUI>

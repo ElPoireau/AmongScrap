@@ -1,0 +1,437 @@
+{
+   "partList" : [
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 1 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 1 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "77562545-1e95-47a5-9567-9c41dea12eaf"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "color" : "FFFFFF",
+         "name" : "Task Interface 1 - 02",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 1 - 02"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "c9f30707-12e6-4685-9f95-cde4afc7ac8b"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 2 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 2 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "0135d97f-13b4-4840-a901-2a9880fcc536"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 3 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 3 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "394f0ec0-d35d-4f24-9b95-195f300d6159"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 4 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 4 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "7f3f944a-a416-4157-808a-e5ce06a3b0ca"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 5 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 5 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "7163188b-bca3-493c-8b49-5d0a60298d86"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 5 - 02",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 5 - 02"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "4987c710-fce0-4607-8e73-f5efc9cea24d"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 5 - 03",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 5 - 03"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "f22e50df-d566-4e56-9038-dd662a884609"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 5 - 04",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 5 - 04"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "eac8a967-9e1a-4432-ac0b-ad1c16fae188"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 6 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 6 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "1286b2d5-e4a8-4e15-ac35-fd6143ee1cb2"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 6 - 02",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 6 - 02"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "f9a9fb6c-59e1-4f36-b02e-418beffa1948"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 7 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 7 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "0d6ce332-8a3c-4990-9b89-60652bbaeb1a"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 8 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 8 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "9a5ad5d3-3d89-48f8-a557-b31b21884171"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 9 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 9 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "3f6bdb04-f7cb-4acf-a436-95e1abf45e4b"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 10 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 10 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "174163a9-9311-485e-b1e7-0031e988c04a"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 8,
+            "z" : 4
+         },
+         "name" : "Task Interface 11 - 01",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "restrictions" : {
+            "buildable" : true,
+            "connectable" : false,
+            "usable" : true
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TaskInterface",
+            "data" : {
+               "TaskName" : "Task 11 - 01"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterface.lua"
+         },
+         "showInInventory" : true,
+         "stackSize" : 1,
+         "sticky" : "All",
+         "uuid" : "899324f3-8764-45e0-a45b-0e0eba68b6f3"
+      }
+   ]
+}
