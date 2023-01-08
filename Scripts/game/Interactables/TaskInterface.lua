@@ -274,19 +274,19 @@ function TaskInterface.client_onCreate( self )
 
 	elseif self.data.TaskName == "Task 2 - 01" then
 		self.cl.taskInterfaceHud = sm.gui.createEngineGui() ---sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_Engine.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.taskInterfaceHud:setButtonCallback("Upgrade","cl_onHudTaskButton")
+		self.cl.taskInterfaceHud:setOnCloseCallback("cl_onHudTaskButton")
 		self.cl.taskInterfaceHud:setText("UpgradeInfo", "FINISH TASK ->")
 		self.cl.taskInterfaceHud:setVisible("Upgrade", true)
 
 	elseif self.data.TaskName == "Task 3 - 01" then
 		self.cl.taskInterfaceHud = sm.gui.createEngineGui() ---sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_Engine.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.taskInterfaceHud:setButtonCallback("Upgrade","cl_onHudTaskButton")
+		self.cl.taskInterfaceHud:setOnCloseCallback("cl_onHudTaskButton")
 		self.cl.taskInterfaceHud:setText("UpgradeInfo", "FINISH TASK ->")
 		self.cl.taskInterfaceHud:setVisible("Upgrade", true)
 
 	elseif self.data.TaskName == "Task 4 - 01" then
 		self.cl.taskInterfaceHud = sm.gui.createEngineGui() ---sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_Engine.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.taskInterfaceHud:setButtonCallback("Upgrade","cl_onHudTaskButton")
+		self.cl.taskInterfaceHud:setOnCloseCallback("cl_onHudTaskButton")
 		self.cl.taskInterfaceHud:setText("UpgradeInfo", "FINISH TASK ->")
 		self.cl.taskInterfaceHud:setVisible("Upgrade", true)
 

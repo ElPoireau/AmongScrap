@@ -222,8 +222,8 @@ function TaskManager.sv_onCreate( self )
 	self.sv.numOfLongTask_Table = 0
 	for _ in pairs(longTasksTable) do self.sv.numOfLongTask_Table = self.sv.numOfLongTask_Table + 1 end
 
-	self.sv.numOfShortTask_PerRound = 8
-	self.sv.numOfNormalTask_PerRound = 2
+	self.sv.numOfShortTask_PerRound = 1
+	self.sv.numOfNormalTask_PerRound = 1
 	self.sv.numOfLongTask_PerRound = 1
 
 	self.sv.howManyTaskPerPlayer = self.sv.numOfShortTask_PerRound + (self.sv.numOfNormalTask_PerRound * 2) + (self.sv.numOfLongTask_PerRound * 4)
@@ -367,7 +367,9 @@ function TaskManager.sv_onResetTask( self )
 end
 
 function TaskManager.sv_onTaskFinished( self , data )
+	print("server Data :")
 	print(data)
+	print(self.sv.activeTask)
 	local playerId = data.player:getId()
 
 	local haveTheTask = false
@@ -380,6 +382,8 @@ function TaskManager.sv_onTaskFinished( self , data )
 			break
 		end
 	end
+	print("P Index:")
+	print(playerIndex)
 
 	for i,v in ipairs(self.sv.activeTask[playerIndex].tasks) do
 		if data.taskId == v.taskId then
@@ -388,6 +392,8 @@ function TaskManager.sv_onTaskFinished( self , data )
 			break
 		end
 	end
+	print("P Index:")
+	print(taskIndex)
 	--[[print(data.taskId)
 	print(playerIndex)
 	print(taskIndex)
@@ -436,7 +442,6 @@ end
 --CONTENT--
 
 function TaskManager.cl_onTaskFinished( self , data )
-	print(data)
 	local haveTheTask = false
 	local taskIndex = nil
 

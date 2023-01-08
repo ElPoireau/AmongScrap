@@ -1152,6 +1152,7 @@ end
 
 --------- [Client function called when a task is finish. (called by TaskInterface.lua)]
 function SurvivalGame.cl_e_onTaskFinished( self , data )
+	print(data)
 	data.player = sm.localPlayer.getPlayer()
 	local isAllTaskFinish = g_taskManager:cl_onTaskFinished(data)
 	self.network:sendToServer("sv_e_onTaskFinished", data)
