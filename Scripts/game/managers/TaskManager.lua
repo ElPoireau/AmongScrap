@@ -400,10 +400,23 @@ function TaskManager.sv_onTaskFinished( self , data )
 	print(self.sv.activeTask)
 	print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)]]
 	print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)
-	if self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished == false then
-		print("TRUEEEE")
-		self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished = true
-		self.sv.taskFinished = self.sv.taskFinished + 1
+	if haveTheTask == true then
+		if self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished == false then
+			-- try to debug
+			print("-----------------------------------------------------------active task playerIndex")
+			print(self.sv.activeTask[playerIndex])
+			local activeTaskPlayer = self.sv.activeTask[playerIndex]
+			print("----------------------------------------------------------player b")
+			print(activeTaskPlayer)
+			print("-----------------------------------------------------------player a")
+			activeTaskPlayer.tasks[taskIndex].isFinished = true
+			print(activeTaskPlayer)
+				self.sv.activeTask[playerIndex] = activeTaskPlayer
+			print("-----------------------------------------------------------activetask")
+			self.sv.taskFinished = self.sv.taskFinished + 1
+			print(self.sv.activeTask)
+			print("-----------------------------------------------------------end")
+		end
 	end
 	print(self.sv.totalTask)
 	print(self.sv.taskFinished)
