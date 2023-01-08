@@ -1,0 +1,14 @@
+{
+   "cellData" : [
+      {
+         "offsetX" : 0,
+         "offsetY" : 0,
+         "path" : "$CONTENT_DATA/Terrain/Tiles/Spawn.tile",
+         "rotation" : 0,
+         "x" : 0,
+         "y" : 0
+      }
+   ],
+   "dependencies" : [],
+   "version" : 1
+}

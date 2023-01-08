@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<MyGUI type="Layout" version="3.2.0">
+	<Widget type="Widget" skin="PanelEmpty" name="ImpostorPanel" position_real="0.7 0 0.3 0.3">
+		<Property key="NeedKey" value="false" />
+		<Property key="NeedMouse" value="false" />
+		<Widget type="Widget" skin="HudBackgroundLarge" position_real="0.6 0 0.4 0.2">
+			<Widget type="TextBox" skin="TextBox" name="ImpostorText" position_real="0 0 1 1">
+				<Property key="TextAlign" value="Center VCenter" />
+				<Property key="Caption" value="Impostor"/>
+				<Property key="FontName" value="SM_IntlText" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 0 0" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="CrewmateText" position_real="0 0 1 1">
+				<Property key="TextAlign" value="Center VCenter" />
+				<Property key="Caption" value="Crewmate"/>
+				<Property key="FontName" value="SM_IntlText" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="0 1 0.95" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+			<Widget type="TextBox" skin="TextBox" name="NotText" position_real="0 0 1 1">
+				<Property key="TextAlign" value="Center VCenter" />
+				<Property key="Caption" value="Waiting..."/>
+				<Property key="FontName" value="SM_IntlText" />
+				<Property key="TextShadow" value="true" />
+				<Property key="TextColour" value="1 1 0.752941" />
+				<Property key="InheritsAlpha" value="false" />
+				<Property key="TextShadowColour" value="0 0 0 0.2" />
+			</Widget>
+		</Widget>
+	</Widget>
+<CodeGeneratorSettings />
+</MyGUI>

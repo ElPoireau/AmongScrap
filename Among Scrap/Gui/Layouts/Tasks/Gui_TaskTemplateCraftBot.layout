@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="BackgroundCraftbot" position_real="0.17604166666666668 0.037037037037037035 0.6479166666666667 0.84629629629629632">
+        <UserString key="LE_TargetWidgetType" value="Widget"/>
+        <Widget type="ItemBox" skin="ItemBox" position_real="0.051446945337620578 0.32822757111597373 0.92443729903536975 0.44857768052516411"/>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
