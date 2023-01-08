@@ -273,7 +273,7 @@ function SurvivalPlayer.client_onUpdate( self )
 					local keyBindingText =  sm.gui.getKeyBinding( "Use", true )
 					sm.gui.setInteractionText( "", keyBindingText, "Kill" )
 					self.cl.canKill = true
-					self.cl.impostorVictim = character--:getPlayer()
+					self.cl.impostorVictim = character:getPlayer()
 				else
 					self.cl.canReport = false
 				end

@@ -423,7 +423,7 @@ end
 
 function TaskInterface.cl_onHudTaskButton( self )
 	self:cl_onTaskFinished()
-end
+
 
 function TaskInterface.cl_onTaskFinished( self )
 	local taskIndex = nil
@@ -440,9 +440,9 @@ function TaskInterface.cl_onTaskFinished( self )
 
 			self.cl.playerTasks[taskIndex].isFinished = true
 			local data = {taskId = self.cl.taskId}
+			sm.event.sendToGame("cl_e_onTaskFinished", data)
 			self.cl.g_taskInterfaceIcon:close()
 			self.cl.taskInterfaceHud:close()
-			sm.event.sendToGame("cl_e_onTaskFinished", data)
 		end
 	end
 end

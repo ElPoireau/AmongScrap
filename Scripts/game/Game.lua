@@ -52,7 +52,7 @@ function SurvivalGame.server_onCreate( self )
 
 	print( self.sv.saved.data )
 	if self.sv.saved.data and self.sv.saved.data.dev then
-		g_godMode = true
+		g_godMode = false
 		g_survivalDev = true
 		sm.log.info( "Starting SurvivalGame in DEV mode" )
 	end
@@ -137,7 +137,7 @@ function SurvivalGame.client_onCreate( self )
 	self.cl.time.timeOfDay = 0.7
 	self.cl.time.timeProgress = true
 
-	self.cl.isImpostor = true
+	self.cl.isImpostor = false
 
 	if not sm.isHost then
 		self:loadCraftingRecipes()
@@ -708,7 +708,7 @@ end
 function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 	print( player.name, "joined the game" )
 
-	if newPlayer then --Player is first time joiners
+	if true then --Player is first time joiners
 		local inventory = player:getInventory()
 
 		sm.container.beginTransaction()
@@ -741,9 +741,11 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 		sm.container.endTransaction()
 
 		local spawnPoint = sm.vec3.new( 0.0, 0.0, 100.0 )
+
 		if not sm.exists( self.sv.saved.overworld ) then
 			sm.world.loadWorld( self.sv.saved.overworld )
 		end
+
 		self.sv.saved.overworld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), player, "sv_createNewPlayer" )
 		self.network:sendToClient( player, "cl_n_onJoined", { newPlayer = newPlayer } )
 	else
@@ -1109,13 +1111,12 @@ end
 
 -------
 function SurvivalGame.cl_e_onImpostorKill( self , data )
-	data.player = sm.localPlayer.getPlayer()
-	--data.playerVictim or sm.localPlayer.getPlayer()
+	data.player = data.playerVictim or sm.localPlayer.getPlayer()
 	self.network:sendToServer("sv_e_onImpostorKill", data)
 end
 
 function SurvivalGame.sv_e_onImpostorKill( self , data )
-	data.playerVictim:setDowned(true) -- !!! should be only for dev !! --
+	--data.playerVictim:setDowned(true) -- !!! should be only for dev !! --
 	self:sv_e_onPlayerKilled({player = data.player})
 	self.network:sendToClient(data.player, "cl_e_onKillByImpostor", data)
 end
