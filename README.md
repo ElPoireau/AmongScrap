@@ -13,12 +13,12 @@ VERSION CHANGELOG (0.1.7 and later)
 	· All the system are functionnal, you can play to Among Scrap now !
 
 -- In the code :
-	· Added icon that show where is Task interface (Work in progress)
-	· Added Task labels and HUD (Work in progress)
-	· Added kill and report function
-	· Remove g_survivalHudAmongScrap HUD
-	· impostor system should be work !
-	· Metting system should be work !
+· Added icon that show where is Task interface (Work in progress)
+· Added Task labels and HUD (Work in progress)
+· Added kill and report function
+· Remove g_survivalHudAmongScrap HUD
+· impostor system should be work !
+· Metting system should be work !
 
 -- New command
 	· '/metting' - it initalize the metting system
