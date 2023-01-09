@@ -6,7 +6,6 @@ STEAM WORKSHOP : https://steamcommunity.com/sharedfiles/filedetails/?id=28115839
 
 VERSION CHANGELOG (0.1.7 and later)
 
-
 -- CHANGELOG (0.2.0) -- (Actual version)
 -- General :
 	· Added mysterious ambiance
