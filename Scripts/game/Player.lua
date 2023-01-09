@@ -112,9 +112,41 @@ function SurvivalPlayer.client_onCreate( self )
 		-----------------------------------------------------------------
 
 		sm.gui.chatMessage("============================================")
-		sm.gui.chatMessage("Welcome in Among Scrap (Version Alpha 0.1.8)")
+		sm.gui.chatMessage("Welcome in Among Scrap (Version 0.2.0)")
 		sm.gui.chatMessage("============================================")
 		sm.gui.chatMessage([[
+		-- CHANGELOG (0.2.0) --
+-- General :
+	· Added mysterious ambiance
+	· Make some crash test in multiplayer
+	· Task progression now work
+
+-- Mapping :
+	· Added new spawn
+	· New map : Wonk ship (Work in progress)
+	· Added test template on WonkShip
+
+-- In the code :
+	· Player are now alaways a new player when he join
+	· Improve the code to be multiplayer friendly
+	· TaskInterfaceIcon now close on destroy
+	· A downed player can no longer vote in metting
+	· Added new sounds when tasks are finish or complete
+	· Added new text when task are complete
+	· Added new Fadein and FadeOut when onGameOver and onGoToWorld
+
+-- Fix :
+	· Fix taskTable pointer problem
+	· Fix the impostor random status
+	· Fix tasks in multiplayer
+
+-- New command :
+	· "/spawnship" - go to Spawn ship map
+	· "/wonkship" - go to Wonk ship map
+
+]])
+
+--[[
 		-- CHANGELOG (0.1.8) --
 -- General :
 	· Happy new year !
@@ -133,7 +165,7 @@ function SurvivalPlayer.client_onCreate( self )
 	· '/vote' - it open the voting GUI
 	· '/start' - it start a round
 	· '/impostornum'
-]])
+]]--
 
 --[[		-- CHANGELOG (0.1.7) --
 -- General :
@@ -384,64 +416,8 @@ function SurvivalPlayer.server_onFixedUpdate( self, dt )
 			self.sv.staminaSpend = self.sv.staminaSpend + CarryStaminaCost
 		end
 	end
---]]--
---[[]]
-	-- Update stamina, food and water stats
-	if character and self.sv.saved.isConscious and not g_godMode then
-		self.sv.statsTimer:tick()
-		if self.sv.statsTimer:done() then
-			self.sv.statsTimer:start( StatsTickRate )
-
-			-- Recover health from food
-			if self.sv.saved.stats.food > FoodRecoveryThreshold then
-				local fastRecoveryFraction = 0
-
-				-- Fast recovery when food is above fast threshold
-				if self.sv.saved.stats.food > FastFoodRecoveryThreshold then
-					local recoverableHp = math.min( self.sv.saved.stats.maxhp - self.sv.saved.stats.hp, FastHpRecovery )
-					local foodSpend = math.min( recoverableHp * FastFoodCostPerHpRecovery, math.max( self.sv.saved.stats.food - FastFoodRecoveryThreshold, 0 ) )
-					local recoveredHp = foodSpend / FastFoodCostPerHpRecovery
-
-					self.sv.saved.stats.hp = math.min( self.sv.saved.stats.hp + recoveredHp, self.sv.saved.stats.maxhp )
-					self.sv.saved.stats.food = self.sv.saved.stats.food - foodSpend
-					fastRecoveryFraction = ( recoveredHp ) / FastHpRecovery
-				end
-
-				-- Normal recovery
-				local recoverableHp = math.min( self.sv.saved.stats.maxhp - self.sv.saved.stats.hp, HpRecovery * ( 1 - fastRecoveryFraction ) )
-				local foodSpend = math.min( recoverableHp * FoodCostPerHpRecovery, math.max( self.sv.saved.stats.food - FoodRecoveryThreshold, 0 ) )
-				local recoveredHp = foodSpend / FoodCostPerHpRecovery
-
-				self.sv.saved.stats.hp = math.min( self.sv.saved.stats.hp + recoveredHp, self.sv.saved.stats.maxhp )
-				self.sv.saved.stats.food = self.sv.saved.stats.food - foodSpend
-			end
-
-			-- Spend water and food on stamina usage
-			self.sv.saved.stats.water = math.max( self.sv.saved.stats.water - self.sv.staminaSpend * WaterCostPerStamina, 0 )
-			self.sv.saved.stats.food = math.max( self.sv.saved.stats.food - self.sv.staminaSpend * FoodCostPerStamina, 0 )
-			self.sv.staminaSpend = 0
-
-			-- Decrease food and water with time
-			self.sv.saved.stats.food = math.max( self.sv.saved.stats.food - FoodLostPerSecond, 0 )
-			self.sv.saved.stats.water = math.max( self.sv.saved.stats.water - WaterLostPerSecond, 0 )
-
-			local fatigueDamageFromHp = false
-			if self.sv.saved.stats.food <= 0 then
-				self:sv_takeDamage( FatigueDamageHp, "fatigue" )
-				fatigueDamageFromHp = true
-			end
-			if self.sv.saved.stats.water <= 0 then
-				if not fatigueDamageFromHp then
-					self:sv_takeDamage( FatigueDamageWater, "fatigue" )
-				end
-			end
-
-			self.storage:save( self.sv.saved )
-			self.network:setClientData( self.sv.saved )
-		end
-	end
 end
---]]--
+
 
 function SurvivalPlayer.server_onInventoryChanges( self, container, changes )
 	--QuestManager.Sv_OnEvent( QuestEvent.InventoryChanges, { container = container, changes = changes } )
@@ -716,11 +692,12 @@ function SurvivalPlayer.client_onReload( self )
 		g_survivalHudTaskList:setVisible("TaskListBarNotification", false)
 		g_survivalHudTaskList:setVisible("TaskListBar", false)
 		g_survivalHudTaskList:setVisible("TaskList", true)
+		sm.audio.play("Handbook - Equip")
 		self.taskMenuOpen = true
-		assert(g_survivalHudTaskList)
 	else
 		g_survivalHudTaskList:setVisible("TaskList", false)
 		g_survivalHudTaskList:setVisible("TaskListBar", true)
+		sm.audio.play("Handbook - Unequip")
 		if self.taskHasJob then
 			g_survivalHudTaskList:setVisible("TaskListBarNotification", true)
 		end
@@ -740,7 +717,7 @@ end
 
 
 
--- impostor --
+-- IMPOSTOR --
 
 function SurvivalPlayer.cl_i_onImpostorKill( self , data )
 	sm.event.sendToGame("cl_e_onImpostorKill", data)
@@ -782,7 +759,20 @@ end
 
 
 
--- task --
+-- TASK --
+
+
+function SurvivalPlayer.cl_refreshTaskProgressionBar( self , data )
+	if data == nil then
+		for i = 1, 12 do
+			g_survivalHudTaskBar:setVisible(string.format("TaskGreen%d", i), false)
+		end
+	else
+		for i = 1, data.taskProgression do
+			g_survivalHudTaskBar:setVisible(string.format("TaskGreen%d", i), true)
+		end
+	end
+end
 
 function SurvivalPlayer.cl_refreshTaskText( self , data )
 	if data then

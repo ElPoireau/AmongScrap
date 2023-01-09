@@ -45,7 +45,7 @@ function SurvivalGame.server_onCreate( self )
 	if self.sv.saved == nil then
 		self.sv.saved = {}
 		self.sv.saved.data = self.data
-		self.sv.saved.overworld = sm.world.createWorld( "$CONTENT_DATA/Scripts/terrain/World.lua", "Overworld", { dev = self.sv.saved.data.dev }, self.sv.saved.data.seed )
+		self.sv.saved.overworld = sm.world.createWorld( "$CONTENT_DATA/Scripts/terrain/SpawnWorld.lua", "Overworld", { dev = self.sv.saved.data.dev }, self.sv.saved.data.seed )
 		self.storage:save( self.sv.saved )
 	end
 	self.data = nil
@@ -118,8 +118,11 @@ function SurvivalGame.server_onCreate( self )
 	g_mettingManager:sv_onCreate()
 
 	self.sv.asyncPublicDataTimer = Timer()
+
 	self.sv.isRoundStarted = false
 	self.sv.needToStartTheAsyncPublicDataTimer = false
+	self.sv.isWonkShipWorldExist = false
+	self.sv.witchWorldPlayersAre = "Overworld"
 end
 
 function SurvivalGame.server_onRefresh( self )
@@ -269,6 +272,9 @@ function SurvivalGame.bindChatCommands( self )
 		sm.game.bindChatCommand( "/reset", {}, "cl_onChatCommand", "Reset all the system for another round" )
 
 		sm.game.bindChatCommand( "/impostornum", {{"int", "number", true}}, "cl_onChatCommand", "Change the number of impostor for the next game" )
+
+		sm.game.bindChatCommand( "/spawnship", {}, "cl_onChatCommand", "Go to spawn" )
+		sm.game.bindChatCommand( "/wonkship", {}, "cl_onChatCommand", "Go to Wonk ship" )
 	end
 end
 
@@ -677,6 +683,7 @@ function SurvivalGame.sv_onChatCommand( self, params, player )
 	elseif params[1] == "/start" then
 		self:sv_onInitRound()
 
+
 	elseif params[1] == "/reset" then
 		self:sv_onResetRound()
 
@@ -684,6 +691,11 @@ function SurvivalGame.sv_onChatCommand( self, params, player )
 		print(params[2])
 		g_impostorManager:sv_changeImpostorNumber(params[2])
 
+	elseif params[1] == "/spawnship" then
+		self:sv_onGoToOverworld()
+
+	elseif params[1] == "/wonkship" then
+		self:sv_onGoToWonkShip()
 
 --[[
 	elseif params[1] == "/activatequest" then
@@ -939,6 +951,36 @@ function SurvivalGame.cl_e_onPlayerKilled( self , data )
 end
 ------
 
+------
+function SurvivalGame.sv_onGameOver( self , data )
+	data.overworld = self.sv.saved.overworld
+	if data.gameOverReason == "allTaskFinished" then
+		sm.log.info("[AMONG SCRAP] -- GAME OVER -- All tasks are finish.")
+		self.network:sendToClients("cl_onGameOver", data)
+		self:sv_onResetRound()
+
+	elseif data.gameOverReason == "impostorKillAll" then
+		sm.log.info("[AMONG SCRAP] -- GAME OVER -- Impostors kill all crewmates.")
+		self.network:sendToClients("cl_onGameOver", data)
+		self:sv_onResetRound()
+
+	elseif data.gameOverReason == "crewmateEjectAll" then
+		sm.log.info("[AMONG SCRAP] -- GAME OVER -- Crewmates eject all impostors.")
+		self.network:sendToClients("cl_onGameOver", data)
+		self:sv_onResetRound()
+	end
+end
+
+function SurvivalGame.cl_onGameOver( self , data )
+	sm.gui.startFadeToBlack( 0.5, 5 )
+	sm.gui.displayAlertText( "GAME OVER", 5 )
+	--self.cl.gameOverEffect = sm.effect.createEffect("SurvivalMusic")
+	--self.cl.gameOverEffect:setPosition(sm.localPlayer.getPlayer().character.worldPosition)
+	--self.cl.gameOverEffect:setAutoPlay(true)
+	--sm.event.sendToWorld(data.overworld, "cl_w_onGameOver")
+end
+------
+
 
 
 function SurvivalGame.sv_onInitRound( self )
@@ -973,6 +1015,105 @@ function SurvivalGame.sv_onResetRound( self )
 	end
 end
 
+
+
+
+
+
+-- WORLD --
+
+--[[
+Avaliable world in Among Scrap:
+
+	1) Overworld :
+		Normal name : Overworld (Or Spawn)
+		Function name : Overworld or overworld
+		Class name : Overworld
+		Str call name : Overworld
+		World file : SpawnWorld.lua
+		Terrain file : SpawnTerain.lua
+		Goto command : /spawnship
+
+	2) WonkShip
+		Normal name : WonkShip or WonkShipWorld
+		Function name : WonkShip or wonkShip
+		Class name : WonkShipWorld
+		Str call name : WonkShip
+		World file : Wonkship.lua
+		Terrain file : WonkShipTerrain.lua
+		Goto command : /wonkship
+]]
+
+---Overworld (spawn)
+------
+function SurvivalGame.sv_onGoToOverworld( self )
+	if self.sv.witchWorldPlayersAre == "Overworld" then
+		sm.log.warning("[AMONG SCRAP] WARNING : Already on spawn (Overworld) world ! (Game.lua ln1025)")
+	else
+		self.network:sendToClients("cl_onGoToOverworld")
+		local spawnPoint = sm.vec3.new( 0.0, 0.0, 100.0 )
+		for _,p in ipairs(sm.player.getAllPlayers()) do
+			self.sv.saved.overworld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), p, "sv_createNewPlayer" )
+		end
+		self.sv.witchWorldPlayersAre = "Overworld"
+	end
+end
+
+function SurvivalGame.cl_onGoToOverworld( self )
+	sm.gui.startFadeToBlack( 0.2, 0.2 )
+end
+------
+
+
+
+function SurvivalGame.sv_onLeaveOverworld( self )
+
+end
+---
+
+
+
+---WonkShip
+------
+function SurvivalGame.sv_onGoToWonkShip( self )
+	if self.sv.witchWorldPlayersAre == "WonkShip" then
+		sm.log.warning("[AMONG SCRAP] WARNING : Already on WonkShip world ! (Game.lua ln1048)")
+	else
+		self.network:sendToClients("cl_onGoToWonkShip")
+		if self.sv.isWonkShipWorldExist == false then
+			self:sv_createWonkShip()
+		end
+		local spawnPoint = sm.vec3.new( 0.0, 0.0, 100.0 )
+		for _,p in ipairs(sm.player.getAllPlayers()) do
+			self.sv.wonkShipWorld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), p, "sv_onCreateNewPlayerOnWonkShip" )
+		end
+		self.sv.witchWorldPlayersAre = "WonkShip"
+		sm.gui.chatMessage("#ff1133 WARNING: you can fall off on the ship (work in progress)")
+		sm.gui.chatMessage("#66ff88 Don't forgot to let me know what you think about the ship and about the mod in general, it help me for the developement ! :)")
+	end
+end
+
+function SurvivalGame.cl_onGoToWonkShip( self )
+sm.gui.startFadeToBlack( 0.2, 0.2 )
+end
+------
+
+
+
+function SurvivalGame.sv_createWonkShip( self )
+	self.sv.wonkShipWorld = sm.world.createWorld( "$CONTENT_DATA/Scripts/terrain/WonkShip.lua", "WonkShipWorld", { dev = self.sv.saved.data.dev }, self.sv.saved.data.seed )
+	self.sv.isWonkShipWorldExist = true
+end
+
+function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self, world, x, y, player )
+	local params = { player = player, x = x, y = y }
+	sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_spawnNewCharacter", params )
+end
+
+function SurvivalGame.sv_onLeaveWonkShip( self )
+
+end
+---
 
 
 
@@ -1156,9 +1297,9 @@ function SurvivalGame.cl_e_onTaskFinished( self , data )
 	print(data)
 	data.player = sm.localPlayer.getPlayer()
 	self.network:sendToServer("sv_e_onTaskFinished", data)
-	local isAllTaskFinish = g_taskManager:cl_onTaskFinished(data)
-	if isAllTaskFinish == true then
-		g_taskManager:cl_onAllTaskFinished()
+	local isPlayerTaskAllFinish = g_taskManager:cl_onTaskFinished(data)
+	if isPlayerTaskAllFinish == true then
+		g_taskManager:cl_onPlayerFinishAllTask()
 	end
 end
 
@@ -1199,7 +1340,21 @@ function SurvivalGame.cl_e_onTaskInterfaceDestroy( self , data )
 end
 -------
 
+-------
+function SurvivalGame.sv_e_onRefreshTaskProgressionBar( self , data )
+	self.network:sendToClients("cl_e_onRefreshTaskProgressionBar", data)
+end
 
+function SurvivalGame.cl_e_onRefreshTaskProgressionBar( self , data )
+	sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_refreshTaskProgressionBar", data)
+end
+--------
+
+
+
+function SurvivalGame.sv_e_onAllTasksFinished( self )
+	self:sv_onGameOver({gameOverReason = "allTaskFinished"})
+end
 
 function SurvivalGame.sv_e_onInitTask( self ) -- Init all task (for one round only)
 	g_taskManager:sv_onInitTask()

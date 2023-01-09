@@ -51,7 +51,7 @@ function TaskInterface.server_onCreate( self )
 	local hasTaskInit = false
 
 	taskName = "Task 1 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
+	if self.data.TaskName == string.format("%s", taskName) then  -- not modular i know ;(((
 		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
 		taskId = "1_1"
 		sendToClData.taskId = taskId
@@ -262,7 +262,7 @@ function TaskInterface.client_onCreate( self )
 	self.cl.g_taskInterfaceIcon:setImage("Icon", "gui_icon_popup_alert.png")
 	---!!! can be nice to add becon icon (with the thing on cl_onRefresh) for wold icon !!!!---
 
-	if self.data.TaskName == "Task 1 - 01" then
+	if self.data.TaskName == "Task 1 - 01" then -- not modular i know ;(((
 		self.cl.taskInterfaceHud = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CraftBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
 		self.cl.taskInterfaceHud:setButtonCallback("Craft","cl_onHudTaskButton")
 		self.cl.taskInterfaceHud:setText("Craft", "FINISH TASK")
@@ -417,6 +417,7 @@ end
 
 function TaskInterface.client_onDestroy( self )
 	sm.event.sendToGame("cl_e_onTaskInterfaceDestroy", self.interactable)
+	self.cl.g_taskInterfaceIcon:close()
 end
 
 -- CONTENT ---
@@ -441,8 +442,11 @@ function TaskInterface.cl_onTaskFinished( self )
 			self.cl.playerTasks[taskIndex].isFinished = true
 			local data = {taskId = self.cl.taskId}
 			sm.event.sendToGame("cl_e_onTaskFinished", data)
+
 			self.cl.g_taskInterfaceIcon:close()
 			self.cl.taskInterfaceHud:close()
+			sm.gui.displayAlertText("Task completed", 2)
+			sm.audio.play("Phaser")
 		end
 	end
 end
@@ -469,14 +473,16 @@ function TaskInterface.cl_receiveTask( self , data )
 	self.cl.playerTasks = data
 	if data then
 		local haveTheTask = false
+		local isFinished = false
 		for i,v in ipairs(self.cl.playerTasks) do
 			if self.cl.taskId == v.taskId then
-				taskIndex = i
+				--taskIndex = i
 				haveTheTask = true
+				isFinished = v.isFinished
 				break
 			end
 		end
-		if haveTheTask == true then
+		if haveTheTask == true and isFinished == false then
 			self.cl.g_taskInterfaceIcon:open()
 		end
 	end

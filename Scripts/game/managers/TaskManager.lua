@@ -13,6 +13,13 @@ taskId : str, The id of the task .(Should be like that : "[taskId]_[stateId]")
 taskLabel : str, The text to be showed on task board.
 isFinished : bool, Say if the task is finished by the player.
 HasManyState : bool, Say if there are many step of this task to be finish.
+
+parentTaskIndex : str of false, taskId of the parentTask - False if parent
+
+childTaskInfo = {howManyFinished = n, howManyTasks = n*} info about his child tasks - Only in grandparent
+
+grandParentTaskIndex = str, taskId of the grandparent - Only in childs
+isParentNeedToBeFinish = bool, True if parent need to be finish before us - Only in childs
 }
 
 ]]--
@@ -249,17 +256,23 @@ function TaskManager.sv_getTaskTable( self , data )
 	if data == "Short task" then
 		local randomNumber = math.floor(sm.noise.randomRange(1, self.sv.numOfShortTask_Table))
 		local task = shortTasksTable[randomNumber]
-		return task
+		local taskCopy = {}
+		for k,v in pairs(task) do taskCopy[k] = v end
+		return taskCopy
 
 	elseif data == "Normal task" then
 		local randomNumber = math.floor(sm.noise.randomRange(1, self.sv.numOfNormalTask_Table))
 		local task = normalTasksTable[randomNumber]
-		return task
+		local taskCopy = {}
+		for k,v in pairs(task) do taskCopy[k] = v end
+		return taskCopy
 
 	elseif data == "Long task" then
 		local randomNumber = math.floor(sm.noise.randomRange(1,self.sv.numOfLongTask_Table))
 		local task = longTasksTable[randomNumber]
-		return task
+		local taskCopy = {}
+		for k,v in pairs(task) do taskCopy[k] = v end
+		return taskCopy
 	end
 end
 
@@ -364,12 +377,11 @@ function TaskManager.sv_onResetTask( self )
 		sm.event.sendToInteractable(v, "sv_receiveTaskState", false)
 		sm.event.sendToInteractable(v, "sv_onResetTask", false)
 	end
+	sm.event.sendToGame("sv_e_onRefreshTaskProgressionBar", nil)
 end
 
 function TaskManager.sv_onTaskFinished( self , data )
 	print("server Data :")
-	print(data)
-	print(self.sv.activeTask)
 	local player = data.player
 
 	local haveTheTask = false
@@ -382,8 +394,6 @@ function TaskManager.sv_onTaskFinished( self , data )
 			break
 		end
 	end
-	print("P Index:")
-	print(playerIndex)
 
 	for i,v in ipairs(self.sv.activeTask[playerIndex].tasks) do
 		if data.taskId == v.taskId then
@@ -392,8 +402,7 @@ function TaskManager.sv_onTaskFinished( self , data )
 			break
 		end
 	end
-	print("R Index:")
-	print(taskIndex)
+
 	--[[print(data.taskId)
 	print(playerIndex)
 	print(taskIndex)
@@ -402,26 +411,15 @@ function TaskManager.sv_onTaskFinished( self , data )
 	print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)
 	if haveTheTask == true then
 		if self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished == false then
-			-- try to debug
-			print("-----------------------------------------------------------active task playerIndex")
-			print(self.sv.activeTask[playerIndex])
-			local activeTaskPlayer = self.sv.activeTask[playerIndex]
-			print("----------------------------------------------------------player b")
-			print(activeTaskPlayer)
-			print("-----------------------------------------------------------player a")
-			activeTaskPlayer.tasks[taskIndex].isFinished = true
-			print(activeTaskPlayer)
-				self.sv.activeTask[playerIndex] = activeTaskPlayer
-			print("-----------------------------------------------------------activetask")
+			self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished = true
 			self.sv.taskFinished = self.sv.taskFinished + 1
-			print(self.sv.activeTask)
-			print("-----------------------------------------------------------end")
+			sm.event.sendToGame("sv_e_onRefreshTaskProgressionBar", {taskProgression = math.floor((self.sv.taskFinished / self.sv.totalTask)* 10)})
 		end
 	end
 	print(self.sv.totalTask)
 	print(self.sv.taskFinished)
 	if self.sv.taskFinished == self.sv.totalTask then
-		print("[AMONG SCRAP] Game over - All tasks are finish")
+		self:sv_onAllTasksFinished()
 	end
 end
 
@@ -434,6 +432,11 @@ function TaskManager.sv_onTaskInterfaceDestroy( self , data )
 	end
 	table.remove(self.sv.taskInterfaceInteractables, interfaceIndex)
 end
+
+function TaskManager.sv_onAllTasksFinished( self )
+	sm.event.sendToGame("sv_e_onAllTasksFinished")
+end
+
 
 
 
@@ -492,7 +495,7 @@ function TaskManager.cl_onTaskFinished( self , data )
 	return false
 end
 
-function TaskManager.cl_onAllTaskFinished( self )
+function TaskManager.cl_onPlayerFinishAllTask( self )
 	self.cl.allTaskFinished = true
 	--sm.event.sendToGame("cl_e_taskFinished")
 end
