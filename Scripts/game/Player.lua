@@ -112,39 +112,54 @@ function SurvivalPlayer.client_onCreate( self )
 		-----------------------------------------------------------------
 
 		sm.gui.chatMessage("============================================")
-		sm.gui.chatMessage("Welcome in Among Scrap (Version 0.2.0)")
+		sm.gui.chatMessage("Welcome in Among Scrap (Version 0.2.1)")
 		sm.gui.chatMessage("============================================")
 		sm.gui.chatMessage([[
-		-- CHANGELOG (0.2.0) --
+		-- CHANGELOG (0.2.1) --
 -- General :
-	· Added mysterious ambiance
-	· Make some crash test in multiplayer
-	· Task progression now work
 
 -- Mapping :
-	· Added new spawn
-	· New map : Wonk ship (Work in progress)
-	· Added test template on WonkShip
 
 -- In the code :
-	· Player are now alaways a new player when he join
-	· Improve the code to be multiplayer friendly
-	· TaskInterfaceIcon now close on destroy
-	· A downed player can no longer vote in metting
-	· Added new sounds when tasks are finish or complete
-	· Added new text when task are complete
-	· Added new Fadein and FadeOut when onGameOver and onGoToWorld
 
 -- Fix :
-	· Fix taskTable pointer problem
-	· Fix the impostor random status
-	· Fix tasks in multiplayer
+	· Fix the player restrictions on all maps
 
 -- New command :
-	· "/spawnship" - go to Spawn ship map
-	· "/wonkship" - go to Wonk ship map
+
 
 ]])
+--[[
+-- CHANGELOG (0.2.0) --
+-- General :
+· Added mysterious ambiance
+· Make some crash test in multiplayer
+· Task progression now work
+
+-- Mapping :
+· Added new spawn
+· New map : Wonk ship (Work in progress)
+· Added test template on WonkShip
+
+-- In the code :
+· Player are now alaways a new player when he join
+· Improve the code to be multiplayer friendly
+· TaskInterfaceIcon now close on destroy
+· A downed player can no longer vote in metting
+· Added new sounds when tasks are finish or complete
+· Added new text when task are complete
+· Added new Fadein and FadeOut when onGameOver and onGoToWorld
+
+-- Fix :
+· Fix taskTable pointer problem
+· Fix the impostor random status
+· Fix tasks in multiplayer
+
+-- New command :
+· "/spawnship" - go to Spawn ship map
+· "/wonkship" - go to Wonk ship map
+
+]]
 
 --[[
 		-- CHANGELOG (0.1.8) --

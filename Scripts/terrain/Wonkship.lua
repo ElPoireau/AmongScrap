@@ -5,7 +5,7 @@ dofile( "$SURVIVAL_DATA/Scripts/game/managers/PackingStationManager.lua" )
 WonkShipWorld = class( nil )
 WonkShipWorld.terrainScript = "$CONTENT_DATA/Scripts/terrain/TerrainScript/WonkShipTerrain.lua"
 WonkShipWorld.groundMaterialSet = "$GAME_DATA/Terrain/Materials/gnd_standard_materialset.json"
-WonkShipWorld.enableSurface = false
+WonkShipWorld.enableSurface = true --false ---!!DEV CHANGE
 WonkShipWorld.enableAssets = true
 WonkShipWorld.enableClutter = true
 WonkShipWorld.enableNodes = true
@@ -13,10 +13,10 @@ WonkShipWorld.enableCreations = true
 WonkShipWorld.enableHarvestables = true
 WonkShipWorld.enableKinematics = true
 --WonkShipWorld.isIndoor = true
-WonkShipWorld.renderMode = "warehouse"
-WonkShipWorld.cellMinX = 0
+WonkShipWorld.renderMode = "outdoor" --"warehouse"  ---!!DEV CHANGE
+WonkShipWorld.cellMinX = -1 --0  ---!!DEV CHANGE
 WonkShipWorld.cellMaxX = 0
-WonkShipWorld.cellMinY = 0
+WonkShipWorld.cellMinY = -1 --0  ---!!DEV CHANGE
 WonkShipWorld.cellMaxY = 0
 
 --[[
@@ -36,7 +36,7 @@ function WonkShipWorld.server_onCreate( self )
 	-- if self.waypointWaitingList == nil then
 	-- 	self.waypointWaitingList = {}
 	-- end
-
+	--sm.physics.setGravity(0)
 	self.foreignConnections = sm.storage.load( STORAGE_CHANNEL_FOREIGN_CONNECTIONS )
 	if self.foreignConnections == nil then
 		self.foreignConnections = {}

@@ -28,7 +28,7 @@ dofile( "$CONTENT_DATA/Scripts/game/managers/MettingManager.lua" )
 SurvivalGame = class( nil )
 SurvivalGame.defaultInventorySize = 40
 SurvivalGame.enableLimitedInventory = false -- !!!!! FALSE ONLY FOR DEV !!!!! -- (default to true)
-SurvivalGame.enableRestrictions = true
+SurvivalGame.enableRestrictions = false -- set true to have good game
 SurvivalGame.enableFuelConsumption = true
 SurvivalGame.enableAmmoConsumption = true
 SurvivalGame.enableUpgrade = false
@@ -99,7 +99,7 @@ function SurvivalGame.server_onCreate( self )
 	else
 		self.sv.time = {}
 		self.sv.time.timeOfDay = 6 / 24 -- 06:00
-		self.sv.time.timeProgress = true
+		self.sv.time.timeProgress = false
 		sm.storage.save( STORAGE_CHANNEL_TIME, self.sv.time )
 	end
 	self.network:setClientData( { dev = g_survivalDev }, 1 )
