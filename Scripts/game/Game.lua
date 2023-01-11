@@ -28,7 +28,7 @@ dofile( "$CONTENT_DATA/Scripts/game/managers/MettingManager.lua" )
 SurvivalGame = class( nil )
 SurvivalGame.defaultInventorySize = 40
 SurvivalGame.enableLimitedInventory = false -- !!!!! FALSE ONLY FOR DEV !!!!! -- (default to true)
-SurvivalGame.enableRestrictions = false -- set true to have good game
+SurvivalGame.enableRestrictions = true -- set true to have good game
 SurvivalGame.enableFuelConsumption = true
 SurvivalGame.enableAmmoConsumption = true
 SurvivalGame.enableUpgrade = false
@@ -877,8 +877,11 @@ end
 function SurvivalGame.sv_e_onSpawnPlayerCharacter( self, player )
 	if player.character and sm.exists( player.character ) then
 		g_respawnManager:sv_onSpawnCharacter( player )
+		--local char = player:getCharacter()
+		--char:setMovementSpeedFraction(200000)
 	else
 		sm.log.warning("SurvivalGame.sv_e_onSpawnPlayerCharacter for a character that doesn't exist")
+
 	end
 end
 

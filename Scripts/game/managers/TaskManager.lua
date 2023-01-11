@@ -229,8 +229,8 @@ function TaskManager.sv_onCreate( self )
 	self.sv.numOfLongTask_Table = 0
 	for _ in pairs(longTasksTable) do self.sv.numOfLongTask_Table = self.sv.numOfLongTask_Table + 1 end
 
-	self.sv.numOfShortTask_PerRound = 1
-	self.sv.numOfNormalTask_PerRound = 1
+	self.sv.numOfShortTask_PerRound = 6
+	self.sv.numOfNormalTask_PerRound = 2
 	self.sv.numOfLongTask_PerRound = 1
 
 	self.sv.howManyTaskPerPlayer = self.sv.numOfShortTask_PerRound + (self.sv.numOfNormalTask_PerRound * 2) + (self.sv.numOfLongTask_PerRound * 4)

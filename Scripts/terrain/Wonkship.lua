@@ -5,7 +5,7 @@ dofile( "$SURVIVAL_DATA/Scripts/game/managers/PackingStationManager.lua" )
 WonkShipWorld = class( nil )
 WonkShipWorld.terrainScript = "$CONTENT_DATA/Scripts/terrain/TerrainScript/WonkShipTerrain.lua"
 WonkShipWorld.groundMaterialSet = "$GAME_DATA/Terrain/Materials/gnd_standard_materialset.json"
-WonkShipWorld.enableSurface = true --false ---!!DEV CHANGE
+WonkShipWorld.enableSurface = false --false ---!!DEV CHANGE
 WonkShipWorld.enableAssets = true
 WonkShipWorld.enableClutter = true
 WonkShipWorld.enableNodes = true
@@ -13,7 +13,7 @@ WonkShipWorld.enableCreations = true
 WonkShipWorld.enableHarvestables = true
 WonkShipWorld.enableKinematics = true
 --WonkShipWorld.isIndoor = true
-WonkShipWorld.renderMode = "outdoor" --"warehouse"  ---!!DEV CHANGE
+WonkShipWorld.renderMode = "warehouse" --"warehouse"  ---!!DEV CHANGE
 WonkShipWorld.cellMinX = -1 --0  ---!!DEV CHANGE
 WonkShipWorld.cellMaxX = 0
 WonkShipWorld.cellMinY = -1 --0  ---!!DEV CHANGE
