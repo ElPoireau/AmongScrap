@@ -1,0 +1,45 @@
+
+{
+	"longTaskSet" : [
+		[
+			{
+				"taskId" : "5_1",
+				"taskLabel" : "5_1",
+				"isFinished" : false,
+				"hasManyState" : true,
+				"parentTaskIndex" : false,
+				"childTaskInfo" : {"howManyFinished" : 0, "howManyTasks" : 4}
+			},
+
+			{
+				"taskId" : "5_2",
+				"taskLabel" : "5_2",
+				"isFinished" : false,
+				"hasManyState" : true,
+				"parentTaskIndex" : "5_1",
+				"grandParentTaskIndex" : "5_1",
+				"isParentNeedToBeFinish" : true
+			},
+
+			{
+				"taskId" : "5_3",
+				"taskLabel" : "5_3",
+				"isFinished" : false,
+				"hasManyState" : true,
+				"parentTaskIndex" : "5_2",
+				"grandParentTaskIndex" : "5_1",
+				"isParentNeedToBeFinish" : true
+			},
+
+			{
+				"taskId" : "5_4",
+				"taskLabel" : "5_4",
+				"isFinished" : false,
+				"hasManyState" : true,
+				"parentTaskIndex" : "5_3",
+				"grandParentTaskIndex" : "5_1",
+				"isParentNeedToBeFinish" : true
+			}
+		]
+	]
+}

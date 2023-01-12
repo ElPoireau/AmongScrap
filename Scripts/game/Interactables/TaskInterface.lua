@@ -422,9 +422,6 @@ end
 
 -- CONTENT ---
 
-function TaskInterface.cl_onHudTaskButton( self )
-	self:cl_onTaskFinished()
-end
 
 function TaskInterface.cl_onTaskFinished( self )
 	local taskIndex = nil
@@ -486,4 +483,12 @@ function TaskInterface.cl_receiveTask( self , data )
 			self.cl.g_taskInterfaceIcon:open()
 		end
 	end
+end
+
+
+
+-- BUTTTON CALLBACK
+
+function TaskInterface.cl_onHudTaskButton( self )
+	self:cl_onTaskFinished()
 end

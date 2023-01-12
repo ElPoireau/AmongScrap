@@ -380,8 +380,13 @@ function WonkShipWorld.sv_spawnNewCharacter( self, params )
 
 	local character = sm.character.createCharacter( params.player, self.world, spawnPosition, yaw, pitch )
 	params.player:setCharacter( character )
-
+	local sendData = {character = params.player:getCharacter(), name = params.player:getName()}
+	--self.network:sendToClients("cl_w_setPlayerNameTag", sendData)
 end
+
+--function WonkShipWorld.cl_w_setPlayerNameTag( self , data ) --!!! CHAR NAMETAG
+--	sm.event.sendToGame("cl_setPlayerNameTag", data)
+--end
 
 function WonkShipWorld.sv_e_onChatCommand( self, params )
 	BaseWorld.sv_e_onChatCommand( self, params )

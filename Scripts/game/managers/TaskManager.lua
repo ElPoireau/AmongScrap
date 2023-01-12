@@ -50,184 +50,22 @@ obj_interactive_task_interface_id_10_1 = sm.uuid.new( "174163a9-9311-485e-b1e7-0
 obj_interactive_task_interface_id_11_1 = sm.uuid.new( "899324f3-8764-45e0-a45b-0e0eba68b6f3" )
 -- All task table are here. used by sv_getTaskTable
 
-local shortTasksTable = {
-	{
-		{
-			taskId = "2_1",
-			taskLabel = "2_1", ---"Stabilize the motors",
-			isFinished = false,
-			hasManyState = false
-		}
-	},
-
-	{
-		{
-			taskId = "3_1",
-			taskLabel = "3_1", --"Increase the speed",
-			isFinished = false,
-			hasManyState = false
-		}
-	},
-
-	{
-		{
-			taskId = "4_1",
-			taskLabel = "4_1", --"Decrease the speed",
-			isFinished = false,
-			hasManyState = false
-		}
-	},
-
-	{
-		{
-			taskId = "7_1",
-			taskLabel = "7_1", --"Check the Hydrolics",
-			isFinished = false,
-			hasManyState = false
-		}
-	},
-
-	{
-		{
-			taskId = "8_1",
-			taskLabel ="8_1", --"Check the O2 level",
-			isFinished = false,
-			hasManyState = false
-		}
-	},
-
-	{
-		{
-			taskId = "9_1",
-			taskLabel = "9_1", --"Check the motor leak level",
-			isFinished = false,
-			hasManyState = false
-		}
-	},
-
-	{
-		{
-			taskId = "10_1",
-			taskLabel = "10_1", --"Enter the Ship key",
-			isFinished = false,
-			hasManyState = false
-		}
-	},
-
-	{
-		{
-			taskId = "11_1",
-			taskLabel = "11_1",--"Check the battery voltage",
-			isFinished = false,
-			hasManyState = false
-		}
-	}
-}
-
-
-
-local normalTasksTable = {
-	{
-		{
-			taskId = "1_1",
-			taskLabel = "1_1", --"Repair the Craftbot",
-			isFinished = false,
-			hasManyState = true,
-			parentTaskIndex = false,
-			childTaskInfo = {howManyFinished = 0, howManyTasks = 2}
-		},
-
-		{
-			taskId = "1_2",
-			taskLabel = "1_2", --"Check the Craftbot",
-			isFinished = false,
-			hasManyState = true,
-			parentTaskIndex = "1_1",
-			grandParentTaskIndex = "1_1",
-			isParentNeedToBeFinish = false
-		}
-	},
-
-	{
-		{
-			taskId = "6_1",
-			taskLabel = "6_1", --"Cook Revival Bagutte",
-			isFinished = false,
-			hasManyState = true,
-			parentTaskIndex = false,
-			childTaskInfo = {howManyFinished = 0, howManyTasks = 2}
-		},
-
-		{
-			taskId = "6_2",
-			taskLabel = "6_2", --"Cook some rly good BURRRGERRRRR",
-			isFinished = false,
-			hasManyState = true,
-			parentTaskIndex = "6_1",
-			grandParentTaskIndex = "6_1",
-			isParentNeedToBeFinish = false
-		}
-	}
-}
-
-
-
-local longTasksTable = {
-	{
-		{
-			taskId = "5_1",
-			taskLabel = "5_1", --"Check oil level of the motors",
-			isFinished = false,
-			hasManyState = true,
-			parentTaskIndex = false,
-			childTaskInfo = {howManyFinished = 0, howManyTasks = 4}
-		},
-
-		{
-			taskId = "5_2",
-			taskLabel = "5_2", --"Check oil level of the motors",
-			isFinished = false,
-			hasManyState = true,
-			parentTaskIndex = "5_1",
-			grandParentTaskIndex = "5_1",
-			isParentNeedToBeFinish = true
-		},
-
-		{
-			taskId = "5_3",
-			taskLabel = "5_3", --"Check oil level of the motors",
-			isFinished = false,
-			hasManyState = true,
-			parentTaskIndex = "5_2",
-			grandParentTaskIndex = "5_1",
-			isParentNeedToBeFinish = true
-		},
-
-		{
-			taskId = "5_4",
-			taskLabel = "5_4", -- "Check oil level of the motors",
-			isFinished = false,
-			hasManyState = true,
-			parentTaskIndex = "5_3",
-			grandParentTaskIndex = "5_1",
-			isParentNeedToBeFinish = true
-		}
-	}
-}
-
 -- SERVER --
 function TaskManager.sv_onCreate( self )
 
 	self.sv = {}
 
+	local shortTasksTable = sm.json.open("$CONTENT_DATA/Tasks/shorttaskset.json")
 	self.sv.numOfShortTask_Table = 0
-	for _ in pairs(shortTasksTable) do self.sv.numOfShortTask_Table = self.sv.numOfShortTask_Table + 1 end
+	for _ in pairs(shortTasksTable.shortTaskSet) do self.sv.numOfShortTask_Table = self.sv.numOfShortTask_Table + 1 end
 
+	local normalTasksTable = sm.json.open("$CONTENT_DATA/Tasks/normaltaskset.json")
 	self.sv.numOfNormalTask_Table = 0
-	for _ in pairs(normalTasksTable) do self.sv.numOfNormalTask_Table = self.sv.numOfNormalTask_Table + 1 end
+	for _ in pairs(normalTasksTable.normalTaskSet) do self.sv.numOfNormalTask_Table = self.sv.numOfNormalTask_Table + 1 end
 
+	local longTasksTable = sm.json.open("$CONTENT_DATA/Tasks/longtaskset.json")
 	self.sv.numOfLongTask_Table = 0
-	for _ in pairs(longTasksTable) do self.sv.numOfLongTask_Table = self.sv.numOfLongTask_Table + 1 end
+	for _ in pairs(longTasksTable.longTaskSet) do self.sv.numOfLongTask_Table = self.sv.numOfLongTask_Table + 1 end
 
 	self.sv.numOfShortTask_PerRound = 6
 	self.sv.numOfNormalTask_PerRound = 2
@@ -252,27 +90,23 @@ end
 --- CONTENT ---
 
 function TaskManager.sv_getTaskTable( self , data )
-
 	if data == "Short task" then
-		local randomNumber = math.floor(sm.noise.randomRange(1, self.sv.numOfShortTask_Table))
-		local task = shortTasksTable[randomNumber]
-		local taskCopy = {}
-		for k,v in pairs(task) do taskCopy[k] = v end
-		return taskCopy
+		local shortTasksTable = sm.json.open("$CONTENT_DATA/Tasks/shorttaskset.json")
+		local randomNumber = math.floor(sm.noise.randomRange(1, self.sv.numOfShortTask_Table+1))
+		local task = shortTasksTable.shortTaskSet[randomNumber]
+		return shallowcopy(task)
 
 	elseif data == "Normal task" then
-		local randomNumber = math.floor(sm.noise.randomRange(1, self.sv.numOfNormalTask_Table))
-		local task = normalTasksTable[randomNumber]
-		local taskCopy = {}
-		for k,v in pairs(task) do taskCopy[k] = v end
-		return taskCopy
+		local normalTasksTable = sm.json.open("$CONTENT_DATA/Tasks/normaltaskset.json")
+		local randomNumber = math.floor(sm.noise.randomRange(1, self.sv.numOfNormalTask_Table+1))
+		local task = normalTasksTable.normalTaskSet[randomNumber]
+		return shallowcopy(task)
 
 	elseif data == "Long task" then
-		local randomNumber = math.floor(sm.noise.randomRange(1,self.sv.numOfLongTask_Table))
-		local task = longTasksTable[randomNumber]
-		local taskCopy = {}
-		for k,v in pairs(task) do taskCopy[k] = v end
-		return taskCopy
+		local longTasksTable = sm.json.open("$CONTENT_DATA/Tasks/longtaskset.json")
+		local randomNumber = math.floor(sm.noise.randomRange(1,self.sv.numOfLongTask_Table+1))
+		local task = longTasksTable.longTaskSet[randomNumber]
+		return shallowcopy(task)
 	end
 end
 
@@ -281,14 +115,14 @@ function TaskManager.sv_onInitTask( self )
 	local isTaskRepeat = false
 
 	local players = sm.player.getAllPlayers()
-	for i,v in ipairs(players) do
+	for i1,v1 in ipairs(players) do
 
-		self.sv.activeTask[i] = {player = v, tasks = {}}
+		self.sv.activeTask[i1] = {player = v1, tasks = {}}
 		for n = 1,self.sv.numOfShortTask_PerRound do
 			repeat
 				isTaskRepeat = false
 				task = self:sv_getTaskTable("Short task")
-				for i,v in ipairs(self.sv.activeTask[i].tasks) do
+				for i,v in ipairs(self.sv.activeTask[i1].tasks) do
 					if task[1] == v then
 						isTaskRepeat = true
 					end
@@ -297,14 +131,14 @@ function TaskManager.sv_onInitTask( self )
 
 			for _,v in ipairs(task) do
 				v.isFinished = false
-				table.insert(self.sv.activeTask[i].tasks, v)
+				table.insert(self.sv.activeTask[i1].tasks, v)
 			end
 		end
 		for n = 1,self.sv.numOfNormalTask_PerRound do
 			repeat
 				isTaskRepeat = false
 				task = self:sv_getTaskTable("Normal task")
-				for i,v in ipairs(self.sv.activeTask[i].tasks) do
+				for i,v in ipairs(self.sv.activeTask[i1].tasks) do
 					if task[1] == v then
 						isTaskRepeat = true
 					end
@@ -313,7 +147,7 @@ function TaskManager.sv_onInitTask( self )
 
 			for _,v in ipairs(task) do
 				v.isFinished = false
-				table.insert(self.sv.activeTask[i].tasks, v)
+				table.insert(self.sv.activeTask[i1].tasks, v)
 			end
 		end
 
@@ -322,7 +156,7 @@ function TaskManager.sv_onInitTask( self )
 			repeat
 				isTaskRepeat = false
 				task = self:sv_getTaskTable("Long task")
-				for i,v in ipairs(self.sv.activeTask[i].tasks) do
+				for i,v in ipairs(self.sv.activeTask[i1].tasks) do
 					if task[1] == v then
 						isTaskRepeat = true
 					end
@@ -331,14 +165,14 @@ function TaskManager.sv_onInitTask( self )
 
 			for _,v in ipairs(task) do
 				v.isFinished = false
-				table.insert(self.sv.activeTask[i].tasks, v)
+				table.insert(self.sv.activeTask[i1].tasks, v)
 			end
 		end
 
-		if v:getPublicData().impostor then
-			if v:getPublicData().impostor == true then
+		if v1:getPublicData().impostor then
+			if v1:getPublicData().impostor == true then
 				--self.sv.PlayerPlaying = i
-				self.sv.activeTask[i] = {player = v, tasks = {}, impostor = true}
+				self.sv.activeTask[i1] = {player = v1, tasks = {}, impostor = true}
 			else
 				self.sv.totalTask = self.sv.totalTask + self.sv.howManyTaskPerPlayer
 			end
@@ -358,6 +192,7 @@ function TaskManager.sv_onInitTask( self )
 
 	end
 	self.sv.hasGivenTaskToPlayer = true
+	print(data)
 end
 
 function TaskManager.sv_receiveTaskInterfaceInteractable( self , data )
@@ -381,6 +216,7 @@ function TaskManager.sv_onResetTask( self )
 end
 
 function TaskManager.sv_onTaskFinished( self , data )
+	--print(self.sv.activeTask)
 	print("server Data :")
 	local player = data.player
 

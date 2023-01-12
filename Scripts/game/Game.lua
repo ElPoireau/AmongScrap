@@ -465,9 +465,7 @@ function SurvivalGame.cl_onChatCommand( self, params )
 
 	--- CONTENT ---
 	elseif params[1] == "/vote" then
-		self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
-
-
+		self.network:sendToServer("sv_e_onEmergencyMetting", {player = sm.localPlayer.getPlayer()} )
 
 	else
 		self.network:sendToServer( "sv_onChatCommand", params )
@@ -797,6 +795,9 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 		--QuestManager.Sv_OnEvent( QuestEvent.PlayerJoined, { player = player } )
 	--end
 	g_unitManager:sv_onPlayerJoined( player )
+
+	-- CONTENT --
+
 end
 
 function SurvivalGame.server_onPlayerLeft( self, player )
@@ -1018,7 +1019,9 @@ function SurvivalGame.sv_onResetRound( self )
 	end
 end
 
-
+function SurvivalGame.cl_setPlayerNameTag( self , data )
+	data.character:setNameTag(data.name, data.color or sm.color.new(255,255,255), false, data.rd or 50 , 35)
+end
 
 
 
@@ -1111,6 +1114,9 @@ end
 function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self, world, x, y, player )
 	local params = { player = player, x = x, y = y }
 	sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_spawnNewCharacter", params )
+	
+	local sendData = {character = player:getCharacter(), name = player:getName()}
+	self.network:sendToClients("cl_setPlayerNameTag", sendData)
 end
 
 function SurvivalGame.sv_onLeaveWonkShip( self )
@@ -1194,6 +1200,10 @@ end
 -------
 
 
+
+function  SurvivalGame.sv_e_onEmergencyMetting( self , data )
+	self.network:sendToClients("cl_e_openMettingGui", data)
+end
 
 function SurvivalGame.cl_c_onCloseMettingGui( self )
 	g_mettingManager:cl_onCloseMettingGui()

@@ -1,0 +1,93 @@
+{
+	"77562545-1e95-47a5-9567-9c41dea12eaf": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_1_1"
+	},
+
+	"c9f30707-12e6-4685-9f95-cde4afc7ac8b": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_1_2"
+	},
+
+	"0135d97f-13b4-4840-a901-2a9880fcc536": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_2_1"
+	},
+
+	"394f0ec0-d35d-4f24-9b95-195f300d6159": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_3_1"
+	},
+
+	"7f3f944a-a416-4157-808a-e5ce06a3b0ca": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_4_1"
+	},
+
+	"7163188b-bca3-493c-8b49-5d0a60298d86": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_5_1"
+	},
+
+	"4987c710-fce0-4607-8e73-f5efc9cea24d": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_5_2"
+	},
+
+	"f22e50df-d566-4e56-9038-dd662a884609": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_5_3"
+	},
+
+	"eac8a967-9e1a-4432-ac0b-ad1c16fae188": {
+	"description": "",
+	"title": "obj_interactive_task_interface_id_5_4"
+	},
+
+	"": {
+	"description": "",
+	"title": ""
+	},
+
+	"": {
+	"description": "",
+	"title": ""
+	},
+
+	"": {
+	"description": "",
+	"title": ""
+	},
+
+	"": {
+	"description": "",
+	"title": ""
+	},
+
+	"": {
+	"description": "",
+	"title": ""
+	},
+
+	"": {
+	"description": "",
+	"title": ""
+	},
+
+	"": {
+	"description": "",
+	"title": ""
+	}
+
+}
+
+obj_interactive_task_interface_id_5_4 = sm.uuid.new( "eac8a967-9e1a-4432-ac0b-ad1c16fae188" )
+
+obj_interactive_task_interface_id_6_1 = sm.uuid.new( "1286b2d5-e4a8-4e15-ac35-fd6143ee1cb2" )
+obj_interactive_task_interface_id_6_2 = sm.uuid.new( "f9a9fb6c-59e1-4f36-b02e-418beffa1948" )
+
+obj_interactive_task_interface_id_7_1 = sm.uuid.new( "0d6ce332-8a3c-4990-9b89-60652bbaeb1a" )
+obj_interactive_task_interface_id_8_1 = sm.uuid.new( "9a5ad5d3-3d89-48f8-a557-b31b21884171" )
+obj_interactive_task_interface_id_9_1 = sm.uuid.new( "3f6bdb04-f7cb-4acf-a436-95e1abf45e4b" )
+obj_interactive_task_interface_id_10_1 = sm.uuid.new( "174163a9-9311-485e-b1e7-0031e988c04a" )
+obj_interactive_task_interface_id_11_1 = sm.uuid.new( "899324f3-8764-45e0-a45b-0e0eba68b6f3" )

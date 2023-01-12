@@ -1,5 +1,5 @@
 --MettingManager.lua
-
+-- JUST REALIZE I WORTE MEETING "METTING" ALL THE TIME :`(((((((((((((((((((((((("
 MettingManager = class( nil )
 
 -- server
@@ -9,6 +9,7 @@ function MettingManager.sv_onCreate( self )
 	self.sv.mettingGuiOrder = {}
 
 	self.sv.howManyPlayers = 0
+	self.sv.howManyPlayersAlive = 0
 	self.sv.howManyVotes = 0
 
 	for i = 1,11 do
@@ -34,6 +35,7 @@ function MettingManager.sv_onInitMetting( self )
 
 	for i,v in ipairs(sm.player.getAllPlayers()) do
 		self.sv.howManyPlayers = i
+		self.sv.howManyPlayersAlive = i
 
 		self.sv.mettingGuiOrder[i].player = v
 		self.sv.mettingGuiOrder[i].name = v:getName()
@@ -47,9 +49,9 @@ end
 function MettingManager.sv_onVote( self , data )
 	self.sv.votes[data.index] = self.sv.votes[data.index] + 1
 	self.sv.howManyVotes = self.sv.howManyVotes + 1
-	--if self.sv.howManyVotes == self.sv.howManyPlayers then
-	self:sv_onEndingVote()
-	--end
+	if self.sv.howManyVotes == self.sv.howManyPlayersAlive then
+		self:sv_onEndingVote()
+	end
 end
 
 function MettingManager.sv_onVoteButtonCallback( self , data )
@@ -92,6 +94,7 @@ function MettingManager.sv_onResetMetting( self )
 	self.sv.mettingGuiOrder = {}
 	self.sv.howManyPlayers = 0
 	self.sv.howManyVotes = 0
+	self.sv.howManyPlayersAlive = 0
 end
 
 
@@ -99,6 +102,7 @@ function MettingManager.sv_onPlayerKilled( self , data )
 	for i,v in ipairs(self.sv.mettingGuiOrder) do
 		if v.isEmpty == false then
 			if data.player == v.player then
+				self.sv.howManyPlayersAlive = self.sv.howManyPlayersAlive - 1
 				self.sv.mettingGuiOrder[i].isAlive = false
 			end
 		end

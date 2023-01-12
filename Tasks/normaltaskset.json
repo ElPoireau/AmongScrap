@@ -1,0 +1,46 @@
+
+	{
+		"normalTaskSet" : [
+		[
+			{
+				"taskId" : "1_1",
+				"taskLabel" : "1_1",
+				"isFinished" : false,
+				"hasManyState" : true,
+				"parentTaskIndex" : false,
+				"childTaskInfo" : {"howManyFinished" : 0, "howManyTasks" : 2}
+			},
+
+			{
+				"taskId" : "1_2",
+				"taskLabel" : "1_2",
+				"isFinished" : false,
+				"hasManyState" : true,
+				"parentTaskIndex" : "1_1",
+				"grandParentTaskIndex" : "1_1",
+				"isParentNeedToBeFinish" : false
+			}
+		],
+
+		[
+			{
+				"taskId" : "6_1",
+				"taskLabel" : "6_1",
+				"isFinished" : false,
+				"hasManyState" : true,
+				"parentTaskIndex" : false,
+				"childTaskInfo" : {"howManyFinished" : 0, "howManyTasks" : 2}
+			},
+
+			{
+				"taskId" : "6_2",
+				"taskLabel" : "6_2",
+				"isFinished" : false,
+				"hasManyState" : true,
+				"parentTaskIndex" : "6_1",
+				"grandParentTaskIndex" : "6_1",
+				"isParentNeedToBeFinish" : false
+			}
+		]
+	]
+}

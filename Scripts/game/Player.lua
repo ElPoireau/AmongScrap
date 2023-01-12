@@ -124,6 +124,8 @@ function SurvivalPlayer.client_onCreate( self )
 
 -- Fix :
 	· Fix the player restrictions on all maps
+	· Fix the active tasks tables in multiplayer
+	· Fix the problem when only one vote can kill a player in meeting
 
 -- New command :
 
@@ -703,6 +705,7 @@ function SurvivalPlayer.client_onCancel( self )
 end
 
 function SurvivalPlayer.client_onReload( self )
+		--self.player.character:addRenderable("$SURVIVAL_DATA/Character/Char_Male/Outfit/Backpack/Outfit_golf_backpack/char_shared_outfit_golf_backpack.rend")
 	if not self.taskMenuOpen then
 		g_survivalHudTaskList:setVisible("TaskListBarNotification", false)
 		g_survivalHudTaskList:setVisible("TaskListBar", false)

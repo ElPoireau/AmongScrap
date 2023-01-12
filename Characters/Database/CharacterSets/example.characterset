@@ -1,3 +1,26 @@
 {
-    "characters": []
+   "characters" : [
+      {
+         "capsule" : {
+            "height" : 1.40,
+            "radius" : 0.30
+         },
+         "character" : {
+            "data" : {},
+            "scriptClass" : "",
+            "scriptPath" : "$SURVIVAL_DATA/Scripts/game/characters/MechanicCharacter.lua"
+         },
+         "movement" : {
+            "canSwim" : true,
+            "crouchSpeed" : 3.0,
+            "facingRotationSpeed" : 3.14150,
+            "headingRotationSpeed" : 3.14150,
+            "moveSpeed" : 4.0,
+            "slowDownSpeed" : 2.50,
+            "sprintSpeed" : 8.0
+         },
+         "renderables" : [],
+         "uuid" : "65c2f922-bbdd-4d38-9e1d-c42d9557ced4"
+      }
+   ]
 }

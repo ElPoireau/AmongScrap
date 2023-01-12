@@ -8,7 +8,7 @@ function ImpostorManager.sv_onCreate( self )
 	self.sv = {}
 	self.sv.allImpostor = {}
 
-	self.sv.howManyImpostor = 1
+	self.sv.howManyImpostor = 0
 end
 
 function ImpostorManager.sv_onInitImpostor( self )
