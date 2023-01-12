@@ -1335,6 +1335,7 @@ end
 
 -------- [Server function called by the taskInterface when it init. send its object (called by TaskInterface.lua)]
 function SurvivalGame.sv_e_receiveTaskInterfaceInteractable( self , data )
+	print(data)
 	g_taskManager:sv_receiveTaskInterfaceInteractable(data)
 	self.network:sendToClients("cl_e_receiveTaskInterfaceInteractable", data)
 end

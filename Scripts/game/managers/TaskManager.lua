@@ -367,6 +367,7 @@ function TaskManager.cl_onSendingTask( self , data )
 	end
 	self.cl.haveTask = true
 	sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_refreshTaskText", self.cl.activeClientTask)
+
 	for i,v in ipairs(self.cl.taskInterfaceInteractables) do
 		sm.event.sendToInteractable(v, "cl_receiveTask", self.cl.activeClientTask.tasks)
 	end
