@@ -2,7 +2,7 @@
 
 Among Scrap is a custom game for Scrap Mechanic based on the game Among Us.
 
-STEAM WORKSHOP : steam://openurl/steamcommunity.com/sharedfiles/filedetails/?id=2811583960
+STEAM WORKSHOP : steam://openurl/https://steamcommunity.com/sharedfiles/filedetails/?id=2811583960
 * FileID: 2811583960
 
 
