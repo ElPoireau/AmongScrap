@@ -1020,7 +1020,7 @@ function SurvivalGame.sv_onResetRound( self )
 end
 
 function SurvivalGame.cl_setPlayerNameTag( self , data )
-	data.character:setNameTag(data.name, data.color or sm.color.new(255,255,255), false, data.rd or 50 , 35)
+	data.character:setNameTag(data.name, data.color or sm.color.new(255,255,255), false, data.rd or 2 , 1)
 end
 
 
@@ -1100,7 +1100,8 @@ function SurvivalGame.sv_onGoToWonkShip( self )
 end
 
 function SurvivalGame.cl_onGoToWonkShip( self )
-sm.gui.startFadeToBlack( 0.2, 0.2 )
+	self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
+	sm.gui.startFadeToBlack( 0.2, 0.2 )
 end
 ------
 

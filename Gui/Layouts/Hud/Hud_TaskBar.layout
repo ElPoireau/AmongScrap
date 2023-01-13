@@ -68,7 +68,7 @@
 			</Widget>
 			<Widget type="TextBox" skin="TextBox" name="TaskCompleteText" position_real="0.05 0.25 0.8 0.5">
 				<Property key="TextAlign" value="Left VCenter" />
-				<Property key="Caption" value="TOTAL TASKS COMPLETED"/>
+				<Property key="Caption" value="Total tasks completed"/>
 				<Property key="FontName" value="X_Hud_Alert" />
 				<Property key="TextShadow" value="true" />
 				<Property key="TextColour" value="1 1 0.752941" />

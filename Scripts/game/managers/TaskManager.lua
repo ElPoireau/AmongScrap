@@ -1,9 +1,6 @@
 -- TaskManager.lua --
 
-
-
 --[[
-
 --------------------------------------------------------------------------------
 ----------------------------------- TASK TABLE ---------------------------------
 --------------------------------------------------------------------------------
@@ -21,34 +18,28 @@ childTaskInfo = {howManyFinished = n, howManyTasks = n*} info about his child ta
 grandParentTaskIndex = str, taskId of the grandparent - Only in childs
 isParentNeedToBeFinish = bool, True if parent need to be finish before us - Only in childs
 }
-
 ]]--
-
-
 
 TaskManager = class( nil )
 
-obj_interactive_task_interface_id_1_1 = sm.uuid.new( "77562545-1e95-47a5-9567-9c41dea12eaf" )
-obj_interactive_task_interface_id_1_2 = sm.uuid.new( "c9f30707-12e6-4685-9f95-cde4afc7ac8b" )
+obj_interactive_task_interface_id_s_1_1 = sm.uuid.new( "0135d97f-13b4-4840-a901-2a9880fcc536" )
+obj_interactive_task_interface_id_s_2_1 = sm.uuid.new( "394f0ec0-d35d-4f24-9b95-195f300d6159" )
+obj_interactive_task_interface_id_s_3_1 = sm.uuid.new( "7f3f944a-a416-4157-808a-e5ce06a3b0ca" )
+obj_interactive_task_interface_id_s_4_1 = sm.uuid.new( "0d6ce332-8a3c-4990-9b89-60652bbaeb1a" )
+obj_interactive_task_interface_id_s_5_1 = sm.uuid.new( "9a5ad5d3-3d89-48f8-a557-b31b21884171" )
+obj_interactive_task_interface_id_s_6_1 = sm.uuid.new( "3f6bdb04-f7cb-4acf-a436-95e1abf45e4b" )
+obj_interactive_task_interface_id_s_7_1 = sm.uuid.new( "174163a9-9311-485e-b1e7-0031e988c04a" )
+obj_interactive_task_interface_id_s_8_1 = sm.uuid.new( "899324f3-8764-45e0-a45b-0e0eba68b6f3" )
 
-obj_interactive_task_interface_id_2_1 = sm.uuid.new( "0135d97f-13b4-4840-a901-2a9880fcc536" )
-obj_interactive_task_interface_id_3_1 = sm.uuid.new( "394f0ec0-d35d-4f24-9b95-195f300d6159" )
-obj_interactive_task_interface_id_4_1 = sm.uuid.new( "7f3f944a-a416-4157-808a-e5ce06a3b0ca" )
+obj_interactive_task_interface_id_n_1_1 = sm.uuid.new( "77562545-1e95-47a5-9567-9c41dea12eaf" )
+obj_interactive_task_interface_id_n_1_2 = sm.uuid.new( "c9f30707-12e6-4685-9f95-cde4afc7ac8b" )
+obj_interactive_task_interface_id_n_2_1 = sm.uuid.new( "1286b2d5-e4a8-4e15-ac35-fd6143ee1cb2" )
+obj_interactive_task_interface_id_n_2_2 = sm.uuid.new( "f9a9fb6c-59e1-4f36-b02e-418beffa1948" )
 
-obj_interactive_task_interface_id_5_1 = sm.uuid.new( "7163188b-bca3-493c-8b49-5d0a60298d86" )
-obj_interactive_task_interface_id_5_2 = sm.uuid.new( "4987c710-fce0-4607-8e73-f5efc9cea24d" )
-obj_interactive_task_interface_id_5_3 = sm.uuid.new( "f22e50df-d566-4e56-9038-dd662a884609" )
-obj_interactive_task_interface_id_5_4 = sm.uuid.new( "eac8a967-9e1a-4432-ac0b-ad1c16fae188" )
-
-obj_interactive_task_interface_id_6_1 = sm.uuid.new( "1286b2d5-e4a8-4e15-ac35-fd6143ee1cb2" )
-obj_interactive_task_interface_id_6_2 = sm.uuid.new( "f9a9fb6c-59e1-4f36-b02e-418beffa1948" )
-
-obj_interactive_task_interface_id_7_1 = sm.uuid.new( "0d6ce332-8a3c-4990-9b89-60652bbaeb1a" )
-obj_interactive_task_interface_id_8_1 = sm.uuid.new( "9a5ad5d3-3d89-48f8-a557-b31b21884171" )
-obj_interactive_task_interface_id_9_1 = sm.uuid.new( "3f6bdb04-f7cb-4acf-a436-95e1abf45e4b" )
-obj_interactive_task_interface_id_10_1 = sm.uuid.new( "174163a9-9311-485e-b1e7-0031e988c04a" )
-obj_interactive_task_interface_id_11_1 = sm.uuid.new( "899324f3-8764-45e0-a45b-0e0eba68b6f3" )
--- All task table are here. used by sv_getTaskTable
+obj_interactive_task_interface_id_l_1_1 = sm.uuid.new( "7163188b-bca3-493c-8b49-5d0a60298d86" )
+obj_interactive_task_interface_id_l_1_2 = sm.uuid.new( "4987c710-fce0-4607-8e73-f5efc9cea24d" )
+obj_interactive_task_interface_id_l_1_3 = sm.uuid.new( "f22e50df-d566-4e56-9038-dd662a884609" )
+obj_interactive_task_interface_id_l_1_4 = sm.uuid.new( "eac8a967-9e1a-4432-ac0b-ad1c16fae188" )
 
 -- SERVER --
 function TaskManager.sv_onCreate( self )
@@ -115,6 +106,7 @@ function TaskManager.sv_onInitTask( self )
 	local isTaskRepeat = false
 
 	local players = sm.player.getAllPlayers()
+
 	for i1,v1 in ipairs(players) do
 
 		self.sv.activeTask[i1] = {player = v1, tasks = {}}
@@ -123,7 +115,7 @@ function TaskManager.sv_onInitTask( self )
 				isTaskRepeat = false
 				task = self:sv_getTaskTable("Short task")
 				for i,v in ipairs(self.sv.activeTask[i1].tasks) do
-					if task[1] == v then
+					if task[1].taskId == v.taskId then
 						isTaskRepeat = true
 					end
 				end
@@ -134,12 +126,13 @@ function TaskManager.sv_onInitTask( self )
 				table.insert(self.sv.activeTask[i1].tasks, v)
 			end
 		end
+
 		for n = 1,self.sv.numOfNormalTask_PerRound do
 			repeat
 				isTaskRepeat = false
 				task = self:sv_getTaskTable("Normal task")
 				for i,v in ipairs(self.sv.activeTask[i1].tasks) do
-					if task[1] == v then
+					if task[1].taskId == v.taskId then
 						isTaskRepeat = true
 					end
 				end
@@ -152,12 +145,11 @@ function TaskManager.sv_onInitTask( self )
 		end
 
 		for n = 1,self.sv.numOfLongTask_PerRound do
-
 			repeat
 				isTaskRepeat = false
 				task = self:sv_getTaskTable("Long task")
 				for i,v in ipairs(self.sv.activeTask[i1].tasks) do
-					if task[1] == v then
+					if task[1].taskId == v.taskId then
 						isTaskRepeat = true
 					end
 				end

@@ -44,50 +44,38 @@
 	"title": "obj_interactive_task_interface_id_5_4"
 	},
 
-	"": {
+	"1286b2d5-e4a8-4e15-ac35-fd6143ee1cb2": {
 	"description": "",
-	"title": ""
+	"title": "obj_interactive_task_interface_id_6_1"
 	},
 
-	"": {
+	"f9a9fb6c-59e1-4f36-b02e-418beffa1948": {
 	"description": "",
-	"title": ""
+	"title": "obj_interactive_task_interface_id_6_2"
 	},
 
-	"": {
+	"0d6ce332-8a3c-4990-9b89-60652bbaeb1a": {
 	"description": "",
-	"title": ""
+	"title": "obj_interactive_task_interface_id_7_1"
 	},
 
-	"": {
+	"9a5ad5d3-3d89-48f8-a557-b31b21884171": {
 	"description": "",
-	"title": ""
+	"title": "obj_interactive_task_interface_id_8_1"
 	},
 
-	"": {
+	"3f6bdb04-f7cb-4acf-a436-95e1abf45e4b": {
 	"description": "",
-	"title": ""
+	"title": "obj_interactive_task_interface_id_9_1"
 	},
 
-	"": {
+	"174163a9-9311-485e-b1e7-0031e988c04a": {
 	"description": "",
-	"title": ""
+	"title": "obj_interactive_task_interface_id_10_1"
 	},
 
-	"": {
+	"899324f3-8764-45e0-a45b-0e0eba68b6f3": {
 	"description": "",
-	"title": ""
+	"title": "obj_interactive_task_interface_id_11_1 "
 	}
-
 }
-
-obj_interactive_task_interface_id_5_4 = sm.uuid.new( "eac8a967-9e1a-4432-ac0b-ad1c16fae188" )
-
-obj_interactive_task_interface_id_6_1 = sm.uuid.new( "1286b2d5-e4a8-4e15-ac35-fd6143ee1cb2" )
-obj_interactive_task_interface_id_6_2 = sm.uuid.new( "f9a9fb6c-59e1-4f36-b02e-418beffa1948" )
-
-obj_interactive_task_interface_id_7_1 = sm.uuid.new( "0d6ce332-8a3c-4990-9b89-60652bbaeb1a" )
-obj_interactive_task_interface_id_8_1 = sm.uuid.new( "9a5ad5d3-3d89-48f8-a557-b31b21884171" )
-obj_interactive_task_interface_id_9_1 = sm.uuid.new( "3f6bdb04-f7cb-4acf-a436-95e1abf45e4b" )
-obj_interactive_task_interface_id_10_1 = sm.uuid.new( "174163a9-9311-485e-b1e7-0031e988c04a" )
-obj_interactive_task_interface_id_11_1 = sm.uuid.new( "899324f3-8764-45e0-a45b-0e0eba68b6f3" )

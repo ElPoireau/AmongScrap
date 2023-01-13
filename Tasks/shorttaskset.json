@@ -3,8 +3,8 @@
 	"shortTaskSet" : [
 		[
 			{
-				"taskId" : "2_1",
-				"taskLabel" : "2_1",
+				"taskId" : "s_1_1",
+				"taskLabel" : "s_1_1",
 				"isFinished" : false,
 				"hasManyState" : false
 			}
@@ -12,8 +12,8 @@
 
 		[
 			{
-				"taskId" : "3_1",
-				"taskLabel" : "3_1",
+				"taskId" : "s_2_1",
+				"taskLabel" : "s_2_1",
 				"isFinished" : false,
 				"hasManyState" : false
 			}
@@ -21,8 +21,8 @@
 
 		[
 			{
-				"taskId" : "4_1",
-				"taskLabel" : "4_1",
+				"taskId" : "s_3_1",
+				"taskLabel" : "s_3_1",
 				"isFinished" : false,
 				"hasManyState" : false
 			}
@@ -30,8 +30,8 @@
 
 		[
 			{
-				"taskId" : "7_1",
-				"taskLabel" : "7_1",
+				"taskId" : "s_4_1",
+				"taskLabel" : "s_4_1",
 				"isFinished" : false,
 				"hasManyState" : false
 			}
@@ -39,8 +39,8 @@
 
 		[
 			{
-				"taskId" : "8_1",
-				"taskLabel" :"8_1",
+				"taskId" : "s_5_1",
+				"taskLabel" :"s_5_1",
 				"isFinished" : false,
 				"hasManyState" : false
 			}
@@ -48,8 +48,8 @@
 
 		[
 			{
-				"taskId" : "9_1",
-				"taskLabel" : "9_1",
+				"taskId" : "s_6_1",
+				"taskLabel" : "s_6_1",
 				"isFinished" : false,
 				"hasManyState" : false
 			}
@@ -57,8 +57,8 @@
 
 		[
 			{
-				"taskId" : "10_1",
-				"taskLabel" : "10_1",
+				"taskId" : "s_7_1",
+				"taskLabel" : "s_7_1",
 				"isFinished" : false,
 				"hasManyState" : false
 			}
@@ -66,8 +66,8 @@
 
 		[
 			{
-				"taskId" : "11_1",
-				"taskLabel" : "11_1",
+				"taskId" : "s_8_1",
+				"taskLabel" : "s_8_1",
 				"isFinished" : false,
 				"hasManyState" : false
 			}

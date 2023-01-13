@@ -169,7 +169,6 @@ function MettingManager.cl_onInitMetting( self , data )
 	self.cl.canVote = true
 end
 
-
 function MettingManager.cl_openMettingGui( self , data )
 	if self.cl.isInit == true then
 		if self.cl.isOpen == false then

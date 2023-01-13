@@ -40,184 +40,12 @@ function BaseTaskInterface.server_onCreate( self )
 	print("[AMONG SCRAP] BaseTaskInterface.server_onCreate")
 	self.sv = {}
 
-	self.sv.taskId = ""
 	self.sv.taskState = false
-
-	local sendToClData = {}
-
-	local taskName = nil
-	local taskId = nil
-	local hasTaskInit = false
-
-	taskName = "Task 1 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then  -- not modular i know ;(((
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "1_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 1 - 02"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "1_2"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 2 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "2_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 3 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "3_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 4 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "4_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 5 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "5_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 5 - 02"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "5_2"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 5 - 03"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "5_3"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 5 - 04"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "5_4"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 6 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "6_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 6 - 02"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "6_2"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 7 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "7_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 8 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "8_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 9 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "9_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 10 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "10_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	taskName = "Task 11 - 01"
-	if self.data.TaskName == string.format("%s", taskName) then
-		print(string.format("[AMONG SCRAP] %s Block initialization", taskName))
-		taskId = "11_1"
-		sendToClData.taskId = taskId
-		self.sv.taskId = taskId
-		self.network:sendToClients("cl_receiveTaskId", sendToClData)
-		hasTaskInit = true
-	end
-
-	if hasTaskInit == false then
-		sm.log.error("[AMONG SCRAP] ERROR: task dosen't exist (BaseTaskInterface.lua - ln214)")
+	self.sv.taskId = self.data.TaskName
 	
-	elseif hasTaskInit == true then
-		sm.event.sendToGame("sv_e_receiveTaskInterfaceInteractable", self.interactable)
-	end
+	self.network:sendToClients("cl_receiveTaskId", {taskId = self.data.TaskName})
+	sm.event.sendToGame("sv_e_receiveTaskInterfaceInteractable", self.interactable)	
 end
-
-
 
 function BaseTaskInterface.server_onRefresh( self )
 	print("[AMONG SCRAP] BaseTaskInterface.server_onRefresh")
@@ -229,13 +57,13 @@ function BaseTaskInterface.server_onDestroy( self )
 	sm.event.sendToGame("sv_e_onTaskInterfaceDestroy", self.interactable)
 end
 
+
+
 --- CONTENT ---
 function BaseTaskInterface.sv_onResetTask( self , data )
 	self.taskState = false --?
 	self.network:sendToClients("cl_onResetTask")
-
 end
-
 
 -- slave ---
 function BaseTaskInterface.sv_receiveTaskState( self , data )
@@ -263,92 +91,9 @@ function BaseTaskInterface.client_onCreate( self )
 	self.cl.TaskInterfaceIcon:setImage("Icon", "gui_icon_popup_alert.png")
 	---!!! can be nice to add becon icon (with the thing on cl_onRefresh) for wold icon !!!!---
 
-	if self.data.TaskName == "Task 1 - 01" then -- not modular i know ;(((
-		self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CraftBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.TaskInterfaceGui:setButtonCallback("Craft","cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("Craft", "FINISH TASK")
-
-	elseif self.data.TaskName == "Task 1 - 02" then
-		self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CraftBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.TaskInterfaceGui:setButtonCallback("Craft","cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("Craft", "FINISH TASK")
-
-	elseif self.data.TaskName == "Task 2 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createEngineGui() ---sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_Engine.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpgradeInfo", "FINISH TASK ->")
-		self.cl.TaskInterfaceGui:setVisible("Upgrade", true)
-
-	elseif self.data.TaskName == "Task 3 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createEngineGui() ---sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_Engine.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpgradeInfo", "FINISH TASK ->")
-		self.cl.TaskInterfaceGui:setVisible("Upgrade", true)
-
-	elseif self.data.TaskName == "Task 4 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createEngineGui() ---sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_Engine.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpgradeInfo", "FINISH TASK ->")
-		self.cl.TaskInterfaceGui:setVisible("Upgrade", true)
-
-	elseif self.data.TaskName == "Task 5 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createChemicalContainerGui()
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpperName", "CLOSE TO FINISH TASK")
-
-	elseif self.data.TaskName == "Task 5 - 02" then
-		self.cl.TaskInterfaceGui = sm.gui.createChemicalContainerGui()
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpperName", "CLOSE TO FINISH TASK")
-
-	elseif self.data.TaskName == "Task 5 - 03" then
-		self.cl.TaskInterfaceGui = sm.gui.createChemicalContainerGui()
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpperName", "CLOSE TO FINISH TASK")
-
-	elseif self.data.TaskName == "Task 5 - 04" then
-		self.cl.TaskInterfaceGui = sm.gui.createChemicalContainerGui()
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpperName", "CLOSE TO FINISH TASK")
-
-	elseif self.data.TaskName == "Task 6 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CookBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.TaskInterfaceGui:setButtonCallback("Revival","cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("Revival", "FINISH TASK")
-
-	elseif self.data.TaskName == "Task 6 - 02" then
-		self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CookBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-		self.cl.TaskInterfaceGui:setButtonCallback("Revival","cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("Revival", "FINISH TASK")
-
-	elseif self.data.TaskName == "Task 7 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createWaterContainerGui()
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpperName", "CLOSE TO FINISH TASK")
-
-	elseif self.data.TaskName == "Task 8 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createWorkbenchGui()
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("Craft", "CLOSE TO FINISH TASK")
-
-	elseif self.data.TaskName == "Task 9 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createGasContainerGui()
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpperName", "CLOSE TO FINISH TASK")
-
-	elseif self.data.TaskName == "Task 10 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createLogbookGui()
-		self.cl.TaskInterfaceGui:setButtonCallback("WaypointButton","cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("Description", "CLICK ON THE BUTTON SET WAYPOINT TO FINISH TASK")
-
-	elseif self.data.TaskName == "Task 11 - 01" then
-		self.cl.TaskInterfaceGui = sm.gui.createBatteryContainerGui()
-		self.cl.TaskInterfaceGui:setOnCloseCallback("cl_onHudTaskButton")
-		self.cl.TaskInterfaceGui:setText("UpperName", "CLOSE TO FINISH TASK")
-
-	else
-		sm.log.error("[AMONG SCRAP] ERROR: task dosen't exist on client side (BaseTaskInterface.lua - ln322)")
-	end
+	--self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CraftBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
+	--self.cl.TaskInterfaceGui:setButtonCallback("Craft","cl_onHudTaskButton")
+	--self.cl.TaskInterfaceGui:setText("Craft", "FINISH TASK")
 end
 
 function BaseTaskInterface.client_onInteract( self , character , state )
@@ -421,9 +166,9 @@ function BaseTaskInterface.client_onDestroy( self )
 	self.cl.TaskInterfaceIcon:close()
 end
 
+
+
 -- CONTENT ---
-
-
 function BaseTaskInterface.cl_onTaskFinished( self )
 	local taskIndex = nil
 	local haveTheTask = false

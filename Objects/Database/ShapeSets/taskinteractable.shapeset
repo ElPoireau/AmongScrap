@@ -6,7 +6,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 1 - 01",
+         "name" : "obj_interactive_task_interface_id_n_1_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -18,7 +18,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 1 - 01"
+               "TaskName" : "n_1_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -34,7 +34,7 @@
             "z" : 4
          },
          "color" : "FFFFFF",
-         "name" : "Task Interface 1 - 02",
+         "name" : "obj_interactive_task_interface_id_n_1_2",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -46,7 +46,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 1 - 02"
+               "TaskName" : "n_1_2"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -61,7 +61,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 2 - 01",
+         "name" : "obj_interactive_task_interface_id_s_1_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -71,11 +71,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "S_1_1_TaskInterface",
             "data" : {
-               "TaskName" : "Task 2 - 01"
+               "TaskName" : "s_1_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/S_1_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -88,7 +88,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 3 - 01",
+         "name" : "obj_interactive_task_interface_id_s_2_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -100,7 +100,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 3 - 01"
+               "TaskName" : "s_2_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -115,7 +115,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 4 - 01",
+         "name" : "obj_interactive_task_interface_id_s_3_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -127,7 +127,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 4 - 01"
+               "TaskName" : "s_3_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -142,7 +142,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 5 - 01",
+         "name" : "obj_interactive_task_interface_id_l_1_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -154,7 +154,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 5 - 01"
+               "TaskName" : "l_1_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -169,7 +169,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 5 - 02",
+         "name" : "obj_interactive_task_interface_id_l_1_2",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -181,7 +181,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 5 - 02"
+               "TaskName" : "l_1_2"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -196,7 +196,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 5 - 03",
+         "name" : "obj_interactive_task_interface_id_l_1_3",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -208,7 +208,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 5 - 03"
+               "TaskName" : "l_1_3"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -223,7 +223,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 5 - 04",
+         "name" : "obj_interactive_task_interface_id_l_1_4",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -235,7 +235,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 5 - 04"
+               "TaskName" : "l_1_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -250,7 +250,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 6 - 01",
+         "name" : "obj_interactive_task_interface_id_n_2_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -262,7 +262,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 6 - 01"
+               "TaskName" : "n_2_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -277,7 +277,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 6 - 02",
+         "name" : "obj_interactive_task_interface_id_n_2_2",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -289,7 +289,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 6 - 02"
+               "TaskName" : "n_2_2"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -304,7 +304,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 7 - 01",
+         "name" : "obj_interactive_task_interface_id_s_4_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -314,9 +314,9 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TaskInterface",
+            "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 7 - 01"
+               "TaskName" : "s_4_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -331,7 +331,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 8 - 01",
+         "name" : "obj_interactive_task_interface_id_s_5_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -343,7 +343,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 8 - 01"
+               "TaskName" : "s_5_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -358,7 +358,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 9 - 01",
+         "name" : "obj_interactive_task_interface_id_s_6_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -370,7 +370,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 9 - 01"
+               "TaskName" : "s_6_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -385,7 +385,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 10 - 01",
+         "name" : "obj_interactive_task_interface_id_s_7_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -397,7 +397,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 10 - 01"
+               "TaskName" : "s_7_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
@@ -412,7 +412,7 @@
             "y" : 8,
             "z" : 4
          },
-         "name" : "Task Interface 11 - 01",
+         "name" : "obj_interactive_task_interface_id_s_8_1",
          "physicsMaterial" : "Mechanical",
          "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
          "restrictions" : {
@@ -424,7 +424,7 @@
          "scripted" : {
             "classname" : "TemplateTaskInterface",
             "data" : {
-               "TaskName" : "Task 11 - 01"
+               "TaskName" : "s_8_1"
             },
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
          },
