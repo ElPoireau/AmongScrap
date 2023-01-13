@@ -402,7 +402,7 @@
 			<Property key="Visible" value="true" />
 		</Widget>
 		<Widget type="Widget" skin="HudBackgroundLarge" name="TaskListBar" position_real="0 0 0.23 0.12">
-			<Widget type="TextBox" skin="TextBox" name="TaskListBarText" position_real="0 0 1 1">
+			<Widget type="TextBox" skin="TextBox" name="TaskText" position_real="0 0 1 1">
 				<Property key="TextAlign" value="Center VCenter" />
 				<Property key="Caption" value="Tasks"/>
 				<Property key="FontName" value="SM_IntlText" />

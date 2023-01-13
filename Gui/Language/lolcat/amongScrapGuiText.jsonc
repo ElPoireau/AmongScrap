@@ -1,20 +1,20 @@
 {
-    "languageCode" : "French", 
+    //"languageCode" : "Lorem Ipsum", 
 
     "languageTable" : { 
         
         // Task HUD
-        "HUD_BAR_TOTAL_TASK_COMPLETED" : "Tâches Complétées",
-        "HUD_BAR_TASK" : "Tâches",
+        "HUD_BAR_TOTAL_TASK_COMPLETED" : "Lorem Ipsum",
+        "HUD_BAR_TASK" : "Lorem",
 
         // Impostor HUD
-        "HUD_ROLE_CREWMATE" : "Équipier",
-        "HUD_ROLE_IMPOSTOR" : "Imposteur",  
-        "HUD_ROLE_NO_ROLE" : "Aucun rôle",
+        "HUD_ROLE_CREWMATE" : "Lorem Ipsum",
+        "HUD_ROLE_IMPOSTOR" : "Lorem Ipsum",  
+        "HUD_ROLE_NO_ROLE" : "Lorem Ipsum",
 
         // Alert text 
-        "HUD_ALERT_KILLED_BY" : "Tué par",
-        "HUD_ALERT_TASK_COMPLETED" : "Tâche complétée",
+        "HUD_ALERT_KILLED_BY" : "Lorem Ipsum",
+        "HUD_ALERT_TASK_COMPLETED" : "Lorem Ipsum",
         //"HUD_" : "Lorem Ipsum"
 
         // Tasks 

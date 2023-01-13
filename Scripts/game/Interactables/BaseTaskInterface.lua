@@ -53,7 +53,7 @@ function BaseTaskInterface.server_onRefresh( self )
 end
 
 function BaseTaskInterface.server_onDestroy( self )
-	print(self)
+	--print(self)
 	sm.event.sendToGame("sv_e_onTaskInterfaceDestroy", self.interactable)
 end
 

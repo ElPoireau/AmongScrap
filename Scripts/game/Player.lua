@@ -4,6 +4,9 @@ dofile( "$SURVIVAL_DATA/Scripts/game/survival_constants.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/util/Timer.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/util.lua" )
 
+-- content --
+dofile( "$CONTENT_DATA/Scripts/util/Language.lua" )
+
 SurvivalPlayer = class( BasePlayer )
 
 local StatsTickRate = 40
@@ -117,12 +120,18 @@ function SurvivalPlayer.client_onCreate( self )
 		sm.gui.chatMessage([[
 		-- CHANGELOG (0.2.1) --
 -- General :
+	· New language support (Work in progress)
 
 -- Mapping :
+	· Added the first version of Wonk Ship
 
 -- In the code :
+	· Make a full revision of the tasks storage 
+	· New folder 'Tasks' that contain all tasks dataset
+	· Tasks script are now unique with a common script 'baseTaskInterface'
+	· Tasks are now more modulable 
 
--- Fix :
+-- Fix :	
 	· Fix the player restrictions on all maps
 	· Fix the active tasks tables in multiplayer
 	· Fix the problem when only one vote can kill a player in meeting
@@ -817,7 +826,7 @@ function SurvivalPlayer.cl_refreshTaskText( self , data )
 					if data.tasks[iA].parentTaskIndex == iA then
 						grandParentTaskIndex  = iA
 						guiTaskTextIndex = guiTaskTextIndex + 1
-						taskLabel = string.format("%s (%d/%d)",data.tasks[grandParentTaskIndex].taskLabel, data.tasks[grandParentTaskIndex].childTaskInfo.howManyFinished, data.tasks[grandParentTaskIndex].childTaskInfo.howManyTasks)
+						taskLabel = g_Language:cl_getTraduction("TASK_ID_" .. data.tasks[grandParentTaskIndex].taskLabel) .. string.format("(%d/%d)", data.tasks[grandParentTaskIndex].childTaskInfo.howManyFinished, data.tasks[grandParentTaskIndex].childTaskInfo.howManyTasks)
 						isFinishedInt = data.tasks[grandParentTaskIndex].childTaskInfo.howManyFinished
 
 						if data.tasks[grandParentTaskIndex].childTaskInfo.howManyFinished == data.tasks[grandParentTaskIndex].childTaskInfo.howManyTasks then
@@ -840,7 +849,7 @@ function SurvivalPlayer.cl_refreshTaskText( self , data )
 				else
 					grandParentTaskIndex = iA
 					guiTaskTextIndex = guiTaskTextIndex + 1
-					taskLabel = data.tasks[grandParentTaskIndex].taskLabel
+					taskLabel = g_Language:cl_getTraduction("TASK_ID_" .. data.tasks[grandParentTaskIndex].taskLabel)
 					if data.tasks[grandParentTaskIndex].isFinished == true then
 						isFinishedInt = 2
 					end
@@ -868,6 +877,7 @@ function SurvivalPlayer.cl_refreshTaskText( self , data )
 					g_survivalHudTaskList:setVisible(WTaskText, true)
 					g_survivalHudTaskList:setVisible(YTaskText, false)
 					g_survivalHudTaskList:setVisible(GTaskText, false)
+
 
 					g_survivalHudTaskList:setText(WTaskText,taskLabel)
 				end

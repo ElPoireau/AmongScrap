@@ -2,6 +2,9 @@ dofile( "$SURVIVAL_DATA/Scripts/game/worlds/BaseWorld.lua")
 dofile( "$SURVIVAL_DATA/Scripts/game/managers/WaterManager.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/managers/PackingStationManager.lua" )
 
+--ish content
+--dofile( "$SURVIVAL_DATA/Scripts/game/util/Timer.lua" )
+
 WonkShipWorld = class( nil )
 WonkShipWorld.terrainScript = "$CONTENT_DATA/Scripts/terrain/TerrainScript/WonkShipTerrain.lua"
 WonkShipWorld.groundMaterialSet = "$GAME_DATA/Terrain/Materials/gnd_standard_materialset.json"
@@ -41,7 +44,10 @@ function WonkShipWorld.server_onCreate( self )
 	if self.foreignConnections == nil then
 		self.foreignConnections = {}
 	end
-
+	-- content
+	self.sv = {}
+	self.sv.pUnitTimer = Timer()
+	self.sv.pUnitTimerStarted = false
 end
 
 function WonkShipWorld.client_onCreate( self )
@@ -78,6 +84,16 @@ function WonkShipWorld.server_onFixedUpdate( self )
 	BaseWorld.server_onFixedUpdate( self )
 
 	g_unitManager:sv_onWorldFixedUpdate( self )
+
+	--content
+	if self.sv.pUnitTimerStarted == true then
+		self.sv.pUnitTimer:tick()
+		if self.sv.pUnitTimer:done() then
+			self.sv.pUnitTimerStarted = false
+			self:sv_onCharacterUnitCreated()
+		end
+	end
+		
 end
 
 function WonkShipWorld.client_onFixedUpdate( self )
@@ -711,3 +727,12 @@ function WonkShipWorld.sv_e_spawnTempUnitsOnCell( self, params )
 end
 
 function WonkShipWorld.sv_n_fireMsg( self ) end
+
+
+-- content
+
+function WonkShipWorld.sv_onPlayerKilled( self , player )
+	local deadUnit = sm.unit.createUnit( sm.uuid.new("a7b409e2-34cb-4a65-a645-301eb6337338"), player.character:getWorldPosition() )
+	sm.event.sendToGame("sv_onUnitCreated", {deadUnit = deadUnit, player = player})
+end
+

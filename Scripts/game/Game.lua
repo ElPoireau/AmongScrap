@@ -18,6 +18,8 @@ dofile( "$GAME_DATA/Scripts/game/managers/EventManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/game/managers/TaskManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/game/managers/ImpostorManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/game/managers/MettingManager.lua" )
+dofile( "$CONTENT_DATA/Scripts/util/Language.lua" )
+
 
 
 
@@ -121,9 +123,12 @@ function SurvivalGame.server_onCreate( self )
 
 	self.sv.asyncPublicDataTimer = Timer()
 
+	self.sv.deadUnits = {}
+
 	self.sv.isRoundStarted = false
 	self.sv.needToStartTheAsyncPublicDataTimer = false
 	self.sv.isWonkShipWorldExist = false
+	self.sv.isWonkShipDeadWorldExist = false
 	self.sv.witchWorldPlayersAre = "Overworld"
 end
 
@@ -143,6 +148,9 @@ function SurvivalGame.client_onCreate( self )
 	self.cl.time.timeProgress = true
 
 	self.cl.isImpostor = false
+	self.cl.deadCharacterUnitTimer = Timer()
+	self.cl.isDeadCharacterUnitTimerStarted = false
+
 
 	if not sm.isHost then
 		self:loadCraftingRecipes()
@@ -188,11 +196,12 @@ function SurvivalGame.client_onCreate( self )
 	assert(g_survivalMusic)
 
 	-- content --
+	g_Language = Language()
+	g_Language:cl_loadLanguage()
 
 	-- Survival HUD
 	--g_survivalHud = sm.gui.createSurvivalHudGui()
 	--assert(g_survivalHud)
-
 	-- Task bar
 	g_survivalHudTaskBar = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Hud/Hud_TaskBar.layout",false, {isHud = true, isInteractive = false, needsCursor = false})
 	g_survivalHudTaskBar:setVisible("TaskGreen1", false)
@@ -205,6 +214,9 @@ function SurvivalGame.client_onCreate( self )
 	g_survivalHudTaskBar:setVisible("TaskGreen8", false)
 	g_survivalHudTaskBar:setVisible("TaskGreen9", false)
 	g_survivalHudTaskBar:setVisible("TaskGreen10", false)
+
+	g_survivalHudTaskBar:setText("TotalTaskCompleteText", g_Language:cl_getTraduction("HUD_BAR_TOTAL_TASK_COMPLETED"))
+	
 	assert(g_survivalHudTaskBar)
 
 	-- Task list
@@ -212,6 +224,9 @@ function SurvivalGame.client_onCreate( self )
 	g_survivalHudTaskList:setVisible("TaskList",false)
 	g_survivalHudTaskList:setVisible("TaskListVerticalBar",true)
 	g_survivalHudTaskList:setVisible("TaskListBarNotification", false)
+
+	g_survivalHudTaskList:setText("TaskText", g_Language:cl_getTraduction("HUD_BAR_TASK"))
+
 	assert(g_survivalHudTaskList)
 
 	-- Impostor
@@ -219,6 +234,11 @@ function SurvivalGame.client_onCreate( self )
 	g_survivalHudImpostor:setVisible("CrewmateText",true)
 	g_survivalHudImpostor:setVisible("ImpostorText",false)
 	g_survivalHudImpostor:setVisible("NotText",false)
+
+	g_survivalHudImpostor:setText("CrewmateText", g_Language:cl_getTraduction("HUD_ROLE_CREWMATE"))
+	g_survivalHudImpostor:setText("ImpostorText", g_Language:cl_getTraduction("HUD_ROLE_IMPOSTOR"))
+	g_survivalHudImpostor:setText("NotText", g_Language:cl_getTraduction("HUD_ROLE_NO_ROLE"))
+	
 	assert(g_survivalHudImpostor)
 
 --[[
@@ -353,6 +373,15 @@ end
 
 function SurvivalGame.client_onFixedUpdate( self )
 
+	-- content
+
+	if self.cl.isDeadCharacterUnitTimerStarted == true then
+		self.cl.deadCharacterUnitTimer:tick()
+		if self.cl.deadCharacterUnitTimer:done() then
+			self:cl_onDeadCharacterUnitCreated()
+			self.cl.isDeadCharacterUnitTimerStarted = false
+		end
+	end
 end
 
 function SurvivalGame.client_onUpdate( self, dt )
@@ -956,7 +985,9 @@ end
 
 -------
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
-	self:sv_killPlayer(data)
+	--self:sv_killPlayer(data)
+	self:sv_onGoToWonkShipDead(data)
+
 	g_mettingManager:sv_onPlayerKilled(data)
 	self.network:sendToClients("cl_e_onPlayerKilled", data)
 end
@@ -1022,6 +1053,7 @@ function SurvivalGame.sv_onResetRound( self )
 		self:sv_e_onResetImpostor()
 		self:sv_e_onResetTask()
 		self:sv_e_onResetMetting()
+		self:sv_onResetDeadUnit()
 
 		self.sv.isRoundStarted = false
 		sm.log.info("[AMONG SCRAP] INFO: Game has been reset.")
@@ -1032,6 +1064,40 @@ end
 
 function SurvivalGame.cl_setPlayerNameTag( self , data )
 	data.character:setNameTag(data.name, data.color or sm.color.new(255,255,255), false, data.rd or 2 , 1)
+end
+
+function SurvivalGame.sv_onUnitCreated( self , data )
+	table.insert(self.sv.deadUnits, {player = data.player, deadUnit = data.deadUnit})
+	self.network:sendToClient(data.player, "cl_onKilled")
+end
+
+function SurvivalGame.cl_onKilled( self )
+	self.cl.deadCharacterUnitTimer:start(5)
+	self.cl.isDeadCharacterUnitTimerStarted = true
+end
+
+function SurvivalGame.cl_onDeadCharacterUnitCreated( self )
+	self.network:sendToServer("sv_onDeadCharacterUnitCreated", {player = sm.localPlayer.getPlayer()})
+	--character:setNameTag(sm.localPlayer.getPlayer():getName(), sm.color.new(255,255,255), false, 2 , 1)
+end
+
+function SurvivalGame.sv_onDeadCharacterUnitCreated( self , data )
+	local index = i
+	for i,v in ipairs(self.sv.deadUnits) do
+		if data.player == v.player then
+			index = i
+		end
+	end
+	self.sv.deadUnits[index].deadUnit.character:setTumbling(true)
+	self.sv.deadUnits[index].deadUnit.character:setDowned(true)
+	
+end
+
+function SurvivalGame.sv_onResetDeadUnit( self )
+	for i,v in ipairs(self.sv.deadUnits) do
+		self.sv.deadUnits[i].deadUnit:destroy()
+	end
+	self.sv.deadUnits = {}
 end
 
 
@@ -1059,6 +1125,15 @@ Avaliable world in Among Scrap:
 		World file : Wonkship.lua
 		Terrain file : WonkShipTerrain.lua
 		Goto command : /wonkship
+
+	2.1) WonkShipDead
+		Normal name : WonkShipDead or WonkShipWorld
+		Function name : WonkShipDead or wonkShipDead
+		Class name : WonkShipWorld
+		Str call name : WonkShipDead
+		World file : Wonkship.lua
+		Terrain file : WonkShipTerrain.lua
+		Goto command : /wonkshipdead
 ]]
 
 ---Overworld (spawn)
@@ -1111,7 +1186,7 @@ function SurvivalGame.sv_onGoToWonkShip( self )
 end
 
 function SurvivalGame.cl_onGoToWonkShip( self )
-	self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
+	--self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
 	sm.gui.startFadeToBlack( 0.2, 0.6 )
 end
 ------
@@ -1132,6 +1207,50 @@ function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self, world, x, y, player 
 end
 
 function SurvivalGame.sv_onLeaveWonkShip( self )
+
+end
+---
+
+
+
+-- WonkShipDead
+------
+function SurvivalGame.sv_onGoToWonkShipDead( self , data )
+	if self.sv.witchWorldPlayersAre == "WonkShip" then
+		self.network:sendToClients("cl_onGoToWonkShipDead")
+		if self.sv.isWonkShipDeadWorldExist == false then
+			self:sv_createWonkShipDead() 
+			self.sv.isWonkShipDeadWorldExist = true
+		end
+		local spawnPoint = sm.vec3.new( 0.0, 0.0, 100.0 )
+		self.sv.wonkShipDeadWorld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), data.player, "sv_onCreateNewPlayerOnWonkShipDead" )
+	else
+		sm.log.warning("[AMONG SCRAP] WARNING : Not on WonkShip ! (Game.lua ln1048)")
+	end
+end
+
+function SurvivalGame.cl_onGoToWonkShipDead( self )
+	--self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
+	sm.gui.startFadeToBlack( 0.2, 0.6 )
+end
+------
+
+
+
+function SurvivalGame.sv_createWonkShipDead( self )
+	self.sv.wonkShipDeadWorld = sm.world.createWorld( "$CONTENT_DATA/Scripts/terrain/WonkShip.lua", "WonkShipWorld", { dev = self.sv.saved.data.dev }, self.sv.saved.data.seed )
+	self.sv.isWonkShipDeadWorldExist = true
+end
+
+function SurvivalGame.sv_onCreateNewPlayerOnWonkShipDead( self, world, x, y, player )
+	local params = { player = player, x = x, y = y }
+	sm.event.sendToWorld( self.sv.wonkShipDeadWorld, "sv_spawnNewCharacter", params )
+	
+	local sendData = {character = player:getCharacter(), name = player:getName()}
+	self.network:sendToClients("cl_setPlayerNameTag", sendData)
+end
+
+function SurvivalGame.sv_onLeaveWonkShipDead( self )
 
 end
 ---
@@ -1172,6 +1291,7 @@ function SurvivalGame.sv_e_onEndingVote( self , data )
 		self:sv_e_onPlayerKilled({player = data.killed})
 	end
 	self.network:sendToClients('cl_e_onEndingVote', data)
+	self:sv_onResetDeadUnit()
 end
 
 function SurvivalGame.cl_e_onEndingVote( self , data )
@@ -1283,6 +1403,7 @@ end
 
 function SurvivalGame.sv_e_onImpostorKill( self , data )
 	--data.playerVictim:setDowned(true) -- !!! should be only for dev !! --
+	sm.event.sendToWorld(self.sv.wonkShipWorld, "sv_onPlayerKilled", data.player)
 	self:sv_e_onPlayerKilled({player = data.player})
 	self.network:sendToClient(data.player, "cl_e_onKillByImpostor", data)
 end
@@ -1319,7 +1440,6 @@ end
 
 --------- [Client function called when a task is finish. (called by TaskInterface.lua)]
 function SurvivalGame.cl_e_onTaskFinished( self , data )
-	print(data)
 	data.player = sm.localPlayer.getPlayer()
 	self.network:sendToServer("sv_e_onTaskFinished", data)
 	local isPlayerTaskAllFinish = g_taskManager:cl_onTaskFinished(data)
@@ -1347,7 +1467,6 @@ end
 
 -------- [Server function called by the taskInterface when it init. send its object (called by TaskInterface.lua)]
 function SurvivalGame.sv_e_receiveTaskInterfaceInteractable( self , data )
-	print(data)
 	g_taskManager:sv_receiveTaskInterfaceInteractable(data)
 	self.network:sendToClients("cl_e_receiveTaskInterfaceInteractable", data)
 end
