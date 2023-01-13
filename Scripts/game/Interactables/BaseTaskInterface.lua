@@ -91,9 +91,9 @@ function BaseTaskInterface.client_onCreate( self )
 	self.cl.TaskInterfaceIcon:setImage("Icon", "gui_icon_popup_alert.png")
 	---!!! can be nice to add becon icon (with the thing on cl_onRefresh) for wold icon !!!!---
 
-	--self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CraftBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-	--self.cl.TaskInterfaceGui:setButtonCallback("Craft","cl_onHudTaskButton")
-	--self.cl.TaskInterfaceGui:setText("Craft", "FINISH TASK")
+	self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CraftBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
+	self.cl.TaskInterfaceGui:setButtonCallback("Craft","cl_onHudTaskButton")
+	self.cl.TaskInterfaceGui:setText("Craft", "FINISH TASK")
 end
 
 function BaseTaskInterface.client_onInteract( self , character , state )

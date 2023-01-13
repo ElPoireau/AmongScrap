@@ -108,6 +108,8 @@ function SurvivalGame.server_onCreate( self )
 	self.sv.syncTimer = Timer()
 	self.sv.syncTimer:start( 0 )
 
+
+	-- content -- 
 	g_taskManager = TaskManager()
 	g_taskManager:sv_onCreate()
 
@@ -756,8 +758,17 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 			sm.world.loadWorld( self.sv.saved.overworld )
 		end
 
-		self.sv.saved.overworld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), player, "sv_createNewPlayer" )
+		if self.sv.witchWorldPlayersAre == "Overworld" then  -- content   -- should be temp
+			self.sv.saved.overworld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), player, "sv_createNewPlayer" )
+
+		elseif self.sv.witchWorldPlayersAre == "Wonkship" then
+			self.sv.wonkShipWorld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), player, "sv_createNewPlayer" ) 
+		
+		else
+			self.sv.saved.overworld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), player, "sv_createNewPlayer" ) -- should be temp
+		end
 		self.network:sendToClient( player, "cl_n_onJoined", { newPlayer = newPlayer } )
+	
 	else
 		local inventory = player:getInventory()
 
@@ -976,7 +987,7 @@ function SurvivalGame.sv_onGameOver( self , data )
 end
 
 function SurvivalGame.cl_onGameOver( self , data )
-	sm.gui.startFadeToBlack( 0.5, 5 )
+	sm.gui.startFadeToBlack( 4, 2 )
 	sm.gui.displayAlertText( "GAME OVER", 5 )
 	--self.cl.gameOverEffect = sm.effect.createEffect("SurvivalMusic")
 	--self.cl.gameOverEffect:setPosition(sm.localPlayer.getPlayer().character.worldPosition)
@@ -1066,7 +1077,7 @@ function SurvivalGame.sv_onGoToOverworld( self )
 end
 
 function SurvivalGame.cl_onGoToOverworld( self )
-	sm.gui.startFadeToBlack( 0.2, 0.2 )
+	sm.gui.startFadeToBlack( 0.2, 0.6 )
 end
 ------
 
@@ -1101,7 +1112,7 @@ end
 
 function SurvivalGame.cl_onGoToWonkShip( self )
 	self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
-	sm.gui.startFadeToBlack( 0.2, 0.2 )
+	sm.gui.startFadeToBlack( 0.2, 0.6 )
 end
 ------
 

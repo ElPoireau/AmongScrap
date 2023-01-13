@@ -16,11 +16,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "N_1_1_TaskInterface",
             "data" : {
                "TaskName" : "n_1_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/N_1_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -44,11 +44,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "N_1_2_TaskInterface",
             "data" : {
                "TaskName" : "n_1_2"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/N_1_2_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -75,7 +75,7 @@
             "data" : {
                "TaskName" : "s_1_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/S_1_1_TaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/S_1_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -98,11 +98,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "S_2_1_TaskInterface",
             "data" : {
                "TaskName" : "s_2_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/S_2_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -125,11 +125,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "S_3_1_TaskInterface",
             "data" : {
                "TaskName" : "s_3_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/S_3_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -152,11 +152,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "L_1_1_TaskInterface",
             "data" : {
                "TaskName" : "l_1_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/L_1_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -179,11 +179,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "L_1_2_TaskInterface",
             "data" : {
                "TaskName" : "l_1_2"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/L_1_2_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -206,11 +206,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "L_1_3_TaskInterface",
             "data" : {
                "TaskName" : "l_1_3"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/L_1_3_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -233,11 +233,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "L_1_4_TaskInterface",
             "data" : {
-               "TaskName" : "l_1_1"
+               "TaskName" : "l_1_4"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/L_1_4_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -260,11 +260,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "N_2_1_TaskInterface",
             "data" : {
                "TaskName" : "n_2_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/N_2_1_TaskInterface .lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -287,11 +287,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "N_2_2_TaskInterface",
             "data" : {
                "TaskName" : "n_2_2"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/N_2_2_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -314,11 +314,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "S_4_1_TaskInterface",
             "data" : {
                "TaskName" : "s_4_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/S_4_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -341,11 +341,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "S_5_1_TaskInterface",
             "data" : {
                "TaskName" : "s_5_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/S_5_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -368,11 +368,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "S_6_1_TaskInterface",
             "data" : {
                "TaskName" : "s_6_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/S_6_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -395,11 +395,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "S_7_1_TaskInterface",
             "data" : {
                "TaskName" : "s_7_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/S_7_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,
@@ -422,11 +422,11 @@
          },
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "TemplateTaskInterface",
+            "classname" : "S_8_1_TaskInterface",
             "data" : {
                "TaskName" : "s_8_1"
             },
-            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TemplateTaskInterface.lua"
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/TaskInterfaceScripts/S_8_1_TaskInterface.lua"
          },
          "showInInventory" : true,
          "stackSize" : 1,

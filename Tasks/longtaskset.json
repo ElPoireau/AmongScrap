@@ -4,7 +4,7 @@
 		[
 			{
 				"taskId" : "l_1_1",
-				"taskLabel" : "",
+				"taskLabel" : "l_1_1",
 				"isFinished" : false,
 				"hasManyState" : true,
 				"parentTaskIndex" : false,

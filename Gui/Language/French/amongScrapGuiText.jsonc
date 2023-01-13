@@ -1,0 +1,21 @@
+{
+    "languageCode" : "Lorem Ipsum", 
+
+    "languageTable" : { 
+        
+        // Task HUD
+        "HUD_BAR_TOTAL_TASK_COMPLETED" : "Lorem Ipsum",
+        "HUD_BAR_TASK" : "Lorem Ipsum",
+
+        // Impostor HUD
+        "HUD_ROLE_CREWMATE" : "Lorem Ipsum",
+        "HUD_ROLE_IMPOSTOR" : "Lorem Ipsum",  
+        "HUD_ROLE_IDK" : "Lorem Ipsum",
+
+        // Alert text 
+        "HUD_ALERT_KILLED_BY" : "Lorem Ipsum",
+        "HUD_ALERT_TASK_COMPLETED" : "Lorem Ipsum",
+        "HUD_" : "Lorem Ipsum",
+
+    }
+}

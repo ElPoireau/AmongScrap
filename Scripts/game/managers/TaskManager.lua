@@ -376,7 +376,7 @@ function TaskManager.cl_onResetTask( self )
 end
 
 function TaskManager.cl_onTaskInterfaceDestroy( self , data )
-	local interfaceIndex
+	local interfaceIndex = nil 
 	for i,v in ipairs(self.cl.taskInterfaceInteractables) do
 		if v == data then
 			interfaceIndex = i
