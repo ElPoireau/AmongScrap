@@ -971,15 +971,16 @@ function SurvivalGame.sv_onResetRound( self )
 end
 
 function SurvivalGame.sv_setPlayerNameTag( self , data )
-	data.character = data.player.character
-	data.player = {}
+	--data.character = data.player.character
+	data = {}
 	self.network:sendToClients("cl_setPlayerNameTag", data)
 end
 
 function SurvivalGame.cl_setPlayerNameTag( self , data )
-	data.character:setNameTag(data.name, data.color or sm.color.new(255,255,255), false, data.rd or 4 , 3)
+	for i,v in ipairs(sm.player.getAllPlayers()) do
+		v.character:setNameTag(v:getName(), data.color or sm.color.new(255,255,255), false, data.rd or 4 , 3)
+	end
 end
-
 
 
 
