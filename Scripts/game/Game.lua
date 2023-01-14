@@ -19,6 +19,7 @@ dofile( "$CONTENT_DATA/Scripts/game/managers/TaskManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/game/managers/ImpostorManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/game/managers/MettingManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/util/Language.lua" )
+dofile( "$CONTENT_DATA/Scripts/util/BetterTimer.lua" )
 
 
 
@@ -41,7 +42,7 @@ local IntroEndFadeDuration = 1.1
 local IntroFadeTimeout = 5.0
 
 function SurvivalGame.server_onCreate( self )
-	print( "SurvivalGame.server_onCreate" )
+	print( "[AMONG SCRAP] Game.server_onCreate" )
 	self.sv = {}
 	self.sv.saved = self.storage:load()
 	if self.sv.saved == nil then
@@ -56,7 +57,7 @@ function SurvivalGame.server_onCreate( self )
 	if self.sv.saved.data and self.sv.saved.data.dev then
 		g_godMode = false
 		g_survivalDev = true
-		sm.log.info( "Starting SurvivalGame in DEV mode" )
+		sm.log.info( "[AMONG SCRAP] Starting AmongScrap in DEV mode" )
 	end
 
 	self:loadCraftingRecipes()
@@ -76,27 +77,10 @@ function SurvivalGame.server_onCreate( self )
 
 	g_unitManager = UnitManager()
 	g_unitManager:sv_onCreate( self.sv.saved.overworld )
-	--self.sv.questEntityManager = sm.scriptableObject.createScriptableObject( sm.uuid.new( "c6988ecb-0fc1-4d45-afde-dc583b8b75ee" ) )
-
-	--self.sv.questManager = sm.storage.load( STORAGE_CHANNEL_QUESTMANAGER )
-	--if not self.sv.questManager then
-	--	self.sv.questManager = sm.scriptableObject.createScriptableObject( sm.uuid.new( "83b0cc7e-b164-47b8-a83c-0d33ba5f72ec" ) )
-	--	sm.storage.save( STORAGE_CHANNEL_QUESTMANAGER, self.sv.questManager )
-	--end
-
-	-- Game script managed global warehouse table
-	self.sv.warehouses = sm.storage.load( STORAGE_CHANNEL_WAREHOUSES )
-	if self.sv.warehouses then
-		print( "Loaded warehouses:" )
-		print( self.sv.warehouses )
-	else
-		self.sv.warehouses = {}
-		sm.storage.save( STORAGE_CHANNEL_WAREHOUSES, self.sv.warehouses )
-	end
 
 	self.sv.time = sm.storage.load( STORAGE_CHANNEL_TIME )
 	if self.sv.time then
-		print( "Loaded timeData:" )
+		print( "[AMONG SCRAP] Loaded timeData:" )
 		print( self.sv.time )
 	else
 		self.sv.time = {}
@@ -121,19 +105,19 @@ function SurvivalGame.server_onCreate( self )
 	g_mettingManager = MettingManager()
 	g_mettingManager:sv_onCreate()
 
-	self.sv.asyncPublicDataTimer = Timer()
-
 	self.sv.deadUnits = {}
 
+	self.sv.betterTimer = BetterTimer()
+	self.sv.betterTimer:onCreate()
+
 	self.sv.isRoundStarted = false
-	self.sv.needToStartTheAsyncPublicDataTimer = false
 	self.sv.isWonkShipWorldExist = false
 	self.sv.isWonkShipDeadWorldExist = false
 	self.sv.witchWorldPlayersAre = "Overworld"
 end
 
 function SurvivalGame.server_onRefresh( self )
-	print("[AMONG SCRAP] SurvivalGame.server_onRefresh")
+	print("[AMONG SCRAP] Game.server_onRefresh")
 	--g_craftingRecipes = nil
 	--g_refineryRecipes = nil
 	--g_taskManager:sv_onRefresh()
@@ -148,9 +132,10 @@ function SurvivalGame.client_onCreate( self )
 	self.cl.time.timeProgress = true
 
 	self.cl.isImpostor = false
-	self.cl.deadCharacterUnitTimer = Timer()
-	self.cl.isDeadCharacterUnitTimerStarted = false
 
+	
+	self.cl.betterTimer = BetterTimer()
+	self.cl.betterTimer:onCreate()
 
 	if not sm.isHost then
 		self:loadCraftingRecipes()
@@ -240,18 +225,6 @@ function SurvivalGame.client_onCreate( self )
 	g_survivalHudImpostor:setText("NotText", g_Language:cl_getTraduction("HUD_ROLE_NO_ROLE"))
 	
 	assert(g_survivalHudImpostor)
-
---[[
-	g_survivalHudAmongScrap = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Hud/Hud_GamemodeAction.layout",false, {isHud = true, isInteractive = false, needsCursor = false})
-	g_survivalHudAmongScrap:setVisible("VReportText",false)
-	g_survivalHudAmongScrap:setVisible("VReportIcon",false)
-	g_survivalHudAmongScrap:setVisible("VKillText",false)
-	g_survivalHudAmongScrap:setVisible("VKillIcon",false)
-	g_survivalHudAmongScrap:setVisible("VUseText",false)
-	g_survivalHudAmongScrap:setVisible("VUseIcon",false)
-	assert(g_survivalHudAmongScrap)
-]]--
-
 end
 
 function SurvivalGame.bindChatCommands( self )
@@ -263,26 +236,8 @@ function SurvivalGame.bindChatCommands( self )
 		sm.game.bindChatCommand( "/respawn", {}, "cl_onChatCommand", "Respawn at last bed (or at the crash site)" )
 		sm.game.bindChatCommand( "/limited", {}, "cl_onChatCommand", "Use the limited inventory" )
 		sm.game.bindChatCommand( "/unlimited", {}, "cl_onChatCommand", "Use the unlimited inventory" )
-		sm.game.bindChatCommand( "/ambush", { { "number", "magnitude", true }, { "int", "wave", true } }, "cl_onChatCommand", "Starts a 'random' encounter" )
-		--sm.game.bindChatCommand( "/recreate", {}, "cl_onChatCommand", "Recreate world" )
-		sm.game.bindChatCommand( "/timeofday", { { "number", "timeOfDay", true } }, "cl_onChatCommand", "Sets the time of the day as a fraction (0.5=mid day)" )
-		sm.game.bindChatCommand( "/timeprogress", { { "bool", "enabled", true } }, "cl_onChatCommand", "Enables or disables time progress" )
-		sm.game.bindChatCommand( "/day", {}, "cl_onChatCommand", "Disable time progression and set time to daytime" )
 		sm.game.bindChatCommand( "/spawn", { { "string", "unitName", true }, { "int", "amount", true } }, "cl_onChatCommand", "Spawn a unit: 'woc', 'tapebot', 'totebot', 'haybot'" )
-		sm.game.bindChatCommand( "/harvestable", { { "string", "harvestableName", true } }, "cl_onChatCommand", "Create a harvestable: 'tree', 'stone'" )
 		sm.game.bindChatCommand( "/cleardebug", {}, "cl_onChatCommand", "Clear debug draw objects" )
-
-		sm.game.bindChatCommand( "/die", {}, "cl_onChatCommand", "Kill the player" )
-		sm.game.bindChatCommand( "/goto", { { "string", "name", false } }, "cl_onChatCommand", "Teleport to predefined position" )
-		sm.game.bindChatCommand( "/killall", {}, "cl_onChatCommand", "Kills all spawned units" )
-		sm.game.bindChatCommand( "/printglobals", {}, "cl_onChatCommand", "Print all global lua variables" )
-
-		sm.game.bindChatCommand( "/settilebool",  { { "string", "name", false }, { "bool", "value", false } }, "cl_onChatCommand", "Set named tile value at player position as a bool" )
-		sm.game.bindChatCommand( "/settilefloat",  { { "string", "name", false }, { "number", "value", false } }, "cl_onChatCommand", "Set named tile value at player position as a floating point number" )
-		sm.game.bindChatCommand( "/settilestring",  { { "string", "name", false }, { "string", "value", false } }, "cl_onChatCommand", "Set named tile value at player position as a bool" )
-		sm.game.bindChatCommand( "/printtilevalues",  {}, "cl_onChatCommand", "Print all tile values at player position" )
-		sm.game.bindChatCommand( "/reloadcell", {{ "int", "x", true }, { "int", "y", true }}, "cl_onChatCommand", "Reload cells at self or {x,y}" )
-		sm.game.bindChatCommand( "/tutorialstartkit", {}, "cl_onChatCommand", "Spawn a starter kit for building a scrap car" )
 
 		--CONTENT
 		sm.game.bindChatCommand( "/task", {}, "cl_onChatCommand", "Init the task system for one round" )
@@ -359,12 +314,7 @@ function SurvivalGame.server_onFixedUpdate( self, timeStep )
 	end
 
 	--- CONTENT ---
-	if self.sv.needToStartTheAsyncPublicDataTimer == true then
-		self.sv.asyncPublicDataTimer:tick()
-		if self.sv.asyncPublicDataTimer:done() then
-			self:sv_onInitRound_Task()
-		end
-	end
+	self.sv.betterTimer:onFixedUpdate()
 end
 
 function SurvivalGame.sv_updateClientData( self )
@@ -372,16 +322,8 @@ function SurvivalGame.sv_updateClientData( self )
 end
 
 function SurvivalGame.client_onFixedUpdate( self )
-
-	-- content
-
-	if self.cl.isDeadCharacterUnitTimerStarted == true then
-		self.cl.deadCharacterUnitTimer:tick()
-		if self.cl.deadCharacterUnitTimer:done() then
-			self:cl_onDeadCharacterUnitCreated()
-			self.cl.isDeadCharacterUnitTimerStarted = false
-		end
-	end
+	-- content -- 
+	self.cl.betterTimer:onFixedUpdate()
 end
 
 function SurvivalGame.client_onUpdate( self, dt )
@@ -504,24 +446,9 @@ function SurvivalGame.cl_onChatCommand( self, params )
 end
 
 function SurvivalGame.sv_reloadCell( self, params, player )
-	print( "sv_reloadCell Reloading cell at {" .. params.x .. " : " .. params.y .. "}" )
+	print( "[AMONG SCRAP] sv_reloadCell Reloading cell at {" .. params.x .. " : " .. params.y .. "}" )
 
 	self.sv.saved.overworld:loadCell( params.x, params.y, player )
-	self.network:sendToClients( "cl_reloadCell", params )
-end
-
-function SurvivalGame.cl_reloadCell( self, params )
-	print( "cl_reloadCell reloading " .. params.x .. " : " .. params.y )
-	for x = -2, 2 do
-		for y = -2, 2 do
-			params.world:reloadCell( params.x+x, params.y+y, "cl_reloadCellTestCallback" )
-		end
-	end
-end
-
-function SurvivalGame.cl_reloadCellTestCallback( self, world, x, y, result )
-	print( "cl_reloadCellTestCallback" )
-	print( "result = " .. result )
 end
 
 function SurvivalGame.sv_giveItem( self, params )
@@ -628,23 +555,6 @@ function SurvivalGame.sv_killPlayer( self, params )
 	sm.event.sendToPlayer( params.player, "sv_e_receiveDamage", params )
 end
 
-function SurvivalGame.sv_spawnUnit( self, params )
-	sm.event.sendToWorld( params.world, "sv_e_spawnUnit", params )
-end
-
-function SurvivalGame.sv_spawnHarvestable( self, params )
-	sm.event.sendToWorld( params.world, "sv_spawnHarvestable", params )
-end
-
-function SurvivalGame.sv_exportCreation( self, params )
-	local obj = sm.json.parseJsonString( sm.creation.exportToString( params.body ) )
-	sm.json.save( obj, "$SURVIVAL_DATA/LocalBlueprints/"..params.name..".blueprint" )
-end
-
-function SurvivalGame.sv_importCreation( self, params )
-	sm.creation.importFromFile( params.world, "$SURVIVAL_DATA/LocalBlueprints/"..params.name..".blueprint", params.position )
-end
-
 function SurvivalGame.sv_onChatCommand( self, params, player )
 	if params[1] == "/tumble" then
 		if params[2] ~= nil then
@@ -688,7 +598,7 @@ function SurvivalGame.sv_onChatCommand( self, params, player )
 		sm.event.sendToPlayer( player, "sv_e_respawn" )
 
 	elseif params[1] == "/printglobals" then
-		print( "Globals:" )
+		print( "[AMONG SCRAP] Globals:" )
 		for k,_ in pairs(_G) do
 			print( k )
 		end
@@ -747,7 +657,7 @@ function SurvivalGame.sv_onChatCommand( self, params, player )
 end
 
 function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
-	print( player.name, "joined the game" )
+	print( player.name, "joined the game [AMONG SCRAP]" )
 
 	if true then --Player is first time joiners
 		local inventory = player:getInventory()
@@ -841,7 +751,7 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 end
 
 function SurvivalGame.server_onPlayerLeft( self, player )
-	print( player.name, "left the game" )
+	print( player.name, "left the game [AMONG SCRAP] " )
 	if player.id > 1 then
 		--QuestManager.Sv_OnEvent( QuestEvent.PlayerLeft, { player = player } )
 	end
@@ -899,7 +809,7 @@ function SurvivalGame.sv_recreatePlayerCharacter( self, world, x, y, player, par
 	local pitch = math.asin( params.dir.z )
 	local newCharacter = sm.character.createCharacter( player, self.sv.saved.overworld, params.pos, yaw, pitch )
 	player:setCharacter( newCharacter )
-	print( "Recreate character in new world" )
+	print( "[AMONG SCRAP] Recreate character in new world" )
 	print( params )
 end
 
@@ -987,6 +897,7 @@ end
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
 	--self:sv_killPlayer(data)
 	self:sv_onGoToWonkShipDead(data)
+	--sm.event.sendToWorld(self.sv.wonkShipWorld, "sv_onPlayerKilled", data.player) -- only if im alone :=(
 
 	g_mettingManager:sv_onPlayerKilled(data)
 	self.network:sendToClients("cl_e_onPlayerKilled", data)
@@ -1017,7 +928,7 @@ function SurvivalGame.sv_onGameOver( self , data )
 	end
 end
 
-function SurvivalGame.cl_onGameOver( self , data )
+function SurvivalGame.cl_onGameOver( self )
 	sm.gui.startFadeToBlack( 4, 2 )
 	sm.gui.displayAlertText( "GAME OVER", 5 )
 	--self.cl.gameOverEffect = sm.effect.createEffect("SurvivalMusic")
@@ -1030,10 +941,11 @@ end
 
 
 function SurvivalGame.sv_onInitRound( self )
+	--self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_onResetRound)
+
 	if self.sv.isRoundStarted == false then
 		self:sv_e_onInitImpostor()
-		self.sv.asyncPublicDataTimer:start(3) -- timer for init task
-		self.sv.needToStartTheAsyncPublicDataTimer = true
+		self.sv.betterTimer:createNewTimer(5, self, SurvivalGame.sv_e_onInitTask)
 		self:sv_e_onInitMetting()
 
 		self.sv.isRoundStarted = true
@@ -1041,11 +953,6 @@ function SurvivalGame.sv_onInitRound( self )
 	else
 		sm.log.warning("[AMONG SCRAP] WARNING : You can't start 2 times.")
 	end
-end
-
-function SurvivalGame.sv_onInitRound_Task( self ) -- for the timer
-	self:sv_e_onInitTask()
-	self.sv.needToStartTheAsyncPublicDataTimer = false
 end
 
 function SurvivalGame.sv_onResetRound( self )
@@ -1066,23 +973,16 @@ function SurvivalGame.cl_setPlayerNameTag( self , data )
 	data.character:setNameTag(data.name, data.color or sm.color.new(255,255,255), false, data.rd or 2 , 1)
 end
 
-function SurvivalGame.sv_onUnitCreated( self , data )
-	table.insert(self.sv.deadUnits, {player = data.player, deadUnit = data.deadUnit})
-	self.network:sendToClient(data.player, "cl_onKilled")
-end
 
-function SurvivalGame.cl_onKilled( self )
-	self.cl.deadCharacterUnitTimer:start(5)
-	self.cl.isDeadCharacterUnitTimerStarted = true
-end
 
-function SurvivalGame.cl_onDeadCharacterUnitCreated( self )
-	self.network:sendToServer("sv_onDeadCharacterUnitCreated", {player = sm.localPlayer.getPlayer()})
-	--character:setNameTag(sm.localPlayer.getPlayer():getName(), sm.color.new(255,255,255), false, 2 , 1)
-end
+
+
+
+-- CHARACTER --
+
 
 function SurvivalGame.sv_onDeadCharacterUnitCreated( self , data )
-	local index = i
+	local index = 0
 	for i,v in ipairs(self.sv.deadUnits) do
 		if data.player == v.player then
 			index = i
@@ -1093,12 +993,18 @@ function SurvivalGame.sv_onDeadCharacterUnitCreated( self , data )
 	
 end
 
+function SurvivalGame.sv_onUnitCreated( self , data )
+	table.insert(self.sv.deadUnits, {player = data.player, deadUnit = data.deadUnit})
+	self.sv.betterTimer:createNewTimer(5, self, SurvivalGame.sv_onDeadCharacterUnitCreated , data)
+end
+
 function SurvivalGame.sv_onResetDeadUnit( self )
 	for i,v in ipairs(self.sv.deadUnits) do
 		self.sv.deadUnits[i].deadUnit:destroy()
 	end
 	self.sv.deadUnits = {}
 end
+
 
 
 

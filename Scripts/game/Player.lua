@@ -94,6 +94,12 @@ function SurvivalPlayer.client_onCreate( self )
 	self.cl.canKill = false
 	self.cl.canReport = false
 
+	self.cl.optionGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Options/Options_MainMenu.layout",false, {isHud = false, isInteractive = true, needsCursor = true, })
+	self.cl.optionGui:setButtonState("On", true)
+	self.cl.optionGui:open()
+
+
+
 	if self.player == sm.localPlayer.getPlayer() then
 		if g_survivalHudTaskBar then
 			g_survivalHudTaskBar:open()
