@@ -17,6 +17,13 @@
         "HUD_ALERT_TASK_COMPLETED" : "Tâche complétée",
         //"HUD_" : "Lorem Ipsum"
 
+        //option menu
+        "OPTION_HEADER" : "Paramètres du jeu",
+        "OPTION_POS_1" : "Lorem Ipsum",
+        "OPTION_POS_2" : "Lorem Ipsum",
+        "OPTION_POS_3" : "Lorem Ipsum",
+        "OPTION_POS_4" : "Lorem Ipsum",
+
         // Tasks 
         // short
         "TASK_ID_s_1_1" : "s_1_1",

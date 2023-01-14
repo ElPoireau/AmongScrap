@@ -1,3 +1,6 @@
 {
-   "shapeSetList" : [ "$CONTENT_DATA/Objects/Database/ShapeSets/taskinteractable.shapeset" ]
+   "shapeSetList" : [
+      "$CONTENT_DATA/Objects/Database/ShapeSets/taskinteractable.shapeset",
+      "$CONTENT_DATA/Objects/Database/ShapeSets/gameaction.shapeset"
+   ]
 }

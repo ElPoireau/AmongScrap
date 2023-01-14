@@ -94,11 +94,6 @@ function SurvivalPlayer.client_onCreate( self )
 	self.cl.canKill = false
 	self.cl.canReport = false
 
-	self.cl.optionGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Options/Options_MainMenu.layout",false, {isHud = false, isInteractive = true, needsCursor = true, })
-	self.cl.optionGui:setButtonState("On", true)
-	self.cl.optionGui:open()
-
-
 
 	if self.player == sm.localPlayer.getPlayer() then
 		if g_survivalHudTaskBar then
@@ -130,12 +125,16 @@ function SurvivalPlayer.client_onCreate( self )
 
 -- Mapping :
 	· Added the first version of Wonk Ship
+	· Create new world copy of Wonk Ship for dead player
 
 -- In the code :
 	· Make a full revision of the tasks storage 
 	· New folder 'Tasks' that contain all tasks dataset
 	· Tasks script are now unique with a common script 'baseTaskInterface'
 	· Tasks are now more modulable 
+	· New timer better than the dev timer
+	· add new world for dead players
+	· Add new unit character when pepole be killed
 
 -- Fix :	
 	· Fix the player restrictions on all maps

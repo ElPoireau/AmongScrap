@@ -895,8 +895,7 @@ end
 
 -------
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
-	--self:sv_killPlayer(data)
-	self:sv_onGoToWonkShipDead(data)
+	self:sv_onGoToWonkShipDead(data) -- should be uncomment
 	--sm.event.sendToWorld(self.sv.wonkShipWorld, "sv_onPlayerKilled", data.player) -- only if im alone :=(
 
 	g_mettingManager:sv_onPlayerKilled(data)
@@ -1410,3 +1409,5 @@ end
 function SurvivalGame.sv_e_onInitTask( self ) -- Init all task (for one round only)
 	g_taskManager:sv_onInitTask()
 end
+
+

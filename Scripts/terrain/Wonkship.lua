@@ -732,7 +732,7 @@ function WonkShipWorld.sv_n_fireMsg( self ) end
 -- content
 
 function WonkShipWorld.sv_onPlayerKilled( self , player )
-	local deadUnit = sm.unit.createUnit( sm.uuid.new("a7b409e2-34cb-4a65-a645-301eb6337338"), player.character:getWorldPosition() )
+	local deadUnit = sm.unit.createUnit( sm.uuid.new("36fe0ade-9352-43e4-9e81-146fafcd3522"), player.character:getWorldPosition() )
 	sm.event.sendToGame("sv_onUnitCreated", {deadUnit = deadUnit, player = player})
 end
 
