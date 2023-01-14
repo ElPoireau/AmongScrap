@@ -315,6 +315,7 @@ function SurvivalGame.server_onFixedUpdate( self, timeStep )
 
 	--- CONTENT ---
 	self.sv.betterTimer:onFixedUpdate()
+	--g_mettingManager.sv.betterTimer:onFixedUpdate()
 end
 
 function SurvivalGame.sv_updateClientData( self )
@@ -324,6 +325,7 @@ end
 function SurvivalGame.client_onFixedUpdate( self )
 	-- content -- 
 	self.cl.betterTimer:onFixedUpdate()
+	g_mettingManager.cl.betterTimer:onFixedUpdate()
 end
 
 function SurvivalGame.client_onUpdate( self, dt )
@@ -968,8 +970,12 @@ function SurvivalGame.sv_onResetRound( self )
 	end
 end
 
+function SurvivalGame.sv_setPlayerNameTag( self , data )
+	self.network:sendToClients("cl_setPlayerNameTag", data)
+end
+
 function SurvivalGame.cl_setPlayerNameTag( self , data )
-	data.character:setNameTag(data.name, data.color or sm.color.new(255,255,255), false, data.rd or 2 , 1)
+	data.player.character:setNameTag(data.name, data.color or sm.color.new(255,255,255), false, data.rd or 2 , 1)
 end
 
 
@@ -1107,8 +1113,8 @@ function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self, world, x, y, player 
 	local params = { player = player, x = x, y = y }
 	sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_spawnNewCharacter", params )
 	
-	local sendData = {character = player:getCharacter(), name = player:getName()}
-	self.network:sendToClients("cl_setPlayerNameTag", sendData)
+	local sendData = {player = player, name = player:getName()}
+	self.sv.betterTimer:createNewTimer(7, self, SurvivalGame.sv_setPlayerNameTag, sendData)
 end
 
 function SurvivalGame.sv_onLeaveWonkShip( self )
@@ -1136,7 +1142,7 @@ end
 
 function SurvivalGame.cl_onGoToWonkShipDead( self )
 	--self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
-	sm.gui.startFadeToBlack( 0.2, 0.6 )
+	--sm.gui.startFadeToBlack( 0.2, 0.6 )
 end
 ------
 

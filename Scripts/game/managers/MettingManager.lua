@@ -1,5 +1,8 @@
 --MettingManager.lua
 -- JUST REALIZE I WORTE MEETING "METTING" ALL THE TIME :`(((((((((((((((((((((((("
+
+dofile( "$CONTENT_DATA/Scripts/util/BetterTimer.lua" )
+
 MettingManager = class( nil )
 
 -- server
@@ -11,6 +14,9 @@ function MettingManager.sv_onCreate( self )
 	self.sv.howManyPlayers = 0
 	self.sv.howManyPlayersAlive = 0
 	self.sv.howManyVotes = 0
+
+	--self.sv.betterTimer = BetterTimer()
+	--self.sv.betterTimer:onCreate()
 
 	for i = 1,11 do
 		self.sv.votes[i] = 0
@@ -122,6 +128,9 @@ function MettingManager.cl_onCreate( self , player )
 	self.cl.isInit = false
 	self.cl.canVote = false
 
+	self.cl.betterTimer = BetterTimer()
+	self.cl.betterTimer:onCreate()
+
 	--g_survivalHudMetting = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Tasks/Gui_TaskTemplateCraftBot.layout",false, {isHud = false, isInteractive = true, needsCursor = true})
 	self.cl.g_survivalHudMetting = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Hud/Hud_MettingVotes.layout",false, {isHud = false, isInteractive = true, needsCursor = true})
 
@@ -205,10 +214,11 @@ function MettingManager.cl_onEndingVote( self , data )
 			self.cl.g_survivalHudMetting:setVisible(string.format("MettingPlayerVotes%d-%d", i1, i2), true)
 		end
 	end
+	self.cl.betterTimer:createNewTimer(2 * 40, self, MettingManager.cl_onCloseMettingGui)
 end
 
 function MettingManager.cl_onCloseMettingGui( self )
-	--self.cl.g_survivalHudMetting:close()
+	self.cl.g_survivalHudMetting:close()
 	self.cl.hasVoted = false
 
 	for v1 = 1,11 do
