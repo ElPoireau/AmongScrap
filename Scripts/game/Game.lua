@@ -922,7 +922,8 @@ end
 function SurvivalGame.cl_setLockedControls( self , state )
 	sm.localPlayer.setLockedControls( state )
 	--self.cl.betterTimer.createNewTimer(40, self, SurvivalGame.cl_setLockedControls, true)
-end	
+end	 
+
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
 	local publicData = data.player:getPublicData()
 	publicData.isAlive = false
