@@ -394,12 +394,12 @@ function WonkShipWorld.sv_spawnNewCharacter( self, params )
 			end
 		end
 		spawnPosition = spawnNode.position + sm.vec3.new( 0, 0, 1 ) * 0.7
-
 		spawnDirection = spawnNode.rotation * sm.vec3.new( 0, 0, 1 )
 	else 
+		spawnPosition.z = spawnPosition.z + 15
 		pitch = math.asin( spawnDirection.z )
 	end
-
+	
 	yaw = math.atan2( spawnDirection.y, spawnDirection.x ) - math.pi/2
 
 	local character = sm.character.createCharacter( params.player, self.world, spawnPosition, yaw, pitch )
