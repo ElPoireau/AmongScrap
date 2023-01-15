@@ -1,37 +1,7 @@
 -- OptionBlock.lua --
 
---[[ Game Options table :
-options = {
-
-    pos[n] = {
-
-        type = str
-        onSetCall = SurvivalGame function
-        varRef = options Index (str)  
-    }
-
-    howManyImpostor = int 
-    
-    howManyShortTasks = int
-    howManyNormalTasks = int
-    HowManyLongTasks = int 
-
-    onWhichMap = str
-
-}
-
-
-
-
-
-
-]]
-
-
-
-
-
 OptionBlock = class()
+
 
 OptionBlock.maxParentCount = 0
 OptionBlock.maxChildCount = 0
@@ -39,11 +9,13 @@ OptionBlock.connectionInput = sm.interactable.connectionType.none
 OptionBlock.connectionOutput = sm.interactable.connectionType.none
 OptionBlock.poseWeightCount = 1
 
+local POS_INDEX = 4
 
 --SERVER--
 
 function OptionBlock.server_onCreate( self )
 	print("[AMONG SCRAP] OptionBlock.server_onCreate")
+    sm.event.sendToGame("sv_onInitOptionBlock", self.interactable)
 end
 
 function OptionBlock.server_onRefresh( self )
@@ -52,16 +24,18 @@ function OptionBlock.server_onRefresh( self )
 end
 
 function OptionBlock.server_onDestroy( self )
-
+    
 end
 
 -- CONTENT --
 
-function OptionBlock.sv_setOptions( self , data )
-    self.network:sendToClients("cl_setOptions", data)
+function OptionBlock.sv_setOptionsMenu( self , data )
+    self.network:sendToClients("cl_setOptionsMenu", data)
 end
 
-
+function OptionBlock.sv_setGameOptions( self , data )
+    sm.event.sendToGame("sv_e_setGameOptions", data )
+end
 
 
 
@@ -69,17 +43,14 @@ end
 --  CLIENT  --
 function OptionBlock.client_onCreate( self )
     self.cl = {}
-
-    self.cl.optionGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Options/Options_MainMenu.layout",false, {isHud = false, isInteractive = true, needsCursor = true, })
-    self.cl.optionGui:setText("TextHeader", g_Language:cl_getTraduction("OPTION_HEADER"))
-   
-    self:cl_onInitPos1()
-    self:cl_onInitPos2()
-
+    self.cl.optionsMenu = {}
+    self.cl.hasInit = false
+    
     self.cl.optionWorldText = sm.gui.createNameTagGui(false)
 	self.cl.optionWorldText:setWorldPosition(self.shape:getWorldPosition())
 	self.cl.optionWorldText:setText("Text", "OPTIONS")
     self.cl.optionWorldText:open()
+
 end
 
 function OptionBlock.client_onInteract( self , character , state )
@@ -101,7 +72,7 @@ function OptionBlock.client_onDestroy( self )
 end
 
 function OptionBlock.client_onRefresh( self )
-
+    
 end
 
 
@@ -109,57 +80,134 @@ end
 
 -- CONTENT --
 
-function OptionBlock.cl_setOptions( self , data ) 
-    self.cl.options = data
+function OptionBlock.cl_initGui( self )
+    print(self.cl.optionsMenu)
+    cl_initSliderFunction(self.cl.optionsMenu)
+    
+    self.cl.optionGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Options/Options_MainMenu.layout",false, {isHud = false, isInteractive = true, needsCursor = true, })
+    self.cl.optionGui:setText("TextHeader", g_Language:cl_getTraduction("OPTION_HEADER"))
+    
+    for i,v in ipairs(self.cl.optionsMenu) do
+        self["cl_onInit" .. v.type](self, i, v)
+    end
+    self.cl.hasInit = true
 end
+
+function OptionBlock.cl_refreshGui( self )
+    for i,v in ipairs(self.cl.optionsMenu) do
+        self["cl_onRefresh" .. v.type](self, i, v)
+    end
+end
+
+function OptionBlock.cl_setOptionsMenu( self , data ) 
+    self.cl.optionsMenu = data
+    if self.cl.hasInit == false then
+        self:cl_initGui()
+    elseif self.cl.hasInit == true then 
+        self:cl_refreshGui()
+    end
+
+end
+
+function OptionBlock.cl_setGameOptions( self )
+    self.network:sendToServer("sv_setGameOptions", self.cl.optionsMenu )
+end
+
 
 -- GUI CALLBACK --
 
--- POS 1 --
-function OptionBlock.cl_onInitPos1( self )
-    self.cl.pos1ButtonState = false
 
-    self.cl.optionGui:setButtonCallback("Pos1ButtonOn", "cl_onPos1ButtonOnCallback")
-    self.cl.optionGui:setButtonCallback("Pos1ButtonOff", "cl_onPos1ButtonOffCallback")
+-- OnOffButton --
 
-    self.cl.optionGui:setButtonState("Pos1ButtonOn", false)
-    self.cl.optionGui:setButtonState("Pos1ButtonOff", true)
-
-    self.cl.optionGui:setText("Pos1Text", g_Language:cl_getTraduction("OPTION_POS_1"))
-end
-
-function OptionBlock.cl_onPos1ButtonOnCallback( self )
-    if self.cl.pos1ButtonState == false then
-        self.cl.optionGui:setButtonState("Pos1ButtonOn", true)
-        self.cl.optionGui:setButtonState("Pos1ButtonOff", false)
-        self.cl.pos1ButtonState = true
+function OptionBlock.cl_onInitOnOffButton( self , index , data )
+    
+    self.cl.optionGui:setVisible("Pos" .. index .. "ButtonOnOff", true)
+    
+    self.cl.optionGui:setButtonCallback("Pos" .. index .. "ButtonOn", "cl_onButtonOnCallback")
+    self.cl.optionGui:setButtonCallback("Pos" .. index .. "ButtonOff", "cl_onButtonOffCallback")
+    
+    self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag ))
+    
+    if self.cl.optionsMenu[index].value == false then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", false)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", true)
+        
+    elseif self.cl.optionsMenu[index].value == true then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", true)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", false)
+        
+    else
+        self.cl.optionsMenu[index].value = false 
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", false)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", true)
     end
 end
 
-function OptionBlock.cl_onPos1ButtonOffCallback( self )
-    if self.cl.pos1ButtonState == true then
-        self.cl.optionGui:setButtonState("Pos1ButtonOn", false)
-        self.cl.optionGui:setButtonState("Pos1ButtonOff", true)
-        self.cl.pos1ButtonState = false
+function OptionBlock.cl_onRefreshOnOffButton( self , index , data )
+    self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", data.value == true)
+    self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", data.value == false) 
+end
+
+
+
+function OptionBlock.cl_onButtonOnCallback( self , tag )
+    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    if self.cl.optionsMenu[index].value == false then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", true)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", false)
+        self.cl.optionsMenu[index].value = true
+    end
+   self:cl_setGameOptions()
+end
+
+function OptionBlock.cl_onButtonOffCallback( self , tag )
+    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    if self.cl.optionsMenu[index].value == true then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", false)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", true)
+        self.cl.optionsMenu[index].value = false
+    end
+    self:cl_setGameOptions()
+end
+
+
+
+
+-- Slider --
+
+function OptionBlock.cl_onInitSlider( self , index , data )
+    self.cl.optionGui:setVisible("Pos" .. index .. "Slider", true)
+    print("dddd")
+    self.cl.optionGui:createHorizontalSlider( "Pos" .. index .. "Scroll", 10, data.value, "cl_onPos" .. index .."SliderCallback" )
+    self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag ))
+    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value))
+end
+
+function OptionBlock.cl_onRefreshSlider( self , index , data )
+    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value))
+    self.cl.optionGui:setSliderPosition("Pos" .. index .. "Scroll", data.value)
+end
+
+
+
+function cl_initSliderFunction( data ) -- I am raging to to this instead of just PUTTING THE INDEX IN THE ARGS WHY DEEEEVVVSSSS :(
+    for i = 1, #data do
+        OptionBlock["cl_onPos" .. i .. "SliderCallback"] = function( self , value , tag )
+            local index = i
+            self.cl.optionsMenu[index].value = value
+            self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(self.cl.optionsMenu[index].value))
+            self:cl_setGameOptions()
+        end
     end
 end
 
--- POS 2 --
-function OptionBlock.cl_onInitPos2( self )
-    self.cl.pos2SliderValue = 0
 
-    self.cl.optionGui:createHorizontalSlider( "Pos2Slider", 10, self.cl.pos2SliderValue, "cl_onPos2SliderCallback" )
 
-    self.cl.optionGui:setText("Pos2Text", g_Language:cl_getTraduction("OPTION_POS_2"))
-    self.cl.optionGui:setText("Pos2SliderValue", tostring( self.cl.pos2SliderValue))
-end
 
-function OptionBlock.cl_onPos2SliderCallback( self , value )
-    self.cl.pos2SliderValue = value
-    self.cl.optionGui:setText("Pos2SliderValue", tostring( self.cl.pos2SliderValue))
-end
+-- Label --
 
--- POS 3 --
-function OptionBlock.cl_onInitPos3( self )
-    self.cl.optionGui:setText("Pos3Text", g_Language:cl_getTraduction("OPTION_POS_3"))
+function OptionBlock.cl_onInitLabel( self , index , data )
+    self.cl.optionGui:setVisible("Pos" .. index .. "Label", true)
+
+    self.cl.optionGui:setText("Pos".. index .. "Text", g_Language:cl_getTraduction(data.textTag ))
 end

@@ -1,0 +1,66 @@
+{
+    //Game Options
+    "options" : {
+        // General
+        "whichMap" : true, //"WonkShip",
+
+        // Impostor
+        "howManyImpostor" : 1,
+
+        // Tasks
+        "howManyShortTasks" : 1,
+        "howManyNormalTasks" : 1,
+        "howManyLongTasks" : 1
+    },
+
+    //Options Menu
+    "menu": [
+        { // Pos 1
+            "type" : "Label",
+            "textTag" : "OPTION_GENERAL",
+            "optionsVarRef" : "null"
+        },
+
+        { // Pos 2
+            "type" : "OnOffButton" , // !! should be multiple button of something like that - so its temp
+            "textTag" : "OPTION_ON_WHICH_MAP",
+            "optionsVarRef" : "whichMap"
+        },
+
+        { // Pos 3
+            "type" : "Label",
+            "textTag" : "OPTION_IMPOSTOR",
+            "optionsVarRef" : "null"
+        },
+
+        { // Pos 4
+            "type" : "Slider",
+            "textTag" : "OPTION_HOW_MANY_IMPOSTOR",
+            "optionsVarRef" : "howManyImpostor"
+        },
+
+        { // Pos 5
+            "type" : "Label",
+            "textTag" : "OPTION_TASK",
+            "optionsVarRef" : "null"
+        },
+
+        { // Pos 6
+            "type" : "Slider",
+            "textTag" : "OPTION_HOW_MANY_SHORT_TASK",
+            "optionsVarRef" : "howManyShortTasks"
+        },
+
+        { // Pos 7
+            "type" : "Slider",
+            "textTag" : "OPTION_HOW_MANY_NORMAL_TASK",
+            "optionsVarRef" : "howManyNormalTasks"
+        },
+
+        { // Pos 8
+            "type" : "Slider",
+            "textTag" : "OPTION_HOW_MANY_LONG_TASK",
+            "optionsVarRef" : "howManyLongTasks"
+        }
+    ]
+}

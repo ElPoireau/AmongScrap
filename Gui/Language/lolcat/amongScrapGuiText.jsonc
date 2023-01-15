@@ -19,10 +19,18 @@
 
         //option menu
         "OPTION_HEADER" : "Lorem Ipsum",
-        "OPTION_POS_1" : "Lorem Ipsum",
-        "OPTION_POS_2" : "Lorem Ipsum",
-        "OPTION_POS_3" : "Lorem Ipsum",
-        "OPTION_POS_4" : "Lorem Ipsum",
+        "OPTION_GENERAL" : "Lorem Ipsum",
+        "OPTION_IMPOSTOR" : "Lorem Ipsum",
+        "OPTION_TASK" : "Lorem Ipsum",
+        "OPTION_ON_WHICH_MAP" : "Lorem Ipsum",
+        "OPTION_HOW_MANY_IMPOSTOR" : "Lorem Ipsum",
+        "OPTION_HOW_MANY_NORMAL_TASK" : "Lorem Ipsum",
+        "OPTION_HOW_MANY_SHORT_TASK" : "Lorem Ipsum",
+        "OPTION_HOW_MANY_LONG_TASK" : "Lorem Ipsum",
+        
+
+
+
 
         // Tasks 
         // short

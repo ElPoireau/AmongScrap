@@ -379,20 +379,28 @@ function WonkShipWorld.sv_reloadSpawnersOnCell( self, x, y )
 end
 
 function WonkShipWorld.sv_spawnNewCharacter( self, params )
-	local spawnPosition = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT
+	local spawnPosition = params.player.character:getWorldPosition() 
+	local spawnDirection = params.player.character:getDirection()
 	local yaw = 0
 	local pitch = 0
 
-	local nodes = sm.cell.getNodesByTag( params.x, params.y, "PLAYER_SPAWN" )
-	if #nodes > 0 then
-		local spawnerIndex = ( ( params.player.id - 1 ) % #nodes ) + 1
-		local spawnNode = nodes[spawnerIndex]
+	
+	if  params.onDeadWorld == false then
+		local nodes = sm.cell.getNodesByTag( params.x, params.y, "PLAYER_SPAWN")
+		local spawnNode = nodes[1]
+		for i,v in ipairs(nodes) do
+			if v.params.name == "PLAYER_SPAWN" .. tostring(params.nodeId) then
+				spawnNode = v
+			end
+		end
 		spawnPosition = spawnNode.position + sm.vec3.new( 0, 0, 1 ) * 0.7
 
-		local spawnDirection = spawnNode.rotation * sm.vec3.new( 0, 0, 1 )
-		--pitch = math.asin( spawnDirection.z )
-		yaw = math.atan2( spawnDirection.y, spawnDirection.x ) - math.pi/2
+		spawnDirection = spawnNode.rotation * sm.vec3.new( 0, 0, 1 )
+	else 
+		pitch = math.asin( spawnDirection.z )
 	end
+
+	yaw = math.atan2( spawnDirection.y, spawnDirection.x ) - math.pi/2
 
 	local character = sm.character.createCharacter( params.player, self.world, spawnPosition, yaw, pitch )
 	params.player:setCharacter( character )

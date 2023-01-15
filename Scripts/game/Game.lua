@@ -49,6 +49,16 @@ function SurvivalGame.server_onCreate( self )
 		self.sv.saved = {}
 		self.sv.saved.data = self.data
 		self.sv.saved.overworld = sm.world.createWorld( "$CONTENT_DATA/Scripts/terrain/SpawnWorld.lua", "Overworld", { dev = self.sv.saved.data.dev }, self.sv.saved.data.seed )
+		
+		--content--
+		local settings = sm.json.open("$CONTENT_DATA/AmongScrapSettings/BaseSettings.jsonc")
+		self.sv.saved.gameOptions = settings.options
+		self.sv.saved.gameOptions.null = false
+		self.sv.saved.optionsMenu = settings.menu 
+		for i,v in ipairs(self.sv.saved.optionsMenu) do
+			self.sv.saved.optionsMenu[i].value = self.sv.saved.gameOptions[v.optionsVarRef]
+		end
+
 		self.storage:save( self.sv.saved )
 	end
 	self.data = nil
@@ -59,25 +69,25 @@ function SurvivalGame.server_onCreate( self )
 		g_survivalDev = true
 		sm.log.info( "[AMONG SCRAP] Starting AmongScrap in DEV mode" )
 	end
-
+	
 	self:loadCraftingRecipes()
 	g_enableCollisionTumble = true
-
+	
 	g_eventManager = EventManager()
 	g_eventManager:sv_onCreate()
-
+	
 	g_elevatorManager = ElevatorManager()
 	g_elevatorManager:sv_onCreate()
-
+	
 	--g_effectManager = EffectManager()
 	--g_effectManager:sv_onCreate()
-
+	
 	g_respawnManager = RespawnManager()
 	g_respawnManager:sv_onCreate( self.sv.saved.overworld )
-
+	
 	g_unitManager = UnitManager()
 	g_unitManager:sv_onCreate( self.sv.saved.overworld )
-
+	
 	self.sv.time = sm.storage.load( STORAGE_CHANNEL_TIME )
 	if self.sv.time then
 		print( "[AMONG SCRAP] Loaded timeData:" )
@@ -90,15 +100,15 @@ function SurvivalGame.server_onCreate( self )
 	end
 	self.network:setClientData( { dev = g_survivalDev }, 1 )
 	self:sv_updateClientData()
-
+	
 	self.sv.syncTimer = Timer()
 	self.sv.syncTimer:start( 0 )
-
-
+	
+	
 	-- content -- 
 	g_taskManager = TaskManager()
 	g_taskManager:sv_onCreate()
-
+	
 	g_impostorManager = ImpostorManager()
 	g_impostorManager:sv_onCreate()
 
@@ -106,14 +116,24 @@ function SurvivalGame.server_onCreate( self )
 	g_mettingManager:sv_onCreate()
 
 	self.sv.deadUnits = {}
-
+	self.sv.optionBlocks = {}
+	self.sv.optionsMenu = {}
+	self.sv.gameOptions = {}
+	
 	self.sv.betterTimer = BetterTimer()
 	self.sv.betterTimer:onCreate()
-
+	
 	self.sv.isRoundStarted = false
 	self.sv.isWonkShipWorldExist = false
 	self.sv.isWonkShipDeadWorldExist = false
 	self.sv.witchWorldPlayersAre = "Overworld"
+
+
+	for i,v in ipairs(self.sv.saved.optionsMenu) do
+		if self.sv.saved.optionsMenu[i].value ~= self.sv.saved.gameOptions[v.optionsVarRef] then
+			self.sv.saved.optionsMenu[i].value = self.sv.saved.gameOptions[v.optionsVarRef]
+		end
+	end
 end
 
 function SurvivalGame.server_onRefresh( self )
@@ -930,7 +950,7 @@ function SurvivalGame.sv_onGameOver( self , data )
 end
 
 function SurvivalGame.cl_onGameOver( self )
-	sm.gui.startFadeToBlack( 4, 2 )
+	 --sm.gui.startFadeToBlack( 4, 2 )
 	sm.gui.displayAlertText( "GAME OVER", 5 )
 	--self.cl.gameOverEffect = sm.effect.createEffect("SurvivalMusic")
 	--self.cl.gameOverEffect:setPosition(sm.localPlayer.getPlayer().character.worldPosition)
@@ -968,25 +988,28 @@ function SurvivalGame.sv_onResetRound( self )
 	else
 		sm.log.warning("[AMONG SCRAP] WARNING : You can't reset 2 times.")
 	end
-end
-
-function SurvivalGame.sv_setPlayerNameTag( self , data )
-	--data.character = data.player.character
-	data = {}
-	self.network:sendToClients("cl_setPlayerNameTag", data)
-end
-
-function SurvivalGame.cl_setPlayerNameTag( self , data )
-	for i,v in ipairs(sm.player.getAllPlayers()) do
-		v.character:setNameTag(v:getName(), data.color or sm.color.new(255,255,255), false, data.rd or 4 , 3)
-	end
-end
+end	
 
 
 
 
 
 -- CHARACTER --
+-------
+function SurvivalGame.sv_setPlayerNameTag( self )
+	self.network:sendToClients("cl_setPlayerNameTag")
+end
+
+function SurvivalGame.cl_setPlayerNameTag( self )
+	local localPlayer = sm.localPlayer.getPlayer()
+	for i,v in ipairs(sm.player.getAllPlayers()) do
+		if v ~= localPlayer then
+			v.character:setNameTag(v:getName(), sm.color.new(255,255,255), false, 5 , 3)
+		end
+	end
+end
+------
+
 
 
 function SurvivalGame.sv_onDeadCharacterUnitCreated( self , data )
@@ -994,38 +1017,47 @@ function SurvivalGame.sv_onDeadCharacterUnitCreated( self , data )
 	for i,v in ipairs(self.sv.deadUnits) do
 		if data.player == v.player then
 			index = i
-		end
-	end
+		end	
+	end	
 	self.sv.deadUnits[index].deadUnit.character:setTumbling(true)
-	self.sv.deadUnits[index].deadUnit.character:setDowned(true)
-	
-end
+	self.sv.deadUnits[index].deadUnit.character:setDowned(true)	
+end	
 
 function SurvivalGame.sv_onUnitCreated( self , data )
 	table.insert(self.sv.deadUnits, {player = data.player, deadUnit = data.deadUnit})
 	self.sv.betterTimer:createNewTimer(5, self, SurvivalGame.sv_onDeadCharacterUnitCreated , data)
-end
+end	
 
 function SurvivalGame.sv_onResetDeadUnit( self )
 	for i,v in ipairs(self.sv.deadUnits) do
 		self.sv.deadUnits[i].deadUnit:destroy()
-	end
+	end	
 	self.sv.deadUnits = {}
+end	
+
+function SurvivalGame.cl_setImpostorNameTag ( self , data )
+	local localPlayer = sm.localPlayer.getPlayer()
+	for i,v in ipairs(data) do
+		if v ~= localPlayer then
+			v.character:setNameTag(v:getName(), sm.color.new(255,0,0), false, 8 , 6)
+		end
+	end
 end
 
 
 
 
 
--- WORLD --
 
 --[[
-Avaliable world in Among Scrap:
+-- WORLD --
 
+	Avaliable world in Among Scrap:
+	
 	1) Overworld :
-		Normal name : Overworld (Or Spawn)
-		Function name : Overworld or overworld
-		Class name : Overworld
+	Normal name : Overworld (Or Spawn)
+	Function name : Overworld or overworld
+	Class name : Overworld
 		Str call name : Overworld
 		World file : SpawnWorld.lua
 		Terrain file : SpawnTerain.lua
@@ -1090,8 +1122,8 @@ function SurvivalGame.sv_onGoToWonkShip( self )
 			self:sv_createWonkShip()
 		end
 		local spawnPoint = sm.vec3.new( 0.0, 0.0, 100.0 )
-		for _,p in ipairs(sm.player.getAllPlayers()) do
-			self.sv.wonkShipWorld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), p, "sv_onCreateNewPlayerOnWonkShip" )
+		for i,p in ipairs(sm.player.getAllPlayers()) do
+			self.sv.wonkShipWorld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), p, "sv_onCreateNewPlayerOnWonkShip",{nodeId = i} )
 		end
 		self.sv.witchWorldPlayersAre = "WonkShip"
 		sm.gui.chatMessage("#ff1133 WARNING: you can fall off on the ship (work in progress)")
@@ -1101,7 +1133,7 @@ end
 
 function SurvivalGame.cl_onGoToWonkShip( self )
 	--self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
-	sm.gui.startFadeToBlack( 0.2, 0.6 )
+	sm.gui.startFadeToBlack( 0.2, 1 )
 end
 ------
 
@@ -1112,12 +1144,11 @@ function SurvivalGame.sv_createWonkShip( self )
 	self.sv.isWonkShipWorldExist = true
 end
 
-function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self, world, x, y, player )
-	local params = { player = player, x = x, y = y }
+function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self , world , x , y , player , data )
+	local params = { player = player, x = x, y = y, onDeadWorld = false, nodeId = data.nodeId}
 	sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_spawnNewCharacter", params )
 	
-	local sendData = {player = player, name = player:getName()}
-	self.sv.betterTimer:createNewTimer(7, self, SurvivalGame.sv_setPlayerNameTag, sendData)
+	self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_setPlayerNameTag)
 end
 
 function SurvivalGame.sv_onLeaveWonkShip( self )
@@ -1136,7 +1167,7 @@ function SurvivalGame.sv_onGoToWonkShipDead( self , data )
 			self:sv_createWonkShipDead() 
 			self.sv.isWonkShipDeadWorldExist = true
 		end
-		local spawnPoint = sm.vec3.new( 0.0, 0.0, 100.0 )
+		local spawnPoint = data.player.character:getWorldPosition()  --sm.vec3.new( 0.0, 0.0, 100.0 )
 		self.sv.wonkShipDeadWorld:loadCell( math.floor( spawnPoint.x/64 ), math.floor( spawnPoint.y/64 ), data.player, "sv_onCreateNewPlayerOnWonkShipDead" )
 	else
 		sm.log.warning("[AMONG SCRAP] WARNING : Not on WonkShip ! (Game.lua ln1048)")
@@ -1157,7 +1188,7 @@ function SurvivalGame.sv_createWonkShipDead( self )
 end
 
 function SurvivalGame.sv_onCreateNewPlayerOnWonkShipDead( self, world, x, y, player )
-	local params = { player = player, x = x, y = y }
+	local params = { player = player, x = x, y = y, onDeadWorld = true, nodeId = 69 }
 	sm.event.sendToWorld( self.sv.wonkShipDeadWorld, "sv_spawnNewCharacter", params )
 	
 	local sendData = {character = player:getCharacter(), name = player:getName()}
@@ -1275,15 +1306,16 @@ function SurvivalGame.sv_e_onSendingImpostor( self , data )
 
 	for _,p in ipairs(data) do
 		p:setPublicData({impostor = true})
-		self.network:sendToClient(p, "cl_e_onSendingImpostor", true)
+		self.network:sendToClient(p, "cl_e_onSendingImpostor", {isImpostor = true, impostors = data})
 	end
 end
 
 function SurvivalGame.cl_e_onSendingImpostor( self , data )
 	if data then
-		self.cl.isImpostor = data
-		g_impostorManager:cl_onSendingImpostor(data)
-		sm.event.sendToPlayer(sm.localPlayer.getPlayer(),"cl_onSendingImpostor", data)
+		self.cl.isImpostor = data.isImpostor
+		g_impostorManager:cl_onSendingImpostor(data.isImpostor)
+		self.cl.betterTimer:createNewTimer(40, self, SurvivalGame.cl_setImpostorNameTag, data.impostors)
+		sm.event.sendToPlayer(sm.localPlayer.getPlayer(),"cl_onSendingImpostor", data.isImpostor)
 	end
 end
 
@@ -1420,3 +1452,19 @@ function SurvivalGame.sv_e_onInitTask( self ) -- Init all task (for one round on
 end
 
 
+
+
+
+
+-- OPTION BLOCK --
+function SurvivalGame.sv_onInitOptionBlock( self , data )
+	table.insert( self.sv.optionBlocks, data )
+	sm.event.sendToInteractable(data,"sv_setOptionsMenu" ,self.sv.saved.optionsMenu)
+end
+
+function SurvivalGame.sv_e_setGameOptions( self , data )
+	self.sv.saved.optionsMenu = data
+	for i,v in ipairs(self.sv.saved.optionsMenu) do 
+		self.sv.saved.gameOptions[v.optionsVarRef] = v.value
+	end
+end

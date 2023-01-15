@@ -18,12 +18,16 @@
         //"HUD_" : "Lorem Ipsum"
 
         //option menu
-        "OPTION_HEADER" : "Paramètres du jeu",
-        "OPTION_POS_1" : "Lorem Ipsum",
-        "OPTION_POS_2" : "Lorem Ipsum",
-        "OPTION_POS_3" : "Lorem Ipsum",
-        "OPTION_POS_4" : "Lorem Ipsum",
-
+        "OPTION_HEADER" : "Paramètres de jeu",
+        "OPTION_GENERAL" : "GÉNÉRAL",
+        "OPTION_IMPOSTOR" : "IMPOSTEUR",
+        "OPTION_TASK" : "TÂCHES",
+        "OPTION_ON_WHICH_MAP" : "Carte",
+        "OPTION_HOW_MANY_IMPOSTOR" : "Nombre d'imposteur",
+        "OPTION_HOW_MANY_SHORT_TASK" : "Nombre de tâche courte",
+        "OPTION_HOW_MANY_NORMAL_TASK" : "Nombre de tâche moyenne",
+        "OPTION_HOW_MANY_LONG_TASK" : "Nombre de tâches longue",
+        
         // Tasks 
         // short
         "TASK_ID_s_1_1" : "s_1_1",
