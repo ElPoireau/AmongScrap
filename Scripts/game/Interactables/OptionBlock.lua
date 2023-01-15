@@ -15,6 +15,9 @@ local POS_INDEX = 4
 
 function OptionBlock.server_onCreate( self )
 	print("[AMONG SCRAP] OptionBlock.server_onCreate")
+    self.sv = {}
+    self.sv.optionsMenu = nil 
+
     sm.event.sendToGame("sv_onInitOptionBlock", self.interactable)
 end
 
@@ -27,15 +30,26 @@ function OptionBlock.server_onDestroy( self )
     sm.event.sendToGame("sv_onDestroyOptionBlock", self.interactable)
 end
 
--- CONTENT --
 
+
+-- CONTENT --
 function OptionBlock.sv_setOptionsMenu( self , data )
+    self.sv.optionsMenu = data
     self.network:sendToClients("cl_setOptionsMenu", data)
 end
 
 function OptionBlock.sv_setGameOptions( self , data )
+    self.sv.optionsMenu = data
     sm.event.sendToGame("sv_e_setGameOptions", data )
 end
+
+function OptionBlock.sv_onNewClient( self , data )
+    self.network:sendToClient(data, "cl_setOptionsMenu", self.sv.optionsMenu)
+end
+
+
+
+
 
 
 
@@ -51,6 +65,7 @@ function OptionBlock.client_onCreate( self )
 	self.cl.optionWorldText:setText("Text", "OPTIONS")
     self.cl.optionWorldText:open()
 
+    self.network:sendToServer("sv_onNewClient", sm.localPlayer.getPlayer())
 end
 
 function OptionBlock.client_onInteract( self , character , state )
@@ -81,7 +96,6 @@ end
 -- CONTENT --
 
 function OptionBlock.cl_initGui( self )
-    print(self.cl.optionsMenu)
     cl_initSliderFunction(self.cl.optionsMenu)
     
     self.cl.optionGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Options/Options_MainMenu.layout",false, {isHud = false, isInteractive = true, needsCursor = true, })
@@ -101,12 +115,13 @@ end
 
 function OptionBlock.cl_setOptionsMenu( self , data ) 
     self.cl.optionsMenu = data
-    if self.cl.hasInit == false then
-        self:cl_initGui()
-    elseif self.cl.hasInit == true then 
-        self:cl_refreshGui()
+    if data then
+        if self.cl.hasInit == false then
+            self:cl_initGui()
+        elseif self.cl.hasInit == true then 
+            self:cl_refreshGui()
+        end
     end
-
 end
 
 function OptionBlock.cl_setGameOptions( self )
@@ -284,7 +299,7 @@ function OptionBlock.cl_onRefreshMultiple2Button( self , index , data )
     end
 end
 
-function OptionBlock.cl_cl_onRefreshMultiple3Button( self , index , data )
+function OptionBlock.cl_onRefreshMultiple3Button( self , index , data )
 
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
@@ -349,7 +364,6 @@ end
 
 function OptionBlock.cl_onInitSlider( self , index , data )
     self.cl.optionGui:setVisible("Pos" .. index .. "Slider", true)
-    print("dddd")
     self.cl.optionGui:createHorizontalSlider( "Pos" .. index .. "Scroll", 10, data.value, "cl_onPos" .. index .."SliderCallback" )
     self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag ))
     self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value))
@@ -383,3 +397,5 @@ function OptionBlock.cl_onInitLabel( self , index , data )
 
     self.cl.optionGui:setText("Pos".. index .. "Text", g_Language:cl_getTraduction(data.textTag ))
 end
+
+function OptionBlock.cl_onRefreshLabel( self , index , data ) end

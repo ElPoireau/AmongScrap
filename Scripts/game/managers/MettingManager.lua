@@ -127,12 +127,13 @@ function MettingManager.cl_onCreate( self , player )
 	self.cl.hasVoted = false
 	self.cl.isInit = false
 	self.cl.canVote = false
+	self.cl.HasMetting = false
 
 	self.cl.betterTimer = BetterTimer()
 	self.cl.betterTimer:onCreate()
 
 	--g_survivalHudMetting = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Tasks/Gui_TaskTemplateCraftBot.layout",false, {isHud = false, isInteractive = true, needsCursor = true})
-	self.cl.g_survivalHudMetting = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Hud/Hud_MettingVotes.layout",false, {isHud = false, isInteractive = true, needsCursor = true})
+	self.cl.g_survivalHudMetting = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Hud/Hud_MettingVotes.layout",false, {isHud = false, isInteractive = true, needsCursor = true, backgroundAlpha = 0.5 })
 
 	self.cl.g_survivalHudMetting:setOnCloseCallback("cl_c_onCloseMettingGui")
 	self.cl.g_survivalHudMetting:setButtonCallback("MettingPlayerUserSkipButton","cl_c_onVoteButtonCallback")
@@ -176,9 +177,23 @@ function MettingManager.cl_onInitMetting( self , data )
 
 	self.cl.isInit = true
 	self.cl.canVote = true
+	self.cl.HasMetting = false
 end
 
+---
 function MettingManager.cl_openMettingGui( self , data )
+	sm.gui.displayAlertText("EMERGENCY METTING", 2)
+	sm.event.sendToWorld(sm.localPlayer.getPlayer().character:getWorld(), "cl_playEffect", {effect = "Horn", type = "audio" })
+	
+	self.cl.betterTimer:createNewTimer(40, self, MettingManager.cl_delayed_1_openMettingGui, data )
+	self.cl.betterTimer:createNewTimer(60, self, MettingManager.cl_delayed_2_openMettingGui, data )
+end
+
+function MettingManager.cl_delayed_1_openMettingGui( self , data )
+	sm.gui.startFadeToBlack(0.3, 1)
+end
+
+function MettingManager.cl_delayed_2_openMettingGui( self , data )
 	if self.cl.isInit == true then
 		if self.cl.isOpen == false then
 			for i,v in ipairs(self.cl.mettingGuiOrder) do
@@ -189,11 +204,15 @@ function MettingManager.cl_openMettingGui( self , data )
 			self.cl.g_survivalHudMetting:open()
 			self.cl.isOpen = true
 		end
+		self.cl.HasMetting = true
 	else
 		sm.log.warning("[AMONG SCRAP] WARNING : You can't open the voting GUI without initalize the metting system. (MettingManager.lua ln140)")
 		sm.gui.chatMessage("[AMONG SCRAP] WARNING : Initalize the metting system before opening the voting GUI ! (Use '/metting')")
 	end
 end
+---
+
+
 
 function MettingManager.cl_onVoteButtonCallback( self , data )
 	if self.cl.canVote == true then
@@ -208,28 +227,64 @@ function MettingManager.cl_onVoteButtonCallback( self , data )
 	end
 end
 
+
+
+---
 function MettingManager.cl_onEndingVote( self , data )
 	for i1,v1 in ipairs(data.allVotes) do
 		for i2 = 1,v1 do
-			self.cl.g_survivalHudMetting:setVisible(string.format("MettingPlayerVotes%d-%d", i1, i2), true)
+			self.cl.betterTimer:createNewTimer(i2 * 5, self, MettingManager.cl_delayed_1_onEndingVote, {i1 = i1, i2 = i2})
 		end
 	end
-	self.cl.betterTimer:createNewTimer(2 * 40, self, MettingManager.cl_onCloseMettingGui)
+	self.cl.betterTimer:createNewTimer(80, self, MettingManager.cl_delayed_2_onEndingVote)
+	
+	local ejectText = "Someone has been ejected"
+	local sendText = ""
+	for i = 1, #ejectText do
+		self.cl.betterTimer:createNewTimer(120 + (i*4), self, MettingManager.cl_delayed_3_onEndingVote, {text = ejectText:sub(1, i)})
+	end
+	self.cl.betterTimer:createNewTimer(180 + (#ejectText * 4), self, MettingManager.cl_delayed_2_onEndingVote)
+
+	self.cl.HasMetting = false
+	self.cl.betterTimer:createNewTimer(80, self, MettingManager.cl_delayed_2_onEndingVote)
+	self.cl.betterTimer:createNewTimer(90, self, MettingManager.cl_onCloseMettingGui)
 end
+
+function MettingManager.cl_delayed_1_onEndingVote( self , data )
+	self.cl.g_survivalHudMetting:setVisible(string.format("MettingPlayerVotes%d-%d", data.i1, data.i2), true)
+end
+
+function MettingManager.cl_delayed_2_onEndingVote( self )
+	sm.gui.startFadeToBlack(0.4, 1)
+end
+
+function MettingManager.cl_delayed_3_onEndingVote( self , data )
+	sm.gui.displayAlertText(data.text, 2)
+	sm.event.sendToWorld(sm.localPlayer.getPlayer().character:getWorld(), "cl_playEffect", {effect = "Elevator Button", type = "effect" })
+	
+end
+---
+
+
+
 
 function MettingManager.cl_onCloseMettingGui( self )
-	self.cl.g_survivalHudMetting:close()
-	self.cl.hasVoted = false
+	if self.cl.HasMetting ~= true then
+		self.cl.g_survivalHudMetting:close()
+		self.cl.hasVoted = false
 
-	for v1 = 1,11 do
-		self.cl.g_survivalHudMetting:setVisible(string.format("MettingPlayerAlert%d", v1), false)
-		for v2 = 1,10 do
-			self.cl.g_survivalHudMetting:setVisible(string.format("MettingPlayerVotes%d-%d", v1, v2), false)
+		for v1 = 1,11 do
+			self.cl.g_survivalHudMetting:setVisible(string.format("MettingPlayerAlert%d", v1), false)
+			for v2 = 1,10 do
+				self.cl.g_survivalHudMetting:setVisible(string.format("MettingPlayerVotes%d-%d", v1, v2), false)
+			end
 		end
+		self.cl.isOpen = false
+	else
+		self.cl.g_survivalHudMetting:open()
 	end
-
-	self.cl.isOpen = false
 end
+
 
 function MettingManager.cl_onResetMetting( self )
 	self.cl.mettingGuiOrder = {}

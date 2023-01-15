@@ -711,3 +711,10 @@ function Overworld.sv_n_fireMsg( self ) end
 
 -- content
 
+function Overworld.cl_playEffect( self , data )
+	if data.type == "effect" then
+		sm.effect.playHostedEffect(data.effect, sm.localPlayer.getPlayer().character)
+	elseif data.type == "audio" then 
+		sm.audio.play(data.effect, sm.localPlayer.getPlayer().character:getWorldPosition())
+	end
+end

@@ -744,3 +744,46 @@ function WonkShipWorld.sv_onPlayerKilled( self , player )
 	sm.event.sendToGame("sv_onUnitCreated", {deadUnit = deadUnit, player = player})
 end
 
+function WonkShipWorld.cl_playEffect( self , data )
+	if data.type == "effect" then
+		sm.effect.playHostedEffect(data.effect, sm.localPlayer.getPlayer().character)
+	elseif data.type == "audio" then 
+		sm.audio.play(data.effect, sm.localPlayer.getPlayer().character:getWorldPosition())
+	end
+end
+
+
+
+function WonkShipWorld.sv_createCharacterOnWonkShip( self, params )
+	local nodes = sm.cell.getNodesByTag( params.x, params.y, "PLAYER_SPAWN")
+	local spawnNode = nodes[1]
+	local yaw = 0
+	
+	for i,v in ipairs(nodes) do
+		if v.params.name == "PLAYER_SPAWN" .. tostring(params.nodeId) then
+			spawnNode = v
+		end
+	end
+		spawnPosition = spawnNode.position + sm.vec3.new( 0, 0, 1 ) * 0.7
+		spawnDirection = spawnNode.rotation * sm.vec3.new( 0, 0, 1 )
+	
+	yaw = math.atan2( spawnDirection.y, spawnDirection.x ) - math.pi/2
+
+	local character = sm.character.createCharacter( params.player, self.world, spawnPosition, yaw, 0 )
+	params.player:setCharacter( character )
+end
+
+
+function WonkShipWorld.sv_createCharacterOnWonkShipDead( self , params )
+	local spawnPosition = params.player.character:getWorldPosition() 
+	local spawnDirection = params.player.character:getDirection()
+	local yaw = 0
+	local pitch = 0
+
+	spawnPosition.z = spawnPosition.z + 15
+	pitch = math.asin( spawnDirection.z )
+	yaw = math.atan2( spawnDirection.y, spawnDirection.x ) - math.pi/2
+
+	local character = sm.character.createCharacter( params.player, self.world, spawnPosition, yaw, pitch )
+	params.player:setCharacter( character )
+end

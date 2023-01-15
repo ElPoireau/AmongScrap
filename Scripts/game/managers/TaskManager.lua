@@ -58,9 +58,9 @@ function TaskManager.sv_onCreate( self )
 	self.sv.numOfLongTask_Table = 0
 	for _ in pairs(longTasksTable.longTaskSet) do self.sv.numOfLongTask_Table = self.sv.numOfLongTask_Table + 1 end
 
-	self.sv.numOfShortTask_PerRound = 6
-	self.sv.numOfNormalTask_PerRound = 2
-	self.sv.numOfLongTask_PerRound = 1
+	self.sv.numOfShortTask_PerRound = 0
+	self.sv.numOfNormalTask_PerRound = 0
+	self.sv.numOfLongTask_PerRound = 0
 
 	self.sv.howManyTaskPerPlayer = self.sv.numOfShortTask_PerRound + (self.sv.numOfNormalTask_PerRound * 2) + (self.sv.numOfLongTask_PerRound * 4)
 
@@ -184,7 +184,7 @@ function TaskManager.sv_onInitTask( self )
 
 	end
 	self.sv.hasGivenTaskToPlayer = true
-	print(data)
+	--print(data)
 end
 
 function TaskManager.sv_receiveTaskInterfaceInteractable( self , data )
@@ -209,7 +209,6 @@ end
 
 function TaskManager.sv_onTaskFinished( self , data )
 	--print(self.sv.activeTask)
-	print("server Data :")
 	local player = data.player
 
 	local haveTheTask = false
@@ -244,8 +243,6 @@ function TaskManager.sv_onTaskFinished( self , data )
 			sm.event.sendToGame("sv_e_onRefreshTaskProgressionBar", {taskProgression = math.floor((self.sv.taskFinished / self.sv.totalTask)* 10)})
 		end
 	end
-	print(self.sv.totalTask)
-	print(self.sv.taskFinished)
 	if self.sv.taskFinished == self.sv.totalTask then
 		self:sv_onAllTasksFinished()
 	end
@@ -318,9 +315,6 @@ function TaskManager.cl_onTaskFinished( self , data )
 			end
 			self.cl.finishedClientTask = self.cl.finishedClientTask + 1
 			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_refreshTaskText", self.cl.activeClientTask)
-			print("client: ")
-			print(self.cl.howManyTaskPerPlayer)
-			print(self.cl.finishedClientTask)
 			if self.cl.finishedClientTask == self.cl.howManyTaskPerPlayer then
 				return true
 			end

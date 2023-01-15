@@ -134,6 +134,9 @@ function SurvivalGame.server_onCreate( self )
 			self.sv.saved.optionsMenu[i].value = self.sv.saved.gameOptions[v.optionsVarRef]
 		end
 	end
+	self:sv_o_setHowManyImpostor(self.sv.saved.gameOptions["howManyImpostor"])
+	self:sv_o_setWhichMap(self.sv.saved.gameOptions["whichMap"])
+	self:sv_o_setHowManyTasks(self.sv.saved.gameOptions)
 end
 
 function SurvivalGame.server_onRefresh( self )
@@ -917,8 +920,12 @@ end
 
 -------
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
-	--self:sv_onGoToWonkShipDead(data) -- should be uncomment--old
-	self:sv_onCreateNewPlayerOnWonkShip(self.sv.wonkShipWorld, 0, 0, data.player, {nodeId = 69, onDeadWorld = true})
+	local publicData = data.player:getPublicData()
+	publicData.isAlive = false
+	data.player:setPublicData()
+
+	self:sv_onGoToWonkShipDead(data.player)
+	--self:sv_onCreateNewPlayerOnWonkShip(self.sv.wonkShipWorld, 0, 0, data.player, {nodeId = 69, onDeadWorld = true})
 	--sm.event.sendToWorld(self.sv.wonkShipWorld, "sv_onPlayerKilled", data.player) -- only if im alone :=(
 
 	g_mettingManager:sv_onPlayerKilled(data)
@@ -927,6 +934,22 @@ end
 
 function SurvivalGame.cl_e_onPlayerKilled( self , data )
 	g_mettingManager:cl_onPlayerKilled(data)
+end
+------
+
+------
+function SurvivalGame.sv_onStart( self )
+	if self.sv.isRoundStarted == false then
+		self:sv_e_setGameOptions(nil)
+		if self.sv.whichWorld == "WonkShip" then
+			self:sv_onGoToWonkShip()
+		end
+	end
+	self.network:sendToClients("cl_onStart")
+end
+
+function SurvivalGame.cl_onStart( self )
+
 end
 ------
 
@@ -966,6 +989,14 @@ function SurvivalGame.sv_onInitRound( self )
 	--self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_onResetRound)
 
 	if self.sv.isRoundStarted == false then
+
+		for i,v in ipairs(sm.player.getAllPlayers()) do
+			local pd = v:getPublicData()
+			pd.isAlive = true
+			pd.isImpostor = false
+			v:setPublicData()
+		end
+
 		self:sv_e_onInitImpostor()
 		self.sv.betterTimer:createNewTimer(5, self, SurvivalGame.sv_e_onInitTask)
 		self:sv_e_onInitMetting()
@@ -979,6 +1010,14 @@ end
 
 function SurvivalGame.sv_onResetRound( self )
 	if self.sv.isRoundStarted == true then
+
+		for i,v in ipairs(sm.player.getAllPlayers()) do
+			local pd = v:getPublicData()
+			pd.isAlive = true
+			pd.isImpostor = false
+			v:setPublicData()
+		end
+
 		self:sv_e_onResetImpostor()
 		self:sv_e_onResetTask()
 		self:sv_e_onResetMetting()
@@ -1073,7 +1112,7 @@ end
 		Terrain file : WonkShipTerrain.lua
 		Goto command : /wonkship
 
-	2.1) WonkShipDead
+	2.1) WonkShipDead --OLD
 		Normal name : WonkShipDead or WonkShipWorld
 		Function name : WonkShipDead or wonkShipDead
 		Class name : WonkShipWorld
@@ -1146,8 +1185,8 @@ function SurvivalGame.sv_createWonkShip( self )
 end
 
 function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self , world , x , y , player , data )
-	local params = { player = player, x = x, y = y, onDeadWorld = data.onDeadWorld or false, nodeId = data.nodeId}
-	sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_spawnNewCharacter", params )
+	local params = { player = player, x = x, y = y, nodeId = data.nodeId}
+	sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_createCharacterOnWonkShip", params )
 	
 	self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_setPlayerNameTag)
 end
@@ -1155,9 +1194,24 @@ end
 function SurvivalGame.sv_onLeaveWonkShip( self )
 
 end
+
+function SurvivalGame.sv_onGoToWonkShipDead( self , player )
+	if witchWorldPlayersAre == "WonkShip" then
+		local params = { player = player}
+		sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_createCharacterOnWonkShipDead", params )
+		self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_setPlayerNameTag)
+	else
+		sm.log.warning("[AMONG SCRAP] WARNING : Not on WonkShip ! (Game.lua ln1164)")
+	end
+end
 ---
 
 
+
+--[[ --OLD
+
+not optimize for multiplayer because of loadCell() create lag and rollback when player are kill
+has been change by creating a new similar blueprint on WonkShip tile and tp dead player at (x, y, z+15)  
 
 -- WonkShipDead
 ------
@@ -1200,7 +1254,7 @@ function SurvivalGame.sv_onLeaveWonkShipDead( self )
 
 end
 ---
-
+]]
 
 
 
@@ -1300,13 +1354,13 @@ end
 
 -------
 function SurvivalGame.sv_e_onSendingImpostor( self , data )
-	for _,p in ipairs(sm.player.getAllPlayers()) do
-		p:setPublicData({impostor = false})
-	end
 	self.network:sendToClients("cl_e_onSendingCrewmate")
 
 	for _,p in ipairs(data) do
-		p:setPublicData({impostor = true})
+			local pd = p:getPublicData()
+			pd.isImpostor = true
+			p:setPublicData()
+		end
 		self.network:sendToClient(p, "cl_e_onSendingImpostor", {isImpostor = true, impostors = data})
 	end
 end
@@ -1327,9 +1381,6 @@ end
 
 -------
 function SurvivalGame.sv_e_onResetImpostor( self )
-	for _,p in ipairs(sm.player.getAllPlayers()) do
-		p:setPublicData({impostor = false})
-	end
 	g_impostorManager:sv_onResetImpostor()
 	self.network:sendToClients("cl_e_onResetImpostor")
 end
@@ -1464,13 +1515,16 @@ function SurvivalGame.sv_onInitOptionBlock( self , data )
 end
 
 function SurvivalGame.sv_e_setGameOptions( self , data )
-	self.sv.saved.optionsMenu = data
-	for i,v in ipairs(self.sv.saved.optionsMenu) do 
-		self.sv.saved.gameOptions[v.optionsVarRef] = v.value
+	if data then
+		self.sv.saved.optionsMenu = data
+		for i,v in ipairs(self.sv.saved.optionsMenu) do 
+			self.sv.saved.gameOptions[v.optionsVarRef] = v.value
+		end
+		for i,v in ipairs(self.sv.optionBlocks) do
+			sm.event.sendToInteractable(v, "sv_setOptionsMenu", self.sv.saved.optionsMenu)
+		end
 	end
-	for i,v in ipairs(self.sv.optionBlocks) do
-		sm.event.sendToInteractable(v,"sv_setOptionsMenu" ,self.sv.saved.optionsMenu)
-	end
+	
 	self:sv_o_setHowManyImpostor(self.sv.saved.gameOptions["howManyImpostor"])
 	self:sv_o_setWhichMap(self.sv.saved.gameOptions["whichMap"])
 	self:sv_o_setHowManyTasks(self.sv.saved.gameOptions)
