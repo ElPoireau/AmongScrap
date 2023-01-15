@@ -917,7 +917,8 @@ end
 
 -------
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
-	self:sv_onGoToWonkShipDead(data) -- should be uncomment
+	--self:sv_onGoToWonkShipDead(data) -- should be uncomment--old
+	self:sv_onCreateNewPlayerOnWonkShip(self.sv.wonkShipWorld, 0, 0, data.player, {nodeId = 69, onDeadWorld = true})
 	--sm.event.sendToWorld(self.sv.wonkShipWorld, "sv_onPlayerKilled", data.player) -- only if im alone :=(
 
 	g_mettingManager:sv_onPlayerKilled(data)
@@ -1145,7 +1146,7 @@ function SurvivalGame.sv_createWonkShip( self )
 end
 
 function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self , world , x , y , player , data )
-	local params = { player = player, x = x, y = y, onDeadWorld = false, nodeId = data.nodeId}
+	local params = { player = player, x = x, y = y, onDeadWorld = data.onDeadWorld or false, nodeId = data.nodeId}
 	sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_spawnNewCharacter", params )
 	
 	self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_setPlayerNameTag)
@@ -1483,6 +1484,9 @@ function SurvivalGame.sv_onDestroyOptionBlock( self , data )
 		end
 	end
 end
+
+
+
 
 
 

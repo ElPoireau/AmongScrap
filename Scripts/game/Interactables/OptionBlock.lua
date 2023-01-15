@@ -263,7 +263,7 @@ function OptionBlock.cl_onInitMultiple3Button( self , index , data )
 end
 
 
-function OptionBlock.cl_onRefreshMultiple1Button(  self , index , data  )
+function OptionBlock.cl_onRefreshMultiple1Button( self , index , data )
 
     if self.cl.optionsMenu[index].value == 1 then
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
@@ -272,7 +272,7 @@ function OptionBlock.cl_onRefreshMultiple1Button(  self , index , data  )
     end
 end
 
-function OptionBlock.cl_onRefreshMultiple2Button( self , tag )
+function OptionBlock.cl_onRefreshMultiple2Button( self , index , data )
 
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
@@ -284,7 +284,7 @@ function OptionBlock.cl_onRefreshMultiple2Button( self , tag )
     end
 end
 
-function OptionBlock.cl_onRefreshMultiple3Button(  self , index , data )
+function OptionBlock.cl_cl_onRefreshMultiple3Button( self , index , data )
 
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
