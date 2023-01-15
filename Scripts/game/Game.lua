@@ -127,7 +127,7 @@ function SurvivalGame.server_onCreate( self )
 	self.sv.isWonkShipWorldExist = false
 	self.sv.isWonkShipDeadWorldExist = false
 	self.sv.witchWorldPlayersAre = "Overworld"
-
+	self.sv.whichWorld = "WonkShip" 
 
 	for i,v in ipairs(self.sv.saved.optionsMenu) do
 		if self.sv.saved.optionsMenu[i].value ~= self.sv.saved.gameOptions[v.optionsVarRef] then
@@ -1467,4 +1467,33 @@ function SurvivalGame.sv_e_setGameOptions( self , data )
 	for i,v in ipairs(self.sv.saved.optionsMenu) do 
 		self.sv.saved.gameOptions[v.optionsVarRef] = v.value
 	end
+	self:sv_o_setHowManyImpostor(self.sv.saved.gameOptions["howManyImpostor"])
+	self:sv_o_setWhichMap(self.sv.saved.gameOptions["whichMap"])
+	self:sv_o_setHowManyTasks(self.sv.saved.gameOptions)
+	self.storage:save( self.sv.saved )
+end
+
+
+
+
+
+
+-- SETTINGS --
+function SurvivalGame.sv_o_setHowManyImpostor( self , value )
+	g_impostorManager:sv_changeImpostorNumber(value)
+end
+
+function SurvivalGame.sv_o_setWhichMap( self , value )
+	if value == 1 then
+		self.sv.whichWorld = "WonkShip"
+	end
+
+end
+
+function SurvivalGame.sv_o_setHowManyTasks( self , data )
+	local sendData = {}
+	sendData.shortTasks = data.howManyShortTasks
+	sendData.normalTasks = data.howManyNormalTasks
+	sendData.longTasks = data.howManyLongTasks
+	g_taskManager:sv_setHowManyTasks(sendData)
 end

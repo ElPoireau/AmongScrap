@@ -2,7 +2,7 @@
     //Game Options
     "options" : {
         // General
-        "whichMap" : true, //"WonkShip",
+        "whichMap" : 1, //"WonkShip",
 
         // Impostor
         "howManyImpostor" : 1,
@@ -22,8 +22,8 @@
         },
 
         { // Pos 2
-            "type" : "OnOffButton" , // !! should be multiple button of something like that - so its temp
-            "textTag" : "OPTION_ON_WHICH_MAP",
+            "type" : "Multiple1Button" , // !! should be multiple button of something like that - so its temp
+            "textTag" : [ "OPTION_ON_WHICH_MAP", "OPTION_MAP_WONK_SHIP"],
             "optionsVarRef" : "whichMap"
         },
 

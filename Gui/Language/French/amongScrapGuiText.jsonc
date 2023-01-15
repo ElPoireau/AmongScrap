@@ -27,6 +27,7 @@
         "OPTION_HOW_MANY_SHORT_TASK" : "Nombre de tâche courte",
         "OPTION_HOW_MANY_NORMAL_TASK" : "Nombre de tâche moyenne",
         "OPTION_HOW_MANY_LONG_TASK" : "Nombre de tâches longue",
+        "OPTION_MAP_WONK_SHIP": "Vaisseau de la Wonk",
         
         // Tasks 
         // short

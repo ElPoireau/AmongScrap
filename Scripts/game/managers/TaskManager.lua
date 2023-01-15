@@ -266,6 +266,12 @@ function TaskManager.sv_onAllTasksFinished( self )
 end
 
 
+function TaskManager.sv_setHowManyTasks(self , data )
+	self.sv.numOfShortTask_PerRound = data.shortTasks
+	self.sv.numOfNormalTask_PerRound = data.normalTasks
+	self.sv.numOfLongTask_PerRound = data.longTasks
+end
+
 
 
 -- CLIENT --

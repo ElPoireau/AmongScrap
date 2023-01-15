@@ -173,6 +173,138 @@ end
 
 
 
+
+
+-- Button Multiple --
+
+function OptionBlock.cl_onInitMultiple1Button( self , index , data )
+    
+    self.cl.optionGui:setVisible("Pos" .. index .. "ButtonMultiple2", true)
+    self.cl.optionGui:setVisible("Pos" .. index .. "Button2", false)
+    
+    self.cl.optionGui:setButtonCallback("Pos" .. index .. "Button1", "cl_onButton1Callback")
+    
+    self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag[1] ))
+    self.cl.optionGui:setText("Pos" .. index .. "Button1", g_Language:cl_getTraduction(data.textTag[2] ))
+
+    if self.cl.optionsMenu[index].value == 0 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+   
+    elseif self.cl.optionsMenu[index].value == 1 then
+       self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
+
+    else
+        self.cl.optionsMenu[index].value = 0 
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+    end
+end
+
+
+function OptionBlock.cl_onInitMultiple2Button( self , index , data )
+    
+    self.cl.optionGui:setVisible("Pos" .. index .. "ButtonMultiple2", true)
+    
+    self.cl.optionGui:setButtonCallback("Pos" .. index .. "Button1", "cl_onButton1Callback")
+    self.cl.optionGui:setButtonCallback("Pos" .. index .. "Button2", "cl_onButton2Callback")
+
+    self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag[1] ))
+    self.cl.optionGui:setText("Pos" .. index .. "Button1", g_Language:cl_getTraduction(data.textTag[2] ))
+    self.cl.optionGui:setText("Pos" .. index .. "Button2", g_Language:cl_getTraduction(data.textTag[3] ))
+
+    if self.cl.optionsMenu[index].value == 1 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+
+    elseif self.cl.optionsMenu[index].value == 2 then
+       self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+       self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)
+
+    else
+        self.cl.optionsMenu[index].value = 1
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    end
+end
+
+function OptionBlock.cl_onInitMultiple3Button( self , index , data )
+    
+    self.cl.optionGui:setVisible("Pos" .. index .. "ButtonMultiple3", true)
+    
+    self.cl.optionGui:setButtonCallback("Pos" .. index .. "Button1", "cl_onButton1Callback")
+    self.cl.optionGui:setButtonCallback("Pos" .. index .. "Button2", "cl_onButton2Callback")
+    self.cl.optionGui:setButtonCallback("Pos" .. index .. "Button3", "cl_onButton3Callback")
+
+    self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag[1] ))
+    self.cl.optionGui:setText("Pos" .. index .. "Button1", g_Language:cl_getTraduction(data.textTag[2] ))
+    self.cl.optionGui:setText("Pos" .. index .. "Button2", g_Language:cl_getTraduction(data.textTag[3] ))
+    self.cl.optionGui:setText("Pos" .. index .. "Button3", g_Language:cl_getTraduction(data.textTag[4] ))
+
+    if self.cl.optionsMenu[index].value == 1 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", false)
+
+    elseif self.cl.optionsMenu[index].value == 2 then
+       self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+       self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)
+       self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", false)
+
+    elseif self.cl.optionsMenu[index].value == 3 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", true)
+
+    else
+        self.cl.optionsMenu[index].value = 0
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    end
+end
+
+function OptionBlock.cl_onButton1Callback( self , tag )
+    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    if self.cl.optionsMenu[index].value == 1 then
+        if self.cl.optionsMenu[index].type == "Multiple1Button" then
+            self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+            self.cl.optionsMenu[index].value = 0
+        end
+    elseif self.cl.optionsMenu[index].value ~= 1 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)    
+        self.cl.optionsMenu[index].value = 1
+    end
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", false)
+    self:cl_setGameOptions()
+end
+
+function OptionBlock.cl_onButton2Callback( self , tag )
+    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    if self.cl.optionsMenu[index].value ~= 2 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)    
+        self.cl.optionsMenu[index].value = 2
+    end
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    self:cl_setGameOptions()
+end
+
+function OptionBlock.cl_onButton3Callback( self , tag )
+    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    if self.cl.optionsMenu[index].value ~= 3 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", true)    
+        self.cl.optionsMenu[index].value = 3
+    end
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    self:cl_setGameOptions()
+end
+
+
+
+
+
+
 -- Slider --
 
 function OptionBlock.cl_onInitSlider( self , index , data )
