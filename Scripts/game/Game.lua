@@ -1357,12 +1357,11 @@ function SurvivalGame.sv_e_onSendingImpostor( self , data )
 	self.network:sendToClients("cl_e_onSendingCrewmate")
 
 	for _,p in ipairs(data) do
-			local pd = p:getPublicData()
-			pd.isImpostor = true
-			p:setPublicData()
-		end
-		self.network:sendToClient(p, "cl_e_onSendingImpostor", {isImpostor = true, impostors = data})
+		local pd = p:getPublicData()
+		pd.isImpostor = true
+		p:setPublicData()
 	end
+		self.network:sendToClient(p, "cl_e_onSendingImpostor", {isImpostor = true, impostors = data})
 end
 
 function SurvivalGame.cl_e_onSendingImpostor( self , data )
