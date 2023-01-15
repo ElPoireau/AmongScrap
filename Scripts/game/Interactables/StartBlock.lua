@@ -25,8 +25,9 @@ end
 
 -- content -- 
 
-
-
+function StartBlock.sv_onStart( self )
+    sm.event.sendToGame("sv_onStart")
+end
 
 
 
@@ -78,6 +79,7 @@ end
 -- content --
 
 function StartBlock.cl_onYesCallback( self )
+    self.network:sendToServer("sv_onStart")
     self:cl_onCloseStartPopUp()
 end
 

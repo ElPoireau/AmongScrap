@@ -922,7 +922,7 @@ end
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
 	local publicData = data.player:getPublicData()
 	publicData.isAlive = false
-	data.player:setPublicData()
+	data.player:setPublicData(publicData)
 
 	self:sv_onGoToWonkShipDead(data.player)
 	--self:sv_onCreateNewPlayerOnWonkShip(self.sv.wonkShipWorld, 0, 0, data.player, {nodeId = 69, onDeadWorld = true})
@@ -942,14 +942,15 @@ function SurvivalGame.sv_onStart( self )
 	if self.sv.isRoundStarted == false then
 		self:sv_e_setGameOptions(nil)
 		if self.sv.whichWorld == "WonkShip" then
-			self:sv_onGoToWonkShip()
+			self.sv.betterTimer:createNewTimer(10, self, SurvivalGame.sv_onGoToWonkShip )
 		end
+		self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_onInitRound )
+		self.network:sendToClients("cl_onStart")
 	end
-	self.network:sendToClients("cl_onStart")
 end
 
 function SurvivalGame.cl_onStart( self )
-
+	sm.gui.startFadeToBlack(0.3, 3)
 end
 ------
 
@@ -991,10 +992,10 @@ function SurvivalGame.sv_onInitRound( self )
 	if self.sv.isRoundStarted == false then
 
 		for i,v in ipairs(sm.player.getAllPlayers()) do
-			local pd = v:getPublicData()
+			local pd = v:getPublicData() or {}
 			pd.isAlive = true
 			pd.isImpostor = false
-			v:setPublicData()
+			v:setPublicData(pd)
 		end
 
 		self:sv_e_onInitImpostor()
@@ -1015,7 +1016,7 @@ function SurvivalGame.sv_onResetRound( self )
 			local pd = v:getPublicData()
 			pd.isAlive = true
 			pd.isImpostor = false
-			v:setPublicData()
+			v:setPublicData(pd)
 		end
 
 		self:sv_e_onResetImpostor()
@@ -1359,9 +1360,9 @@ function SurvivalGame.sv_e_onSendingImpostor( self , data )
 	for _,p in ipairs(data) do
 		local pd = p:getPublicData()
 		pd.isImpostor = true
-		p:setPublicData()
-	end
+		p:setPublicData(pd)
 		self.network:sendToClient(p, "cl_e_onSendingImpostor", {isImpostor = true, impostors = data})
+	end
 end
 
 function SurvivalGame.cl_e_onSendingImpostor( self , data )

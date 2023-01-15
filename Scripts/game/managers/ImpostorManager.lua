@@ -34,7 +34,7 @@ function ImpostorManager.sv_onInitImpostor( self )
 		table.insert(self.sv.allImpostor, impostor)
 	end
 	sm.event.sendToGame("sv_e_onSendingImpostor", self.sv.allImpostor)
-	print(self.sv.allImpostor)
+	--print(self.sv.allImpostor)
 end
 
 function ImpostorManager.sv_onResetImpostor( self )
@@ -63,7 +63,7 @@ function ImpostorManager.cl_onCreate( self )
 end
 
 function ImpostorManager.cl_onSendingImpostor( self , data )
-	print(data)
+	--print(data)
 	self.cl.isImpostor = data
 end
 
