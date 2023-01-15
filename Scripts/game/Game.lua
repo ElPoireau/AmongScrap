@@ -1467,14 +1467,22 @@ function SurvivalGame.sv_e_setGameOptions( self , data )
 	for i,v in ipairs(self.sv.saved.optionsMenu) do 
 		self.sv.saved.gameOptions[v.optionsVarRef] = v.value
 	end
+	for i,v in ipairs(self.sv.optionBlocks) do
+		sm.event.sendToInteractable(v,"sv_setOptionsMenu" ,self.sv.saved.optionsMenu)
+	end
 	self:sv_o_setHowManyImpostor(self.sv.saved.gameOptions["howManyImpostor"])
 	self:sv_o_setWhichMap(self.sv.saved.gameOptions["whichMap"])
 	self:sv_o_setHowManyTasks(self.sv.saved.gameOptions)
 	self.storage:save( self.sv.saved )
 end
 
-
-
+function SurvivalGame.sv_onDestroyOptionBlock( self , data )
+	for i,v in ipairs(self.sv.optionBlocks) do
+		if v == data then
+			table.remove( self.sv.optionBlocks, i )
+		end
+	end
+end
 
 
 

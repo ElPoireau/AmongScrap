@@ -24,7 +24,7 @@ function OptionBlock.server_onRefresh( self )
 end
 
 function OptionBlock.server_onDestroy( self )
-    
+    sm.event.sendToGame("sv_onDestroyOptionBlock", self.interactable)
 end
 
 -- CONTENT --
@@ -261,6 +261,46 @@ function OptionBlock.cl_onInitMultiple3Button( self , index , data )
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
     end
 end
+
+
+function OptionBlock.cl_onRefreshMultiple1Button(  self , index , data  )
+
+    if self.cl.optionsMenu[index].value == 1 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
+    elseif self.cl.optionsMenu[index].value == 0  then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+    end
+end
+
+function OptionBlock.cl_onRefreshMultiple2Button( self , tag )
+
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    
+    if self.cl.optionsMenu[index].value == 1 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
+    elseif self.cl.optionsMenu[index].value == 2  then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)
+    end
+end
+
+function OptionBlock.cl_onRefreshMultiple3Button(  self , index , data )
+
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", false)
+
+    if self.cl.optionsMenu[index].value == 1 then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
+    elseif self.cl.optionsMenu[index].value == 2  then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)
+    elseif self.cl.optionsMenu[index].value == 3  then
+        self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", true)
+    end
+end
+
+
+
 
 function OptionBlock.cl_onButton1Callback( self , tag )
     local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
