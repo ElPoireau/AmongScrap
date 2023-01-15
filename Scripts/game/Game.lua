@@ -919,6 +919,10 @@ end
 --- GENERAL ---
 
 -------
+function SurvivalGame.cl_setLockedControls( self , state )
+	sm.localPlayer.setLockedControls( state )
+	--self.cl.betterTimer.createNewTimer(40, self, SurvivalGame.cl_setLockedControls, true)
+end	
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
 	local publicData = data.player:getPublicData()
 	publicData.isAlive = false
@@ -961,26 +965,31 @@ function SurvivalGame.sv_onGameOver( self , data )
 		sm.log.info("[AMONG SCRAP] -- GAME OVER -- All tasks are finish.")
 		self.network:sendToClients("cl_onGameOver", data)
 		self:sv_onResetRound()
+		self.sv.betterTimer:createNewTimer(120, self, SurvivalGame.sv_onGoToOverworld)
 
 	elseif data.gameOverReason == "impostorKillAll" then
 		sm.log.info("[AMONG SCRAP] -- GAME OVER -- Impostors kill all crewmates.")
 		self.network:sendToClients("cl_onGameOver", data)
 		self:sv_onResetRound()
+		self.sv.betterTimer:createNewTimer(120, self, SurvivalGame.sv_onGoToOverworld)
 
 	elseif data.gameOverReason == "crewmateEjectAll" then
 		sm.log.info("[AMONG SCRAP] -- GAME OVER -- Crewmates eject all impostors.")
 		self.network:sendToClients("cl_onGameOver", data)
 		self:sv_onResetRound()
+		self.sv.betterTimer:createNewTimer(120, self, SurvivalGame.sv_onGoToOverworld)
 	end
 end
 
 function SurvivalGame.cl_onGameOver( self )
-	 --sm.gui.startFadeToBlack( 4, 2 )
+	--m.gui.startFadeToBlack( 4, 2 )
 	sm.gui.displayAlertText( "GAME OVER", 5 )
-	--self.cl.gameOverEffect = sm.effect.createEffect("SurvivalMusic")
-	--self.cl.gameOverEffect:setPosition(sm.localPlayer.getPlayer().character.worldPosition)
-	--self.cl.gameOverEffect:setAutoPlay(true)
-	--sm.event.sendToWorld(data.overworld, "cl_w_onGameOver")
+	sm.event.sendToWorld(sm.localPlayer.getPlayer().character:getWorld(), "cl_playEffect", {effect = "Builderguide - Stagecomplete", type = "effect" })
+	self.cl.betterTimer:createNewTimer(80, self, SurvivalGame.cl_delayed_1_onGameOver)
+end
+
+function SurvivalGame.cl_delayed_1_onGameOver( self )
+	sm.gui.startFadeToBlack( 0.5, 3 )
 end
 ------
 
@@ -1197,7 +1206,7 @@ function SurvivalGame.sv_onLeaveWonkShip( self )
 end
 
 function SurvivalGame.sv_onGoToWonkShipDead( self , player )
-	if witchWorldPlayersAre == "WonkShip" then
+	if self.sv.witchWorldPlayersAre == "WonkShip" then
 		local params = { player = player}
 		sm.event.sendToWorld( self.sv.wonkShipWorld, "sv_createCharacterOnWonkShipDead", params )
 		self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_setPlayerNameTag)

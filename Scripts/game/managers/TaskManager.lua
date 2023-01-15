@@ -62,7 +62,7 @@ function TaskManager.sv_onCreate( self )
 	self.sv.numOfNormalTask_PerRound = 0
 	self.sv.numOfLongTask_PerRound = 0
 
-	self.sv.howManyTaskPerPlayer = self.sv.numOfShortTask_PerRound + (self.sv.numOfNormalTask_PerRound * 2) + (self.sv.numOfLongTask_PerRound * 4)
+	self.sv.howManyTaskPerPlayer = self.sv.numOfShortTask_PerRound + (self.sv.numOfNormalTask_PerRound * 2) + (self.sv.numOfLongTask_PerRound * 4) or 1
 
 	self.sv.totalTask = 0
 	self.sv.totalPlayer = 0
@@ -235,12 +235,12 @@ function TaskManager.sv_onTaskFinished( self , data )
 	print(taskIndex)
 	print(self.sv.activeTask)
 	print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)]]
-	print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)
+	--print(self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished)
 	if haveTheTask == true then
 		if self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished == false then
 			self.sv.activeTask[playerIndex].tasks[taskIndex].isFinished = true
 			self.sv.taskFinished = self.sv.taskFinished + 1
-			sm.event.sendToGame("sv_e_onRefreshTaskProgressionBar", {taskProgression = math.floor((self.sv.taskFinished / self.sv.totalTask)* 10)})
+			sm.event.sendToGame("sv_e_onRefreshTaskProgressionBar", {taskProgression = math.floor((self.sv.taskFinished / self.sv.totalTask)* 10)}) -- WARNING DIVIDE BY 0
 		end
 	end
 	if self.sv.taskFinished == self.sv.totalTask then
@@ -267,6 +267,7 @@ function TaskManager.sv_setHowManyTasks(self , data )
 	self.sv.numOfShortTask_PerRound = data.shortTasks
 	self.sv.numOfNormalTask_PerRound = data.normalTasks
 	self.sv.numOfLongTask_PerRound = data.longTasks
+	self.sv.howManyTaskPerPlayer = self.sv.numOfShortTask_PerRound + (self.sv.numOfNormalTask_PerRound * 2) + (self.sv.numOfLongTask_PerRound * 4) or 1
 end
 
 
