@@ -4,32 +4,68 @@
     "languageTable" : { 
         
         // Task HUD
-        "HUD_BAR_TOTAL_TASK_COMPLETED" : "Tâches Complétées",
+        "HUD_BAR_TOTAL_TASK_COMPLETED" : "Progression des tâches",
         "HUD_BAR_TASK" : "Tâches",
 
         // Impostor HUD
         "HUD_ROLE_CREWMATE" : "Équipier",
         "HUD_ROLE_IMPOSTOR" : "Imposteur",  
-        "HUD_ROLE_NO_ROLE" : "Aucun rôle",
+        "HUD_ROLE_NO_ROLE" : "Aucun role",
 
         // Alert text 
-        "HUD_ALERT_KILLED_BY" : "Tué par",
+        "HUD_ALERT_KILLED_BY" : "tuée par",
         "HUD_ALERT_TASK_COMPLETED" : "Tâche complétée",
-        //"HUD_" : "Lorem Ipsum"
+        "HUD_ALERT_EMERGENCY_MEETING" : "RENCONTRE D'URGENCE !",
 
-        //option menu
-        "OPTION_HEADER" : "Paramètres de jeu",
-        "OPTION_GENERAL" : "GÉNÉRAL",
-        "OPTION_IMPOSTOR" : "IMPOSTEUR",
-        "OPTION_TASK" : "TÂCHES",
-        "OPTION_ON_WHICH_MAP" : "Carte",
-        "OPTION_HOW_MANY_IMPOSTOR" : "Nombre d'imposteur",
-        "OPTION_HOW_MANY_SHORT_TASK" : "Nombre de tâche courte",
-        "OPTION_HOW_MANY_NORMAL_TASK" : "Nombre de tâche moyenne",
-        "OPTION_HOW_MANY_LONG_TASK" : "Nombre de tâches longue",
-        "OPTION_MAP_WONK_SHIP": "Vaisseau de la Wonk",
+
+        // Interaction text
+        "HUD_INTERACTION_OPEN" : "Ouvrir",
+        "HUD_INTERACTION_CANT_OPEN" : "Impossible d'ouvrir",
+        "HUD_INTERACTION_KILL" : "Tuer",
+        "HUD_INTERACTION_REPORT" : "Rapporter",
+        "HUD_INTERACTION_START_GAME" : "Commencer la partie",
+        "HUD_INTERACTION_TASK_ALREADY_COMPLETED" : "Tâche déjà complétée",
         
+        // Kill reason
+        "HUD_MEETING_PLAYER_EJECTED" : "À été éjecté(e)",
+        "HUD_MEETING_EQUALITY" : "Personne n'a été éjecté (Égalité)",
+        "HUD_MEETING_SKIP" : "Personne n'a été éjecté",
+        "HUD_MEETING_NO_VOTE" : "Personne n'a été éjecté (Aucun vote)",
+
+        //Gui
+        "GUI_MEETING_WHO_IMPOSTOR" : "Qui est l'imposteur",
+        "GUI_MEETING_SKIP" : "Passer le vote",
+
+        // Chat
+        "CHAT_WELCOME_MESSAGE" : "Bienvenue sur Among Scrap", 
+
+        // Option title
+        "OPTION_HEADER" : "Paramètres",
+        "OPTION_GENERAL" : "Général",
+        "OPTION_IMPOSTOR" : "Imposteur",
+        "OPTION_TASK" : "Tâches",
+        "OPTION_MEETING" : "Réunions",
+
+        // General
+        "OPTION_ON_WHICH_MAP" : "Carte de jeu",
+        "OPTION_MAP_WONK_SHIP": "Navette de la Wonk",
+
+        // Impostor
+        "OPTION_HOW_MANY_IMPOSTOR" : "Nombre d'imposteur",
+        "OPTION_KILL_COOLDOWN_TIME" : "Temps entre deux meutres",
+
+        // Tasks
+        "OPTION_HOW_MANY_NORMAL_TASK" : "Nombre de tâche normal",
+        "OPTION_HOW_MANY_SHORT_TASK" : "Nombre de tâche rapide",
+        "OPTION_HOW_MANY_LONG_TASK" : "Nombre de tâche longue",
+
+        // Unit 
+        "UNIT_SECOND" : "Sec",
+
+
         // Tasks 
+        "TASK_IMPOSTOR" : "Vous êtes un imposteur !",
+
         // short
         "TASK_ID_s_1_1" : "s_1_1",
         "TASK_ID_s_2_1" : "s_2_1",
@@ -50,6 +86,9 @@
         "TASK_ID_l_1_1" : "l_1_1",
         "TASK_ID_l_1_2" : "l_1_2",
         "TASK_ID_l_1_3" : "l_1_3",
-        "TASK_ID_l_1_4" : "l_1_4"
+        "TASK_ID_l_1_4" : "l_1_4",
+
+        // Useless
+        "_JUSTFORTHECOMMA_" : null
     }
 }

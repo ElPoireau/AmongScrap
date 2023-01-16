@@ -14,5 +14,8 @@ function Language.cl_loadLanguage( self )
 end
 
 function Language.cl_getTraduction( self , tag )
+    if tag == nil then
+        return false
+    end
     return self.traductionTable.languageTable[tag] or "[AMONG SCRAP] LANGUAGE ERROR"
 end

@@ -130,24 +130,24 @@ function BaseTaskInterface.client_canInteract( self , character )
 				if isFinish == false then
 					sm.gui.setCenterIcon( "Use" )
 					local keyBindingText = sm.gui.getKeyBinding( "Use", true )
-					sm.gui.setInteractionText("", keyBindingText, "Open" )
+					sm.gui.setInteractionText("", keyBindingText, g_Language:cl_getTraduction("HUD_INTERACTION_OPEN") )
 					return true
 				else
 					sm.gui.setCenterIcon( "Use" )
 					local keyBindingText = sm.gui.getKeyBinding( "", true )
-					sm.gui.setInteractionText("<img spacing='0'>IconChallengeCompleted.png</img>","","Task already completed")
+					sm.gui.setInteractionText("<img spacing='0'>IconChallengeCompleted.png</img>","",g_Language:cl_getTraduction("HUD_INTERACTION_TASK_ALREADY_COMPLETED"))
 					return false
 				end
 			else
 				sm.gui.setCenterIcon( "Use" )
 				local keyBindingText = sm.gui.getKeyBinding( "", true )
-				sm.gui.setInteractionText("<img spacing='0'>icon_mainquest_medium.png</img>","","you don't have this task !")
+				sm.gui.setInteractionText("<img spacing='0'>icon_mainquest_medium.png</img>","", g_Language:cl_getTraduction("HUD_INTERACTION_CANT_OPEN"))
 				return false
 			end
 		else
 			sm.gui.setCenterIcon( "Use" )
 			local keyBindingText = sm.gui.getKeyBinding( "", true )
-			sm.gui.setInteractionText("<img spacing='0'>icon_mainquest_medium.png</img>","","you don't have task !")
+			sm.gui.setInteractionText("<img spacing='0'>icon_mainquest_medium.png</img>","", g_Language:cl_getTraduction("HUD_INTERACTION_CANT_OPEN"))
 			return false
 		end
 	end

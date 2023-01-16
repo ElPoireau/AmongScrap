@@ -522,7 +522,7 @@
 				<Property key="NeedMouse" value="true" />
 			</Widget>
 		</Widget>
-		<Widget type="TextBox" skin="TextBox" position_real="0 0 1 0.17">
+		<Widget type="TextBox" skin="TextBox" name="ImpostorText" position_real="0 0 1 0.17">
 			<Property key="TextAlign" value="Center VCenter" />
 			<Property key="Caption" value="WHO IS THE IMPOSTOR ?"/>
 			<Property key="FontName" value="SM_IntlText" />
@@ -531,7 +531,7 @@
 			<Property key="InheritsAlpha" value="false" />
 			<Property key="TextShadowColour" value="0 0 0 0.2" />
 		</Widget>
-		<Widget type="Widget" skin="HudBackgroundShadowLarge" position_real="0.06 0.89 0.34 0.07">
+		<Widget type="Widget" skin="HudBackgroundShadowLarge" name="SkipText" position_real="0.06 0.89 0.34 0.07">
 			<Widget type="TextBox" skin="TextBox" position_real="0 0 1 1">
 				<Property key="TextAlign" value="Center VCenter" />
 				<Property key="Caption" value="SKIP VOTE"/>

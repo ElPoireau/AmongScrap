@@ -80,5 +80,18 @@
 	"eac8a967-9e1a-4432-ac0b-ad1c16fae188": {
 		"description": "",
 		"title": "obj_interactive_task_interface_id_l_1_4"
+	},
+
+
+
+
+	"231db07d-b14d-48ba-919d-037e214e7ca1": {
+		"description": "",
+		"title": "obj_interactive_option_block"
+	},
+
+	"281fe90c-f456-4b29-b9d0-50165374d3f6": {
+		"description": "",
+		"title": "obj_interactive_start_block"
 	}
 }

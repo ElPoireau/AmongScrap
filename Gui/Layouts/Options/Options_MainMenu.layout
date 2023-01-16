@@ -1044,7 +1044,7 @@
 
                 <Widget type="Widget" skin="PanelEmpty" name="Pos8ButtonMultiple3" position_real="0 0 1 1"> 
                     <Property key="Visible" value="false" /> 
-                    <Widget type="TextBox" skin="TextBox" name="Pos2Text" position_real="0 0 0.350877 1">
+                    <Widget type="TextBox" skin="TextBox" name="Pos8Text" position_real="0 0 0.350877 1">
                         <Property key="Caption" value="MENU_OPTION" />
                         <Property key="FontName" value="SM_TextLabel" />
                         <Property key="TextAlign" value="Left VCenter" />
@@ -1117,6 +1117,704 @@
                     </Widget>
                 </Widget>
             </Widget>
+
+
+
+
+
+
+
+
+
+            <Widget type="Widget" skin="PanelEmpty" name="Pos9" position_real="0.05 0.71 0.9 0.08"> 
+                <Widget type="Widget" skin="PanelEmpty" name="Pos9ButtonOnOff" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos9Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos9ButtonOn" position_real="0.368421 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{ON_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos9Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos9ButtonOff" position_real="0.486842 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{OFF_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos9ButtonMultiple2" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos9Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos9Button1" position_real="0.368421 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos9Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos9Button2" position_real="0.626842 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos9ButtonMultiple3" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos9Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos9Button1" position_real="0.288421 0.05 0.238421 0.85">
+                        <Property key="Caption" value="#Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos9Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos9Button2" position_real="0.526842 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos9Button3" position_real="0.765263 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos9Slider" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos9Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="LABEL" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos9Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="PanelEmpty" name="Pos9Scroll" position_real="0.412281 0.10 0.587719 0.80">
+                    </Widget>
+                    <Widget type="TextBox" skin="TextBox" name="Pos9SliderValue" position_real="0.223684 0.25 0.175439 0.5">
+                        <Property key="FontName" value="SM_ListItem" />
+                        <Property key="Caption" value="-1234567890" />
+                        <Property key="TextAlign" value="Right VCenter" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="TextColour" value="1 0.831373 0.290196" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos9Label" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos9Text" position_real="0 0 0.986842 1">
+                        <Property key="Caption" value="Label" />
+                        <Property key="FontName" value="SM_Header" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="Alpha" value="0.5" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos9Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                </Widget>
+            </Widget>
+
+
+
+
+
+
+
+            <Widget type="Widget" skin="PanelEmpty" name="Pos10" position_real="0.05 0.79 0.9 0.08"> 
+                <Widget type="Widget" skin="PanelEmpty" name="Pos10ButtonOnOff" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos10Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos10ButtonOn" position_real="0.368421 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{ON_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos10Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos10ButtonOff" position_real="0.486842 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{OFF_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos10ButtonMultiple2" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos10Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos10Button1" position_real="0.368421 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos10Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos10Button2" position_real="0.626842 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos10ButtonMultiple3" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos10Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos10Button1" position_real="0.288421 0.05 0.238421 0.85">
+                        <Property key="Caption" value="#Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos10Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos10Button2" position_real="0.526842 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos10Button3" position_real="0.765263 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos10Slider" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos10Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="LABEL" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos10Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="PanelEmpty" name="Pos10Scroll" position_real="0.412281 0.10 0.587719 0.80">
+                    </Widget>
+                    <Widget type="TextBox" skin="TextBox" name="Pos10SliderValue" position_real="0.223684 0.25 0.175439 0.5">
+                        <Property key="FontName" value="SM_ListItem" />
+                        <Property key="Caption" value="-1234567890" />
+                        <Property key="TextAlign" value="Right VCenter" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="TextColour" value="1 0.831373 0.290196" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos10Label" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos10Text" position_real="0 0 0.986842 1">
+                        <Property key="Caption" value="Label" />
+                        <Property key="FontName" value="SM_Header" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="Alpha" value="0.5" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos10Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                </Widget>
+            </Widget>
+
+
+
+
+
+
+
+
+            <Widget type="Widget" skin="PanelEmpty" name="Pos11" position_real="0.05 0.79 0.9 0.08"> 
+                <Widget type="Widget" skin="PanelEmpty" name="Pos11ButtonOnOff" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos11Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos11ButtonOn" position_real="0.368421 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{ON_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos11Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos11ButtonOff" position_real="0.486842 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{OFF_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos11ButtonMultiple2" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos11Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos11Button1" position_real="0.368421 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos11Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos11Button2" position_real="0.626842 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos11ButtonMultiple3" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos11Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos11Button1" position_real="0.288421 0.05 0.238421 0.85">
+                        <Property key="Caption" value="#Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos11Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos11Button2" position_real="0.526842 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos11Button3" position_real="0.765263 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos11Slider" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos11Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="LABEL" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos11Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="PanelEmpty" name="Pos11Scroll" position_real="0.412281 0.10 0.587719 0.80">
+                    </Widget>
+                    <Widget type="TextBox" skin="TextBox" name="Pos11SliderValue" position_real="0.223684 0.25 0.175439 0.5">
+                        <Property key="FontName" value="SM_ListItem" />
+                        <Property key="Caption" value="-1234567890" />
+                        <Property key="TextAlign" value="Right VCenter" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="TextColour" value="1 0.831373 0.290196" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos11Label" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos11Text" position_real="0 0 0.986842 1">
+                        <Property key="Caption" value="Label" />
+                        <Property key="FontName" value="SM_Header" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="Alpha" value="0.5" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos11Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                </Widget>
+            </Widget>
+
+
+
+
+
+
+
+
+
+
+            <Widget type="Widget" skin="PanelEmpty" name="Pos12" position_real="0.05 0.87 0.9 0.08"> 
+                <Widget type="Widget" skin="PanelEmpty" name="Pos12ButtonOnOff" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos12Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos12ButtonOn" position_real="0.368421 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{ON_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos12Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos12ButtonOff" position_real="0.486842 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{OFF_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos12ButtonMultiple2" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos12Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos12Button1" position_real="0.368421 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos12Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos12Button2" position_real="0.626842 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos12ButtonMultiple3" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos12Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos12Button1" position_real="0.288421 0.05 0.238421 0.85">
+                        <Property key="Caption" value="#Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos12Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos12Button2" position_real="0.526842 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos12Button3" position_real="0.765263 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos12Slider" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos12Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="LABEL" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos12Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="PanelEmpty" name="Pos12Scroll" position_real="0.412281 0.10 0.587719 0.80">
+                    </Widget>
+                    <Widget type="TextBox" skin="TextBox" name="Pos12SliderValue" position_real="0.223684 0.25 0.175439 0.5">
+                        <Property key="FontName" value="SM_ListItem" />
+                        <Property key="Caption" value="-1234567890" />
+                        <Property key="TextAlign" value="Right VCenter" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="TextColour" value="1 0.831373 0.290196" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos12Label" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos12Text" position_real="0 0 0.986842 1">
+                        <Property key="Caption" value="Label" />
+                        <Property key="FontName" value="SM_Header" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="Alpha" value="0.53" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos12Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                </Widget>
+            </Widget>
+
+
+
+
+
+
+
+            <Widget type="Widget" skin="PanelEmpty" name="Pos13" position_real="0.05 0.95 0.9 0.08"> 
+                <Widget type="Widget" skin="PanelEmpty" name="Pos13ButtonOnOff" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos13Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos13ButtonOn" position_real="0.368421 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{ON_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos13Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos13ButtonOff" position_real="0.486842 0.05 0.118421 0.85">
+                        <Property key="Caption" value="#{OFF_CAPS}" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos13ButtonMultiple2" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos13Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos13Button1" position_real="0.368421 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos13Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos13Button2" position_real="0.626842 0.05 0.258421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos13ButtonMultiple3" position_real="0 0 1 1"> 
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos13Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="MENU_OPTION" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos13Button1" position_real="0.288421 0.05 0.238421 0.85">
+                        <Property key="Caption" value="#Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos13Line" position_real="0 0.960 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos13Button2" position_real="0.526842 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                    <Widget type="Button" skin="SettingsButton" name="Pos13Button3" position_real="0.765263 0.05 0.238421 0.85">
+                        <Property key="Caption" value="Lorem ipsum" />
+                        <Property key="FontName" value="SM_ButtonSmall" />
+                        <Property key="TextAlign" value="Center" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos13Slider" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos13Text" position_real="0 0 0.350877 1">
+                        <Property key="Caption" value="LABEL" />
+                        <Property key="FontName" value="SM_TextLabel" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos13Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="PanelEmpty" name="Pos13Scroll" position_real="0.412281 0.10 0.587719 0.80">
+                    </Widget>
+                    <Widget type="TextBox" skin="TextBox" name="Pos13SliderValue" position_real="0.223684 0.25 0.175439 0.5">
+                        <Property key="FontName" value="SM_ListItem" />
+                        <Property key="Caption" value="-1234567890" />
+                        <Property key="TextAlign" value="Right VCenter" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="TextColour" value="1 0.831373 0.290196" />
+                    </Widget>
+                </Widget>
+
+
+
+                <Widget type="Widget" skin="PanelEmpty" name="Pos13Label" position_real="0 0 1 1">
+                    <Property key="Visible" value="false" /> 
+                    <Widget type="TextBox" skin="TextBox" name="Pos13Text" position_real="0 0 0.986842 1">
+                        <Property key="Caption" value="Label" />
+                        <Property key="FontName" value="SM_Header" />
+                        <Property key="TextAlign" value="Left VCenter" />
+                        <Property key="Alpha" value="0.5" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                    <Widget type="Widget" skin="WhiteSkin" name="Pos13Line" position_real="0 0.975 0.991228 0.025">
+                        <Property key="Alpha" value="0.05" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                    </Widget>
+                </Widget>
+            </Widget>
+
+
 
 
 

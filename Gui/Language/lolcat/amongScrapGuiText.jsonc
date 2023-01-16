@@ -15,24 +15,57 @@
         // Alert text 
         "HUD_ALERT_KILLED_BY" : "Lorem Ipsum",
         "HUD_ALERT_TASK_COMPLETED" : "Lorem Ipsum",
-        //"HUD_" : "Lorem Ipsum"
+        "HUD_ALERT_EMERGENCY_MEETING" : "Lorem Ipsum",
 
-        //option menu
+
+        // Interaction text
+        "HUD_INTERACTION_OPEN" : "Lorem Ipsum",
+        "HUD_INTERACTION_CANT_OPEN" : "Lorem Ipsum",
+        "HUD_INTERACTION_KILL" : "Lorem Ipsum",
+        "HUD_INTERACTION_REPORT" : "Lorem Ipsum",
+        "HUD_INTERACTION_START_GAME" : "Lorem Ipsum",
+        "HUD_INTERACTION_TASK_ALREADY_COMPLETED" : "Lorem Ipsum",
+        
+        // Kill reason
+        "HUD_MEETING_PLAYER_EJECTED" : "Lorem Ipsum",
+        "HUD_MEETING_EQUALITY" : "Lorem Ipsum",
+        "HUD_MEETING_SKIP" : "Lorem Ipsum",
+        "HUD_MEETING_NO_VOTE" : "Lorem Ipsum",
+
+        //Gui
+        "GUI_MEETING_WHO_IMPOSTOR" : "Lorem Ipsum",
+        "GUI_MEETING_SKIP" : "Lorem Ipsum",
+
+        // Chat
+        "CHAT_WELCOME_MESSAGE" : "Lorem Ipsum", 
+
+        // Option title
         "OPTION_HEADER" : "Lorem Ipsum",
         "OPTION_GENERAL" : "Lorem Ipsum",
         "OPTION_IMPOSTOR" : "Lorem Ipsum",
         "OPTION_TASK" : "Lorem Ipsum",
+        "OPTION_MEETING" : "Lorem Ipsum",
+
+        // General
         "OPTION_ON_WHICH_MAP" : "Lorem Ipsum",
+        "OPTION_MAP_WONK_SHIP": "Lorem Ipsum",
+
+        // Impostor
         "OPTION_HOW_MANY_IMPOSTOR" : "Lorem Ipsum",
+        "OPTION_KILL_COOLDOWN_TIME" : "Lorem Ipsum",
+
+        // Tasks
         "OPTION_HOW_MANY_NORMAL_TASK" : "Lorem Ipsum",
         "OPTION_HOW_MANY_SHORT_TASK" : "Lorem Ipsum",
         "OPTION_HOW_MANY_LONG_TASK" : "Lorem Ipsum",
-        "OPTION_MAP_WONK_SHIP": "Lorem Ipsum",
 
-
+        // Unit 
+        "UNIT_SECOND" : "Lorem Ipsum",
 
 
         // Tasks 
+        "TASK_IMPOSTOR" : "Lorem Ipsum",
+
         // short
         "TASK_ID_s_1_1" : "s_1_1",
         "TASK_ID_s_2_1" : "s_2_1",
@@ -53,6 +86,9 @@
         "TASK_ID_l_1_1" : "l_1_1",
         "TASK_ID_l_1_2" : "l_1_2",
         "TASK_ID_l_1_3" : "l_1_3",
-        "TASK_ID_l_1_4" : "l_1_4"
+        "TASK_ID_l_1_4" : "l_1_4",
+
+        // Useless
+        "_JUSTFORTHECOMMA_" : null
     }
 }

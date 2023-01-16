@@ -20,8 +20,8 @@ function BetterTimer.onFixedUpdate( self )
 end
 
 -- content
-function BetterTimer.createNewTimer( self , maxTick , callClass , callFunction , data )
-    table.insert(self.timer, {tick = 0, maxTick = maxTick, callClass = callClass, callFunction = callFunction, data = data or nil} )
+function BetterTimer.createNewTimer( self , maxTick , callClass , callFunction , data , tag )
+    table.insert(self.timer, {tick = 0, maxTick = maxTick, callClass = callClass, callFunction = callFunction, data = data or nil, tag = tag } )
 end
 
 function BetterTimer.onTimeOver( self , timer )
@@ -32,4 +32,14 @@ function BetterTimer.onTimeOver( self , timer )
     else
         func(class, timer.data)
     end
+end
+
+function BetterTimer.getCurrentTickByTag( self , tag )
+    local tick = 0
+    for i,v in ipairs(self.timer) do
+        if tag == v.tag then
+            return v.tick
+        end
+    end
+    return 0
 end

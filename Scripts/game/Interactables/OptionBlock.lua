@@ -363,14 +363,16 @@ end
 -- Slider --
 
 function OptionBlock.cl_onInitSlider( self , index , data )
+    local unit = g_Language:cl_getTraduction(data.unit) or ""
     self.cl.optionGui:setVisible("Pos" .. index .. "Slider", true)
-    self.cl.optionGui:createHorizontalSlider( "Pos" .. index .. "Scroll", 10, data.value, "cl_onPos" .. index .."SliderCallback" )
+    self.cl.optionGui:createHorizontalSlider( "Pos" .. index .. "Scroll", data.maxValue + 1 or 10, data.value, "cl_onPos" .. index .."SliderCallback" )
     self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag ))
-    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value))
+    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value) .. " " .. unit)
 end
 
 function OptionBlock.cl_onRefreshSlider( self , index , data )
-    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value))
+    local unit = g_Language:cl_getTraduction(data.unit) or ""
+    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value) .. " " .. unit)
     self.cl.optionGui:setSliderPosition("Pos" .. index .. "Scroll", data.value)
 end
 
@@ -380,8 +382,9 @@ function cl_initSliderFunction( data ) -- I am raging to to this instead of just
     for i = 1, #data do
         OptionBlock["cl_onPos" .. i .. "SliderCallback"] = function( self , value , tag )
             local index = i
+            local unit = g_Language:cl_getTraduction(data.unit) or ""
             self.cl.optionsMenu[index].value = value
-            self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(self.cl.optionsMenu[index].value))
+            self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(self.cl.optionsMenu[index].value) .. " " .. unit)
             self:cl_setGameOptions()
         end
     end

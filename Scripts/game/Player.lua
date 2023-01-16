@@ -93,7 +93,11 @@ function SurvivalPlayer.client_onCreate( self )
 
 	self.cl.canKill = false
 	self.cl.canReport = false
+	self.cl.killCooldown = false
+	self.cl.killCooldownTime = 1
 
+	self.cl.betterTimer = BetterTimer()
+	self.cl.betterTimer:onCreate()
 
 	if self.player == sm.localPlayer.getPlayer() then
 		if g_survivalHudTaskBar then
@@ -116,33 +120,42 @@ function SurvivalPlayer.client_onCreate( self )
 		-----------------------------------------------------------------
 
 		sm.gui.chatMessage("============================================")
-		sm.gui.chatMessage("Welcome in Among Scrap (Version 0.2.1)")
+		sm.gui.chatMessage(g_Language:cl_getTraduction("CHAT_WELCOME_MESSAGE") .. " (Version 0.2.1)")
 		sm.gui.chatMessage("============================================")
 		sm.gui.chatMessage([[
 		-- CHANGELOG (0.2.1) --
 -- General :
 	· New language support (Work in progress)
+	· New savable game settings support 
 
 -- Mapping :
-	· Added the first version of Wonk Ship
-	· Create new world copy of Wonk Ship for dead player
+	· Add the first version of Wonk Ship
+	· add the dead player teleport system
+	· Overworld no longer saved
 
 -- In the code :
 	· Make a full revision of the tasks storage 
 	· New folder 'Tasks' that contain all tasks dataset
-	· Tasks script are now unique with a common script 'baseTaskInterface'
+	· Tasks script are now unique with a common script 'baseTaskInterface' 
 	· Tasks are now more modulable 
 	· New timer better than the dev timer
 	· add new world for dead players
 	· Add new unit character when pepole be killed
+	· Add new name tag for impostor and player
+	· Add kill cooldown for impostor 
+	· add lockingControls on loading
+	· add fadeOut on loading
+	· Improve the metting looks
 
 -- Fix :	
 	· Fix the player restrictions on all maps
 	· Fix the active tasks tables in multiplayer
 	· Fix the problem when only one vote can kill a player in meeting
+	· Fix a bug when complete task can occure a division by 0
 
--- New command :
-
+-- New block:
+	· Option block 
+	· Start block
 
 ]])
 --[[
@@ -320,23 +333,28 @@ end
 
 function SurvivalPlayer.client_onUpdate( self )
 	if self.cl.isConscious then
-		local FuckingUselessWhyTheDevsAddThisReturn, result = sm.localPlayer.getRaycast( 15 )
+		local useless, result = sm.localPlayer.getRaycast( 15 )
 		if result.type == "character" then
 			local character = result:getCharacter()
 			if character:isDowned() then
 				sm.gui.setCenterIcon( "Use" )
 				local keyBindingText =  sm.gui.getKeyBinding( "Use", true )
-				sm.gui.setInteractionText( "", keyBindingText, "Report" )
+				sm.gui.setInteractionText( "", keyBindingText, g_Language:cl_getTraduction("HUD_INTERACTION_REPORT"))
 				self.cl.canReport = true
 				self.cl.canKill = false
 				self.cl.impostorVictim = false
 			else
 				if self.cl.isImpostor == true then
-					sm.gui.setCenterIcon( "Use" )
-					local keyBindingText =  sm.gui.getKeyBinding( "Use", true )
-					sm.gui.setInteractionText( "", keyBindingText, "Kill" )
-					self.cl.canKill = true
-					self.cl.impostorVictim = character:getPlayer()
+					if self.cl.KillCooldown == false then
+						sm.gui.setCenterIcon( "Use" )
+						local keyBindingText =  sm.gui.getKeyBinding( "Use", true )
+						sm.gui.setInteractionText( "", keyBindingText, g_Language:cl_getTraduction("HUD_INTERACTION_KILL") )
+						self.cl.canKill = true
+						self.cl.impostorVictim = character:getPlayer()
+					else
+						sm.gui.setInteractionText( "", "", g_Language:cl_getTraduction("HUD_INTERACTION_COOLDOWN"),"", tostring(math.floor((40 * self.cl.killCooldownTime - self.cl.betterTimer:getCurrentTickByTag("KillCooldown")) / 40)))
+						self.cl.canKill = false
+					end
 				else
 					self.cl.canReport = false
 				end
@@ -449,6 +467,9 @@ function SurvivalPlayer.server_onFixedUpdate( self, dt )
 	end
 end
 
+function SurvivalPlayer.client_onFixedUpdate( self )
+	self.cl.betterTimer:onFixedUpdate()
+end
 
 function SurvivalPlayer.server_onInventoryChanges( self, container, changes )
 	--QuestManager.Sv_OnEvent( QuestEvent.InventoryChanges, { container = container, changes = changes } )
@@ -753,6 +774,9 @@ end
 
 function SurvivalPlayer.cl_i_onImpostorKill( self , data )
 	sm.event.sendToGame("cl_e_onImpostorKill", data)
+
+	self.cl.killCooldown = true
+	self.cl.betterTimer:createNewTimer(40*30, self, SurvivalPlayer.cl_setKillCooldown, false, "KillCooldown")
 end
 
 
@@ -762,13 +786,26 @@ function SurvivalPlayer.cl_onSendingImpostor( self , data )
 
 	if self.cl.isImpostor == true then
 		self:cl_refreshImpostorGui(true)
+
+		self.cl.killCooldown = true
+		self.cl.betterTimer:createNewTimer(40 * self.cl.killCooldownTime, self, SurvivalPlayer.cl_setKillCooldown, false, "KillCooldown")
+	
 	elseif self.cl.isImpostor == false then
 		self:cl_refreshImpostorGui(false)
 	end
 end
 
+function SurvivalPlayer.cl_setKillCooldown( self , data )
+	self.cl.killCooldown = data
+end
+
+function SurvivalPlayer.cl_setKillCooldownTime( self , data )
+	self.cl.killCooldownTime = data or 1
+end
+
 function SurvivalPlayer.cl_onResetImpostor( self )
 		self.cl.isImpostor = false
+		self.cl.killCooldown = false
 		self:cl_refreshImpostorGui(nil)
 end
 
@@ -814,7 +851,7 @@ function SurvivalPlayer.cl_refreshTaskText( self , data )
 			g_survivalHudTaskList:setVisible('YTaskText1', true)
 			g_survivalHudTaskList:setVisible('GTaskText1', false)
 
-			g_survivalHudTaskList:setText('YTaskText1', "You're an impostor, kill and sabotage to win!")
+			g_survivalHudTaskList:setText('YTaskText1', g_Language:cl_getTraduction("TASK_IMPOSTOR"))
 		else
 			if not self.taskMenuOpen then
 				g_survivalHudTaskList:setVisible("TaskListBarNotification", true)

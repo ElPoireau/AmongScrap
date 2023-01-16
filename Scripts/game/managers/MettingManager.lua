@@ -68,22 +68,22 @@ end
 function MettingManager.sv_onEndingVote( self )
 	local killedValue = 0
 	local killedIndex = 0
-	local killedReason = "No votes"
+	local killReason = "HUD_MEETING_NO_VOTE"
 	for i,v in ipairs(self.sv.votes) do
 		if v > killedValue then
 			killedValue = v
 			killedIndex = i
-			killedReason = "Ejected"
+			killReason = "HUD_MEETING_PLAYER_EJECTED"
 		elseif v == killedValue then
 			killedValue = v
 			killedIndex = 11
-			killReason = "Equality"
+			killReason = "HUD_MEETING_EQUALITY"
 		end
-		if killedIndex == 11 and killReason == "Ejected" then
-			killReason = "Skip"
+		if killedIndex == 11 and killReason == "HUD_MEETING_PLAYER_EJECTED" then
+			killReason = "HUD_MEETING_SKIP"
 		end
 	end
-	local sendData = {allVotes = self.sv.votes, killed = self.sv.mettingGuiOrder[killedIndex].player or nil, killedIndex = killedIndex, killReason = killReason}
+	local sendData = {allVotes = self.sv.votes, killed = self.sv.mettingGuiOrder[killedIndex].player or false, killedIndex = killedIndex, killReason = killReason}
 	sm.event.sendToGame("sv_e_onEndingVote", sendData)
 
 	for i = 1,11 do
@@ -162,6 +162,9 @@ end
 function MettingManager.cl_onInitMetting( self , data )
 	self.cl.mettingGuiOrder = data
 
+	self.cl.g_survivalHudMetting:setText("ImpostorText", g_Language:cl_getTraduction("GUI_MEETING_WHO_IMPOSTOR"))
+	self.cl.g_survivalHudMetting:setText("SkipText", g_Language:cl_getTraduction("GUI_MEETING_SKIP"))
+
 	for i = 1,10 do
 		self.cl.g_survivalHudMetting:setText(string.format("MettingPlayerText%d", i), "")
 		self.cl.g_survivalHudMetting:setVisible(string.format("MettingPlayerUserButton%d", i), false)
@@ -233,21 +236,26 @@ end
 function MettingManager.cl_onEndingVote( self , data )
 	for i1,v1 in ipairs(data.allVotes) do
 		for i2 = 1,v1 do
-			self.cl.betterTimer:createNewTimer(i2 * 5, self, MettingManager.cl_delayed_1_onEndingVote, {i1 = i1, i2 = i2})
+			self.cl.betterTimer:createNewTimer(i2 * 10, self, MettingManager.cl_delayed_1_onEndingVote, {i1 = i1, i2 = i2})
 		end
 	end
-	self.cl.betterTimer:createNewTimer(80, self, MettingManager.cl_delayed_2_onEndingVote)
-	
-	local ejectText = "Someone has been ejected"
-	local sendText = ""
-	for i = 1, #ejectText do
-		self.cl.betterTimer:createNewTimer(120 + (i*4), self, MettingManager.cl_delayed_3_onEndingVote, {text = ejectText:sub(1, i)})
+	self.cl.betterTimer:createNewTimer(150, self, MettingManager.cl_delayed_2_onEndingVote)
+
+	local ejectText =  ""
+	if data.killed ~= false then
+		ejectText = data.killed:getName() or ""
 	end
-	self.cl.betterTimer:createNewTimer(180 + (#ejectText * 4), self, MettingManager.cl_delayed_2_onEndingVote)
+	
+	local sendText = ""
+	ejectText = ejectText .. g_Language:cl_getTraduction(data.killReason) or ""
+
+	for i = 1, #ejectText do
+		self.cl.betterTimer:createNewTimer(200 + (i*4), self, MettingManager.cl_delayed_3_onEndingVote, {text = ejectText:sub(1, i)})
+	end
+	self.cl.betterTimer:createNewTimer(240 + (#ejectText * 4), self, MettingManager.cl_delayed_2_onEndingVote)
 
 	self.cl.HasMetting = false
-	self.cl.betterTimer:createNewTimer(80, self, MettingManager.cl_delayed_2_onEndingVote)
-	self.cl.betterTimer:createNewTimer(90, self, MettingManager.cl_onCloseMettingGui)
+	self.cl.betterTimer:createNewTimer(170, self, MettingManager.cl_onCloseMettingGui)
 end
 
 function MettingManager.cl_delayed_1_onEndingVote( self , data )

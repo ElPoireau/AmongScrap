@@ -161,8 +161,8 @@ function TaskManager.sv_onInitTask( self )
 			end
 		end
 
-		if v1:getPublicData().impostor then
-			if v1:getPublicData().impostor == true then
+		if v1:getPublicData().isImpostor then
+			if v1:getPublicData().isImpostor == true then
 				--self.sv.PlayerPlaying = i
 				self.sv.activeTask[i1] = {player = v1, tasks = {}, impostor = true}
 			else

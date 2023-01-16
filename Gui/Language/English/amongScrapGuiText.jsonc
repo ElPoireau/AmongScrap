@@ -4,7 +4,7 @@
     "languageTable" : { 
         
         // Task HUD
-        "HUD_BAR_TOTAL_TASK_COMPLETED" : "Total tasks completed",
+        "HUD_BAR_TOTAL_TASK_COMPLETED" : "Progression of tasks",
         "HUD_BAR_TASK" : "Tasks",
 
         // Impostor HUD
@@ -14,10 +14,58 @@
 
         // Alert text 
         "HUD_ALERT_KILLED_BY" : "Killed by",
-        "HUD_ALERT_TASK_COMPLETED" : "Task completed",
-        //"HUD_" : "Lorem Ipsum"
+        "HUD_ALERT_TASK_COMPLETED" : "Task complete",
+        "HUD_ALERT_EMERGENCY_MEETING" : "EMERGENCY MEETING",
+
+
+        // Interaction text
+        "HUD_INTERACTION_OPEN" : "Open",
+        "HUD_INTERACTION_CANT_OPEN" : "you can open it",
+        "HUD_INTERACTION_KILL" : "Kill",
+        "HUD_INTERACTION_REPORT" : "Report",
+        "HUD_INTERACTION_START_GAME" : "Start the game",
+        "HUD_INTERACTION_TASK_ALREADY_COMPLETED" : "Task already completed",
+        
+        // Kill reason
+        "HUD_MEETING_PLAYER_EJECTED" : "has been ejected",
+        "HUD_MEETING_EQUALITY" : "No one was ejected (equality)",
+        "HUD_MEETING_SKIP" : "No one was ejected",
+        "HUD_MEETING_NO_VOTE" : "No one was ejected (no vote)",
+
+        //Gui
+        "GUI_MEETING_WHO_IMPOSTOR" : "Who is the impostor ?",
+        "GUI_MEETING_SKIP" : "SKIP VOTE",
+
+        // Chat
+        "CHAT_WELCOME_MESSAGE" : "Welcome in Among Scrap", 
+
+        // Option title
+        "OPTION_HEADER" : "Game settings",
+        "OPTION_GENERAL" : "General",
+        "OPTION_IMPOSTOR" : "Impostor",
+        "OPTION_TASK" : "Task",
+        "OPTION_MEETING" : "Meeting",
+
+        // General
+        "OPTION_ON_WHICH_MAP" : "Map",
+        "OPTION_MAP_WONK_SHIP": "Wonk Ship",
+
+        // Impostor
+        "OPTION_HOW_MANY_IMPOSTOR" : "Number of impostor",
+        "OPTION_KILL_COOLDOWN_TIME" : "kill cooldown time",
+
+        // Tasks
+        "OPTION_HOW_MANY_NORMAL_TASK" : "Number of normal task",
+        "OPTION_HOW_MANY_SHORT_TASK" : "Number of short task",
+        "OPTION_HOW_MANY_LONG_TASK" : "Number of long task",
+
+        // Unit 
+        "UNIT_SECOND" : "Sec",
+
 
         // Tasks 
+        "TASK_IMPOSTOR" : "You're an impostor !",
+
         // short
         "TASK_ID_s_1_1" : "s_1_1",
         "TASK_ID_s_2_1" : "s_2_1",
@@ -38,6 +86,9 @@
         "TASK_ID_l_1_1" : "l_1_1",
         "TASK_ID_l_1_2" : "l_1_2",
         "TASK_ID_l_1_3" : "l_1_3",
-        "TASK_ID_l_1_4" : "l_1_4"
+        "TASK_ID_l_1_4" : "l_1_4",
+
+        // Useless
+        "_JUSTFORTHECOMMA_" : null
     }
 }

@@ -29,8 +29,8 @@ dofile( "$CONTENT_DATA/Scripts/util/BetterTimer.lua" )
 ---@field cl table
 ---@field warehouses table
 SurvivalGame = class( nil )
-SurvivalGame.defaultInventorySize = 40
-SurvivalGame.enableLimitedInventory = false -- !!!!! FALSE ONLY FOR DEV !!!!! -- (default to true)
+SurvivalGame.defaultInventorySize = 10
+SurvivalGame.enableLimitedInventory = true -- !!!!! FALSE ONLY FOR DEV !!!!! -- (default to true)
 SurvivalGame.enableRestrictions = true -- set true to have good game
 SurvivalGame.enableFuelConsumption = true
 SurvivalGame.enableAmmoConsumption = true
@@ -134,9 +134,7 @@ function SurvivalGame.server_onCreate( self )
 			self.sv.saved.optionsMenu[i].value = self.sv.saved.gameOptions[v.optionsVarRef]
 		end
 	end
-	self:sv_o_setHowManyImpostor(self.sv.saved.gameOptions["howManyImpostor"])
-	self:sv_o_setWhichMap(self.sv.saved.gameOptions["whichMap"])
-	self:sv_o_setHowManyTasks(self.sv.saved.gameOptions)
+	self:sv_e_setGameOptions(nil)
 end
 
 function SurvivalGame.server_onRefresh( self )
@@ -687,34 +685,34 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 	if true then --Player is first time joiners
 		local inventory = player:getInventory()
 
-		sm.container.beginTransaction()
+		--sm.container.beginTransaction()
 
 		if g_survivalDev then
 			--Hotbar
-			sm.container.setItem( inventory, 0,obj_consumable_longsandwich, 1 )
+			--sm.container.setItem( inventory, 0,obj_consumable_longsandwich, 1 )
 
 			--sm.container.setItem( inventory, 1, obj_interactive_task_interface_id_1, 1 )
-			sm.container.setItem( inventory, 7, obj_plantables_potato, 50 )
-			sm.container.setItem( inventory, 8, tool_lift, 1 )
-			sm.container.setItem( inventory, 9, tool_connect, 1 )
+			--sm.container.setItem( inventory, 7, obj_plantables_potato, 50 )
+			--sm.container.setItem( inventory, 8, tool_lift, 1 )
+			--sm.container.setItem( inventory, 9, tool_connect, 1 )
 
 			--Actual inventory
-			sm.container.setItem( inventory, 10, tool_paint, 1 )
-			sm.container.setItem( inventory, 11, tool_weld, 1 )
+			--sm.container.setItem( inventory, 10, tool_paint, 1 )
+			--sm.container.setItem( inventory, 11, tool_weld, 1 )
 		else
-			sm.container.setItem( inventory, 0,obj_consumable_longsandwich, 1 )
+			--sm.container.setItem( inventory, 0,obj_consumable_longsandwich, 1 )
 
-			sm.container.setItem( inventory, 1, tool_spudgun, 1 )
-			sm.container.setItem( inventory, 7, obj_plantables_potato, 50 )
-			sm.container.setItem( inventory, 8, tool_lift, 1 )
-			sm.container.setItem( inventory, 9, tool_connect, 1 )
+			--sm.container.setItem( inventory, 1, tool_spudgun, 1 )
+			--sm.container.setItem( inventory, 7, obj_plantables_potato, 50 )
+			--sm.container.setItem( inventory, 8, tool_lift, 1 )
+			--sm.container.setItem( inventory, 9, tool_connect, 1 )
 
 			--Actual inventory
-			sm.container.setItem( inventory, 10, tool_paint, 1 )
-			sm.container.setItem( inventory, 11, tool_weld, 1 )
+			--sm.container.setItem( inventory, 10, tool_paint, 1 )
+			--sm.container.setItem( inventory, 11, tool_weld, 1 )
 		end
 
-		sm.container.endTransaction()
+		--sm.container.endTransaction()
 
 		local spawnPoint = sm.vec3.new( 0.0, 0.0, 100.0 )
 
@@ -925,7 +923,7 @@ function SurvivalGame.cl_setLockedControls( self , state )
 end	 
 
 function SurvivalGame.sv_e_onPlayerKilled( self , data )
-	local publicData = data.player:getPublicData()
+	local publicData = data.player:getPublicData() or {}
 	publicData.isAlive = false
 	data.player:setPublicData(publicData)
 
@@ -949,12 +947,14 @@ function SurvivalGame.sv_onStart( self )
 		if self.sv.whichWorld == "WonkShip" then
 			self.sv.betterTimer:createNewTimer(10, self, SurvivalGame.sv_onGoToWonkShip )
 		end
-		self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_onInitRound )
+		self.sv.betterTimer:createNewTimer(70, self, SurvivalGame.sv_onInitRound )
 		self.network:sendToClients("cl_onStart")
 	end
 end
 
 function SurvivalGame.cl_onStart( self )
+	self.cl.betterTimer:createNewTimer(10, self, SurvivalGame.cl_setLockedControls, true)
+	self.cl.betterTimer:createNewTimer(123, self, SurvivalGame.cl_setLockedControls, false)
 	sm.gui.startFadeToBlack(0.3, 3)
 end
 ------
@@ -984,9 +984,11 @@ end
 
 function SurvivalGame.cl_onGameOver( self )
 	--m.gui.startFadeToBlack( 4, 2 )
-	sm.gui.displayAlertText( "GAME OVER", 5 )
+	sm.gui.displayAlertText( "GAME OVER", 4 )
 	sm.event.sendToWorld(sm.localPlayer.getPlayer().character:getWorld(), "cl_playEffect", {effect = "Builderguide - Stagecomplete", type = "effect" })
 	self.cl.betterTimer:createNewTimer(80, self, SurvivalGame.cl_delayed_1_onGameOver)
+	self.cl.betterTimer:createNewTimer(80, self, SurvivalGame.cl_setLockedControls, true)
+	self.cl.betterTimer:createNewTimer(40*5, self, SurvivalGame.cl_setLockedControls, false)
 end
 
 function SurvivalGame.cl_delayed_1_onGameOver( self )
@@ -1023,7 +1025,7 @@ function SurvivalGame.sv_onResetRound( self )
 	if self.sv.isRoundStarted == true then
 
 		for i,v in ipairs(sm.player.getAllPlayers()) do
-			local pd = v:getPublicData()
+			local pd = v:getPublicData() or {}
 			pd.isAlive = true
 			pd.isImpostor = false
 			v:setPublicData(pd)
@@ -1149,15 +1151,15 @@ function SurvivalGame.sv_onGoToOverworld( self )
 end
 
 function SurvivalGame.cl_onGoToOverworld( self )
+	self.cl.betterTimer:createNewTimer(5, self, SurvivalGame.cl_setLockedControls, true)
+	self.cl.betterTimer:createNewTimer(35, self, SurvivalGame.cl_setLockedControls, false)
 	sm.gui.startFadeToBlack( 0.2, 0.6 )
 end
 ------
 
 
 
-function SurvivalGame.sv_onLeaveOverworld( self )
-
-end
+function SurvivalGame.sv_onLeaveOverworld( self ) end
 ---
 
 
@@ -1184,6 +1186,8 @@ end
 
 function SurvivalGame.cl_onGoToWonkShip( self )
 	--self:cl_e_openMettingGui({player = sm.localPlayer.getPlayer()})
+	self.cl.betterTimer:createNewTimer(3, self, SurvivalGame.cl_setLockedControls, true)
+	self.cl.betterTimer:createNewTimer(40, self, SurvivalGame.cl_setLockedControls, false)
 	sm.gui.startFadeToBlack( 0.2, 1 )
 end
 ------
@@ -1202,9 +1206,7 @@ function SurvivalGame.sv_onCreateNewPlayerOnWonkShip( self , world , x , y , pla
 	self.sv.betterTimer:createNewTimer(40, self, SurvivalGame.sv_setPlayerNameTag)
 end
 
-function SurvivalGame.sv_onLeaveWonkShip( self )
-
-end
+function SurvivalGame.sv_onLeaveWonkShip( self ) end
 
 function SurvivalGame.sv_onGoToWonkShipDead( self , player )
 	if self.sv.witchWorldPlayersAre == "WonkShip" then
@@ -1306,6 +1308,7 @@ function SurvivalGame.sv_e_onEndingVote( self , data )
 end
 
 function SurvivalGame.cl_e_onEndingVote( self , data )
+	self.cl.betterTimer:createNewTimer(320, self, SurvivalGame.cl_setLockedControls, false)
 	g_mettingManager:cl_onEndingVote(data)
 end
 ------
@@ -1353,6 +1356,7 @@ function SurvivalGame.cl_c_onCloseMettingGui( self )
 end
 
 function SurvivalGame.cl_e_openMettingGui( self , data )
+	self.cl.betterTimer:createNewTimer(10, self, SurvivalGame.cl_setLockedControls, true)
 	g_mettingManager:cl_openMettingGui(data)
 end
 
@@ -1368,7 +1372,7 @@ function SurvivalGame.sv_e_onSendingImpostor( self , data )
 	self.network:sendToClients("cl_e_onSendingCrewmate")
 
 	for _,p in ipairs(data) do
-		local pd = p:getPublicData()
+		local pd = p:getPublicData() or {}
 		pd.isImpostor = true
 		p:setPublicData(pd)
 		self.network:sendToClient(p, "cl_e_onSendingImpostor", {isImpostor = true, impostors = data})
@@ -1538,6 +1542,7 @@ function SurvivalGame.sv_e_setGameOptions( self , data )
 	self:sv_o_setHowManyImpostor(self.sv.saved.gameOptions["howManyImpostor"])
 	self:sv_o_setWhichMap(self.sv.saved.gameOptions["whichMap"])
 	self:sv_o_setHowManyTasks(self.sv.saved.gameOptions)
+	self:sv_o_setKillCooldownTime(self.sv.saved.gameOptions["killCooldownTime"])
 	self.storage:save( self.sv.saved )
 end
 
@@ -1572,4 +1577,10 @@ function SurvivalGame.sv_o_setHowManyTasks( self , data )
 	sendData.normalTasks = data.howManyNormalTasks
 	sendData.longTasks = data.howManyLongTasks
 	g_taskManager:sv_setHowManyTasks(sendData)
+end
+
+function SurvivalGame.sv_o_setKillCooldownTime( self , data )
+	for i,v in ipairs(sm.player.getAllPlayers()) do
+		sm.event.sendToPlayer(v, "sv_setKillCooldownTime", data )
+	end
 end

@@ -6,6 +6,7 @@
 
         // Impostor
         "howManyImpostor" : 1,
+        "killCooldownTime" : 30,
 
         // Tasks
         "howManyShortTasks" : 1,
@@ -35,30 +36,42 @@
 
         { // Pos 4
             "type" : "Slider",
+            "maxValue" : 10,
             "textTag" : "OPTION_HOW_MANY_IMPOSTOR",
             "optionsVarRef" : "howManyImpostor"
         },
 
         { // Pos 5
+            "type" : "Slider",
+            "maxValue" : 60,
+            "unit" : "UNIT_SECOND",
+            "textTag" : "OPTION_KILL_COOLDOWN_TIME",
+            "optionsVarRef" : "killCooldownTime"
+        },
+
+        { // Pos 6
             "type" : "Label",
             "textTag" : "OPTION_TASK",
             "optionsVarRef" : "null"
         },
 
-        { // Pos 6
+        { // Pos 7
             "type" : "Slider",
+            "maxValue" : 7,
             "textTag" : "OPTION_HOW_MANY_SHORT_TASK",
             "optionsVarRef" : "howManyShortTasks"
         },
 
-        { // Pos 7
+        { // Pos 8
             "type" : "Slider",
+            "maxValue" : 2,
             "textTag" : "OPTION_HOW_MANY_NORMAL_TASK",
             "optionsVarRef" : "howManyNormalTasks"
         },
 
-        { // Pos 8
+        { // Pos 9
             "type" : "Slider",
+            "maxValue" : 1,
             "textTag" : "OPTION_HOW_MANY_LONG_TASK",
             "optionsVarRef" : "howManyLongTasks"
         }
