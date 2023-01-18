@@ -3,12 +3,47 @@
 Among Scrap is a custom game for Scrap Mechanic based on the game Among Us.
 
 STEAM WORKSHOP : steam://openurl/https://steamcommunity.com/sharedfiles/filedetails/?id=2811583960
-* FileID: 2811583960
+**FileID: 2811583960**
 
 
 ## VERSION CHANGELOG (0.1.7 and later)
 
-##### **CHANGELOG (0.2.0)** (Actual version)
+##### **CHANGELOG (0.2.1)** (Actual version)
+
+-- General :
+- New language support (Work in progress)
+- New savable game settings support 
+
+-- Mapping :
+- Add the first version of Wonk Ship
+- add the dead player teleport system
+- Overworld no longer saved
+
+-- In the code :
+- Make a full revision of the tasks storage 
+-  New folder 'Tasks' that contain all tasks dataset
+- Tasks script are now unique with a common script 'baseTaskInterface' 
+- Tasks are now more modulable 
+- New timer better than the dev timer
+- add new world for dead players
+- Add new unit character when pepole be killed
+- Add new name tag for impostor and player
+- Add kill cooldown for impostor 
+- add lockingControls on loading
+- add fadeOut on loading
+- Improve the metting looks
+
+-- Fix :	
+- Fix the player restrictions on all maps
+- Fix the active tasks tables in multiplayer
+- Fix the problem when only one vote can kill a player in meeting
+- Fix a bug when complete task can occure a division by 0
+
+-- New block:
+- Option block 
+- Start block
+
+##### **CHANGELOG (0.2.0)**
 
 -- General :
 - Added mysterious ambiance
