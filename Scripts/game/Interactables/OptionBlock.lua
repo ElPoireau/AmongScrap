@@ -59,26 +59,40 @@ function OptionBlock.client_onCreate( self )
     self.cl = {}
     self.cl.optionsMenu = {}
     self.cl.hasInit = false
-    
+    self.cl.hasFirstInit = false
+    self.cl.isOpen = false
+    self.cl.pageMenu = 1
+
     self.cl.optionWorldText = sm.gui.createNameTagGui(false)
 	self.cl.optionWorldText:setWorldPosition(self.shape:getWorldPosition())
 	self.cl.optionWorldText:setText("Text", "OPTIONS")
     self.cl.optionWorldText:open()
+    
+   self.cl.tempGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Options/Options_MainMenu.layout",false, {isHud = true})
+   self.cl.tempGui:setText("TextHeader", g_Language:cl_getTraduction("OPTION_HEADER"))
+   self.cl.tempGui:setText("TextPage", g_Language:cl_getTraduction("UNIT_PAGE") .. " ".. self.cl.pageMenu)
+
 
     self.network:sendToServer("sv_onNewClient", sm.localPlayer.getPlayer())
 end
 
+
 function OptionBlock.client_onInteract( self , character , state )
     if state == true then
 	    self.cl.optionGui:open()
+
+        self.cl.isOpen = true
     end
 end
 
 function OptionBlock.client_canInteract( self , character )
-    sm.gui.setCenterIcon( "Use" )
-    local keyBindingText = sm.gui.getKeyBinding( "Use", true )
-    sm.gui.setInteractionText("", keyBindingText, "Open" )
-    return true
+    if self.cl.optionGui:isActive() == false then
+        sm.gui.setCenterIcon( "Use" )
+        local keyBindingText = sm.gui.getKeyBinding( "Use", true )
+        sm.gui.setInteractionText("", keyBindingText, "Open" )
+        return true
+    end        
+    return false
 end
 
 function OptionBlock.client_onDestroy( self )
@@ -96,21 +110,80 @@ end
 -- CONTENT --
 
 function OptionBlock.cl_initGui( self )
-    cl_initSliderFunction(self.cl.optionsMenu)
-    
+    self.cl.tempGui:setText("TextPage", g_Language:cl_getTraduction("UNIT_PAGE") .. " ".. self.cl.pageMenu)
+    if self.cl.optionGui then
+        self.cl.isOpen = self.cl.optionGui:isActive()
+        self.cl.tempGui:open()
+        self.cl.optionGui:close()
+        self.cl.optionGui:destroy()
+    end
+
     self.cl.optionGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Options/Options_MainMenu.layout",false, {isHud = false, isInteractive = true, needsCursor = true, })
-    self.cl.optionGui:setText("TextHeader", g_Language:cl_getTraduction("OPTION_HEADER"))
+
+    if self.cl.isOpen == true then
+        self.cl.optionGui:open()
+        self.cl.tempGui:open()
+    end
+
+    cl_initSliderFunction(self.cl.optionsMenu)
+    self.cl.optionGui:setOnCloseCallback("cl_onCloseOptionGuiCallback")
     
-    for i,v in ipairs(self.cl.optionsMenu) do
-        self["cl_onInit" .. v.type](self, i, v)
+    self.cl.optionGui:setText("TextHeader", g_Language:cl_getTraduction("OPTION_HEADER"))
+    self.cl.optionGui:setText("TextPage", g_Language:cl_getTraduction("UNIT_PAGE") .. " ".. self.cl.pageMenu)
+    self.cl.optionGui:setButtonCallback("MinusPage", "cl_onMinusPageCallback")
+    self.cl.optionGui:setButtonCallback("PlusPage", "cl_onPlusPageCallback")
+    
+    for i1 = 1,11 do
+        local i2 = i1 + ((11 * self.cl.pageMenu) - 11) 
+        v = self.cl.optionsMenu[i2] 
+
+        if v then 
+            if v.type ~= "Empty" then 
+                self["cl_onInit" .. v.type](self, i1, v)
+            end
+            
+        elseif not v then
+            break
+        end
     end
     self.cl.hasInit = true
+    if self.cl.hasFirstInit == false then
+        self.cl.hasFirstInit = true
+    end
+end
+
+function OptionBlock.cl_resetGui( self )
+    for index = 1,11 do
+
+        self.cl.optionGui:setVisible("Pos" .. index .. "ButtonOnOff", false)
+        self.cl.optionGui:setVisible("Pos" .. index .. "ButtonMultiple2", false)
+        self.cl.optionGui:setVisible("Pos" .. index .. "ButtonMultiple3", false)
+        self.cl.optionGui:setVisible("Pos" .. index .. "Label", false)
+        self.cl.optionGui:setVisible("Pos" .. index .. "Slider", false)
+    end
 end
 
 function OptionBlock.cl_refreshGui( self )
-    for i,v in ipairs(self.cl.optionsMenu) do
-        self["cl_onRefresh" .. v.type](self, i, v)
+    for i1 = 1,11 do
+        local i2 = i1 + ((11 * self.cl.pageMenu) - 11) 
+        v = self.cl.optionsMenu[i2]
+
+        if v then 
+            if v.type ~= "Empty" then 
+                self["cl_onRefresh" .. v.type](self, i1, v)
+            end
+        elseif not v then
+            break
+        end
     end
+end
+
+
+function OptionBlock.cl_onChangePage(self , increment )
+    self.cl.hasInit = false
+    self.cl.pageMenu = self.cl.pageMenu + increment
+    self:cl_resetGui()
+    self:cl_initGui()
 end
 
 function OptionBlock.cl_setOptionsMenu( self , data ) 
@@ -132,10 +205,38 @@ end
 -- GUI CALLBACK --
 
 
+
+-- General -- 
+
+function OptionBlock.cl_onPlusPageCallback( self )
+    if self.cl.pageMenu * 11 < #self.cl.optionsMenu then 
+        self:cl_onChangePage(1)
+    end
+end
+
+function OptionBlock.cl_onMinusPageCallback( self )
+    if self.cl.pageMenu > 1 then 
+        self:cl_onChangePage(-1)
+    end
+end
+
+function OptionBlock.cl_onCloseOptionGuiCallback( self )
+    if self.cl.hasInit == true then
+        self.cl.tempGui:close()
+        self.cl.isOpen = false
+    else 
+        self.cl.tempGui:open()
+        self.cl.isOpen = true
+    end
+end
+
+
+
 -- OnOffButton --
 
 function OptionBlock.cl_onInitOnOffButton( self , index , data )
-    
+    local menuIndex = index + ((11 * self.cl.pageMenu) - 11) 
+
     self.cl.optionGui:setVisible("Pos" .. index .. "ButtonOnOff", true)
     
     self.cl.optionGui:setButtonCallback("Pos" .. index .. "ButtonOn", "cl_onButtonOnCallback")
@@ -143,16 +244,16 @@ function OptionBlock.cl_onInitOnOffButton( self , index , data )
     
     self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag ))
     
-    if self.cl.optionsMenu[index].value == false then
+    if self.cl.optionsMenu[menuIndex].value == false then
         self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", false)
         self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", true)
         
-    elseif self.cl.optionsMenu[index].value == true then
+    elseif self.cl.optionsMenu[menuIndex].value == true then
         self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", true)
         self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", false)
         
     else
-        self.cl.optionsMenu[index].value = false 
+        self.cl.optionsMenu[menuIndex].value = false 
         self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", false)
         self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", true)
     end
@@ -166,21 +267,25 @@ end
 
 
 function OptionBlock.cl_onButtonOnCallback( self , tag )
-    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
-    if self.cl.optionsMenu[index].value == false then
-        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", true)
-        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", false)
-        self.cl.optionsMenu[index].value = true
+    local posIndex = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    local menuIndex = posIndex + ((11 * self.cl.pageMenu) - 11) 
+
+    if self.cl.optionsMenu[menuIndex].value == false then
+        self.cl.optionGui:setButtonState("Pos" .. posIndex .. "ButtonOn", true)
+        self.cl.optionGui:setButtonState("Pos" .. posIndex .. "ButtonOff", false)
+        self.cl.optionsMenu[menuIndex].value = true
     end
    self:cl_setGameOptions()
 end
 
 function OptionBlock.cl_onButtonOffCallback( self , tag )
-    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
-    if self.cl.optionsMenu[index].value == true then
-        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOn", false)
-        self.cl.optionGui:setButtonState("Pos" .. index .. "ButtonOff", true)
-        self.cl.optionsMenu[index].value = false
+    local posIndex = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    local menuIndex = posIndex + ((11 * self.cl.pageMenu) - 11) 
+
+    if self.cl.optionsMenu[menuIndex].value == true then
+        self.cl.optionGui:setButtonState("Pos" .. posIndex .. "ButtonOn", false)
+        self.cl.optionGui:setButtonState("Pos" .. posIndex .. "ButtonOff", true)
+        self.cl.optionsMenu[menuIndex].value = false
     end
     self:cl_setGameOptions()
 end
@@ -193,7 +298,8 @@ end
 -- Button Multiple --
 
 function OptionBlock.cl_onInitMultiple1Button( self , index , data )
-    
+    local menuIndex = index + ((11 * self.cl.pageMenu) - 11) 
+
     self.cl.optionGui:setVisible("Pos" .. index .. "ButtonMultiple2", true)
     self.cl.optionGui:setVisible("Pos" .. index .. "Button2", false)
     
@@ -202,21 +308,22 @@ function OptionBlock.cl_onInitMultiple1Button( self , index , data )
     self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag[1] ))
     self.cl.optionGui:setText("Pos" .. index .. "Button1", g_Language:cl_getTraduction(data.textTag[2] ))
 
-    if self.cl.optionsMenu[index].value == 0 then
+    if data.value == 0 then
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
    
-    elseif self.cl.optionsMenu[index].value == 1 then
+    elseif data.value == 1 then
        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
 
     else
-        self.cl.optionsMenu[index].value = 0 
+        self.cl.optionsMenu[menuIndex].value = 0 
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
     end
 end
 
 
 function OptionBlock.cl_onInitMultiple2Button( self , index , data )
-    
+    local menuIndex = index + ((11 * self.cl.pageMenu) - 11) 
+
     self.cl.optionGui:setVisible("Pos" .. index .. "ButtonMultiple2", true)
     
     self.cl.optionGui:setButtonCallback("Pos" .. index .. "Button1", "cl_onButton1Callback")
@@ -226,16 +333,16 @@ function OptionBlock.cl_onInitMultiple2Button( self , index , data )
     self.cl.optionGui:setText("Pos" .. index .. "Button1", g_Language:cl_getTraduction(data.textTag[2] ))
     self.cl.optionGui:setText("Pos" .. index .. "Button2", g_Language:cl_getTraduction(data.textTag[3] ))
 
-    if self.cl.optionsMenu[index].value == 1 then
+    if data.value == 1 then
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
 
-    elseif self.cl.optionsMenu[index].value == 2 then
+    elseif data.value == 2 then
        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)
 
     else
-        self.cl.optionsMenu[index].value = 1
+        self.cl.optionsMenu[menuIndex].value = 1
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
     end
@@ -288,28 +395,30 @@ function OptionBlock.cl_onRefreshMultiple1Button( self , index , data )
 end
 
 function OptionBlock.cl_onRefreshMultiple2Button( self , index , data )
+    local menuIndex = index + ((11 * self.cl.pageMenu) - 11) 
 
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
     
-    if self.cl.optionsMenu[index].value == 1 then
+    if self.cl.optionsMenu[menuIndex].value == 1 then
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
-    elseif self.cl.optionsMenu[index].value == 2  then
+    elseif self.cl.optionsMenu[menuIndex].value == 2  then
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)
     end
 end
 
 function OptionBlock.cl_onRefreshMultiple3Button( self , index , data )
+    local menuIndex = index + ((11 * self.cl.pageMenu) - 11) 
 
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
     self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", false)
 
-    if self.cl.optionsMenu[index].value == 1 then
+    if self.cl.optionsMenu[menuIndex].value == 1 then
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)
-    elseif self.cl.optionsMenu[index].value == 2  then
+    elseif self.cl.optionsMenu[menuIndex].value == 2  then
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)
-    elseif self.cl.optionsMenu[index].value == 3  then
+    elseif self.cl.optionsMenu[menuIndex].value == 3  then
         self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", true)
     end
 end
@@ -318,40 +427,46 @@ end
 
 
 function OptionBlock.cl_onButton1Callback( self , tag )
-    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
-    if self.cl.optionsMenu[index].value == 1 then
-        if self.cl.optionsMenu[index].type == "Multiple1Button" then
-            self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
-            self.cl.optionsMenu[index].value = 0
+    local posIndex = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    local menuIndex = posIndex + ((11 * self.cl.pageMenu) - 11) 
+
+    if self.cl.optionsMenu[menuIndex].value == 1 then
+        if self.cl.optionsMenu[menuIndex].type == "Multiple1Button" then
+            self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button1", false)
+            self.cl.optionsMenu[menuIndex].value = 0
         end
-    elseif self.cl.optionsMenu[index].value ~= 1 then
-        self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", true)    
-        self.cl.optionsMenu[index].value = 1
+    elseif self.cl.optionsMenu[menuIndex].value ~= 1 then
+        self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button1", true)    
+        self.cl.optionsMenu[menuIndex].value = 1
     end
-    self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
-    self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", false)
+    self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button2", false)
+    self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button3", false)
     self:cl_setGameOptions()
 end
 
 function OptionBlock.cl_onButton2Callback( self , tag )
-    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
-    if self.cl.optionsMenu[index].value ~= 2 then
-        self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", true)    
-        self.cl.optionsMenu[index].value = 2
+    local posIndex = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    local menuIndex = posIndex + ((11 * self.cl.pageMenu) - 11) 
+
+    if self.cl.optionsMenu[menuIndex].value ~= 2 then
+        self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button2", true)    
+        self.cl.optionsMenu[menuIndex].value = 2
     end
-    self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
-    self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button1", false)
+    self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button2", false)
     self:cl_setGameOptions()
 end
 
 function OptionBlock.cl_onButton3Callback( self , tag )
-    local index = tonumber(tag:sub(POS_INDEX, POS_INDEX))
-    if self.cl.optionsMenu[index].value ~= 3 then
-        self.cl.optionGui:setButtonState("Pos" .. index .. "Button3", true)    
-        self.cl.optionsMenu[index].value = 3
+    local posIndex = tonumber(tag:sub(POS_INDEX, POS_INDEX))
+    local menuIndex = posIndex + ((11 * self.cl.pageMenu) - 11) 
+
+    if self.cl.optionsMenu[menuIndex].value ~= 3 then
+        self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button3", true)    
+        self.cl.optionsMenu[menuIndex].value = 3
     end
-    self.cl.optionGui:setButtonState("Pos" .. index .. "Button1", false)
-    self.cl.optionGui:setButtonState("Pos" .. index .. "Button2", false)
+    self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button1", false)
+    self.cl.optionGui:setButtonState("Pos" .. posIndex .. "Button2", false)
     self:cl_setGameOptions()
 end
 
@@ -365,26 +480,29 @@ end
 function OptionBlock.cl_onInitSlider( self , index , data )
     local unit = g_Language:cl_getTraduction(data.unit) or ""
     self.cl.optionGui:setVisible("Pos" .. index .. "Slider", true)
-    self.cl.optionGui:createHorizontalSlider( "Pos" .. index .. "Scroll", data.maxValue + 1 or 10, data.value, "cl_onPos" .. index .."SliderCallback" )
+
+    self.cl.optionGui:createHorizontalSlider( "Pos" .. index .. "Scroll", data.maxValue + 1, data.value, "cl_onPos" .. index .. "SliderCallback" )
+
     self.cl.optionGui:setText("Pos" .. index .. "Text", g_Language:cl_getTraduction(data.textTag ))
-    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value) .. " " .. unit)
+    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value / (data.divider or 1)) .. " " .. unit)
 end
 
 function OptionBlock.cl_onRefreshSlider( self , index , data )
     local unit = g_Language:cl_getTraduction(data.unit) or ""
-    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value) .. " " .. unit)
+    self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(data.value / (data.divider or 1)) .. " " .. unit)
     self.cl.optionGui:setSliderPosition("Pos" .. index .. "Scroll", data.value)
 end
 
 
 
 function cl_initSliderFunction( data ) -- I am raging to to this instead of just PUTTING THE INDEX IN THE ARGS WHY DEEEEVVVSSSS :(
-    for i = 1, #data do
+    for i = 1, 11 do
         OptionBlock["cl_onPos" .. i .. "SliderCallback"] = function( self , value , tag )
-            local index = i
-            local unit = g_Language:cl_getTraduction(data.unit) or ""
-            self.cl.optionsMenu[index].value = value
-            self.cl.optionGui:setText("Pos" .. index .. "SliderValue", tostring(self.cl.optionsMenu[index].value) .. " " .. unit)
+            local posIndex = i
+            local menuIndex = posIndex + ((11 * self.cl.pageMenu) - 11) 
+            local unit = g_Language:cl_getTraduction(self.cl.optionsMenu[menuIndex].unit) or ""
+            self.cl.optionsMenu[menuIndex].value = value
+            self.cl.optionGui:setText("Pos" .. posIndex .. "SliderValue", tostring(self.cl.optionsMenu[menuIndex].value / (data.divider or 1)) .. " " .. unit)
             self:cl_setGameOptions()
         end
     end

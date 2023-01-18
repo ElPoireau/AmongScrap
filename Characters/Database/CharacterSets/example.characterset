@@ -7,20 +7,21 @@
          },
          "character" : {
             "data" : {},
-            "scriptClass" : "",
-            "scriptPath" : "$SURVIVAL_DATA/Scripts/game/characters/MechanicCharacter.lua"
+            "scriptClass" : "UselessMechanicCharacter",
+            "scriptPath" : "$CONTENT_DATA/Scripts/game/characters/UselessMechanicCharacter.lua"
          },
          "movement" : {
             "canSwim" : true,
-            "crouchSpeed" : 3.0,
+            "crouchSpeed" : 1.0,
             "facingRotationSpeed" : 3.14150,
             "headingRotationSpeed" : 3.14150,
-            "moveSpeed" : 4.0,
-            "slowDownSpeed" : 2.50,
-            "sprintSpeed" : 8.0
+            "jumpImpulse" : 70.0,
+            "moveSpeed" : 1.0,
+            "slowDownSpeed" : 1.0,
+            "sprintSpeed" : 1.0
          },
          "renderables" : [],
-         "uuid" : "65c2f922-bbdd-4d38-9e1d-c42d9557ced4"
+         "uuid" : "00000000-0000-0000-0000-000000000000"
       }
    ]
 }

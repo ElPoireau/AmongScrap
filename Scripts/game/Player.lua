@@ -95,6 +95,7 @@ function SurvivalPlayer.client_onCreate( self )
 	self.cl.canReport = false
 	self.cl.killCooldown = false
 	self.cl.killCooldownTime = 1
+	self.cl.playerSpeedKm_h = 2
 
 	self.cl.betterTimer = BetterTimer()
 	self.cl.betterTimer:onCreate()
@@ -107,8 +108,6 @@ function SurvivalPlayer.client_onCreate( self )
 			self:cl_refreshImpostorGui(nil)
 			--g_survivalHudAmongScrap:open()
 		end
-
-		--SetMovementSpeedFraction(self.player:getCharacter(), 100090)
 		self.cl.hungryEffect = sm.effect.createEffect( "Mechanic - StatusHungry" )
 		self.cl.thirstyEffect = sm.effect.createEffect( "Mechanic - StatusThirsty" )
 		self.cl.underwaterEffect = sm.effect.createEffect( "Mechanic - StatusUnderwater" )
@@ -468,6 +467,17 @@ function SurvivalPlayer.server_onFixedUpdate( self, dt )
 end
 
 function SurvivalPlayer.client_onFixedUpdate( self )
+	--print(self.player.character.movementSpeedFraction)
+	if self.player.character then
+		if self.player.character:isSprinting() then
+			self.player.character.movementSpeedFraction = self.cl.playerSpeedKm_h / 4
+			self.player.character:setMovementWeights( 0.6, 0.9)
+		else 
+		self.player.character.movementSpeedFraction = self.cl.playerSpeedKm_h / 4 * 2
+		self.player.character:setMovementWeights( 1, 0.9)
+		end
+		--print(self.player.character:getVelocity())
+	end
 	self.cl.betterTimer:onFixedUpdate()
 end
 
@@ -799,9 +809,29 @@ function SurvivalPlayer.cl_setKillCooldown( self , data )
 	self.cl.killCooldown = data
 end
 
+
+--------
+function SurvivalPlayer.sv_setPlayerSpeed( self , data )
+	self.network:sendToClients("cl_setPlayerSpeed", data)
+end
+
+function SurvivalPlayer.cl_setPlayerSpeed( self , data )
+	self.cl.playerSpeedKm_h = data
+end
+-------
+
+
+
+-------
+function SurvivalPlayer.sv_setKillCooldownTime( self , data )
+	self.network:sendToClients("cl_setKillCooldownTime", data)
+end
+
 function SurvivalPlayer.cl_setKillCooldownTime( self , data )
 	self.cl.killCooldownTime = data or 1
 end
+-------
+
 
 function SurvivalPlayer.cl_onResetImpostor( self )
 		self.cl.isImpostor = false

@@ -49,7 +49,8 @@
         // General
         "OPTION_ON_WHICH_MAP" : "Carte de jeu",
         "OPTION_MAP_WONK_SHIP": "Navette de la Wonk",
-
+        "OPTION_PLAYER_SPEED" : "Vitesse du joueur",
+    
         // Impostor
         "OPTION_HOW_MANY_IMPOSTOR" : "Nombre d'imposteur",
         "OPTION_KILL_COOLDOWN_TIME" : "Temps entre deux meutres",
@@ -59,9 +60,13 @@
         "OPTION_HOW_MANY_SHORT_TASK" : "Nombre de tâche rapide",
         "OPTION_HOW_MANY_LONG_TASK" : "Nombre de tâche longue",
 
+        // Meeting
+        "OPTION_MEETING_COOLDOWN_TIME" : "Lorem Ipsum",
+
         // Unit 
         "UNIT_SECOND" : "Sec",
-
+        "UNIT_PAGE" : "Page",
+        "UNIT_KM_H" : "Km/h",
 
         // Tasks 
         "TASK_IMPOSTOR" : "Vous êtes un imposteur !",

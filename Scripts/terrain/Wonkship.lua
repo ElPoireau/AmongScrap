@@ -8,7 +8,7 @@ dofile( "$SURVIVAL_DATA/Scripts/game/managers/PackingStationManager.lua" )
 WonkShipWorld = class( nil )
 WonkShipWorld.terrainScript = "$CONTENT_DATA/Scripts/terrain/TerrainScript/WonkShipTerrain.lua"
 WonkShipWorld.groundMaterialSet = "$GAME_DATA/Terrain/Materials/gnd_standard_materialset.json"
-WonkShipWorld.enableSurface = false --false ---!!DEV CHANGE
+WonkShipWorld.enableSurface = true --false ---!!DEV CHANGE
 WonkShipWorld.enableAssets = true
 WonkShipWorld.enableClutter = true
 WonkShipWorld.enableNodes = true
@@ -16,7 +16,7 @@ WonkShipWorld.enableCreations = true
 WonkShipWorld.enableHarvestables = true
 WonkShipWorld.enableKinematics = true
 --WonkShipWorld.isIndoor = true
-WonkShipWorld.renderMode = "warehouse" --"warehouse"  ---!!DEV CHANGE
+WonkShipWorld.renderMode = "outdoor" --"warehouse"  ---!!DEV CHANGE
 WonkShipWorld.cellMinX = -1 --0  ---!!DEV CHANGE
 WonkShipWorld.cellMaxX = 0
 WonkShipWorld.cellMinY = -1 --0  ---!!DEV CHANGE
@@ -739,12 +739,14 @@ function WonkShipWorld.sv_n_fireMsg( self ) end
 
 -- content
 
-function WonkShipWorld.sv_onPlayerKilled( self , player )
-	local deadUnit = sm.unit.createUnit( sm.uuid.new("36fe0ade-9352-43e4-9e81-146fafcd3522"), player.character:getWorldPosition() )
+function WonkShipWorld.sv_onPlayerKilled( self , player ) --36fe0ade-9352-43e4-9e81-146fafcd3522
+	local deadUnit = sm.unit.createUnit( sm.uuid.new("00000000-0000-0000-0000-000000000000"), player.character:getWorldPosition() )
 	sm.event.sendToGame("sv_onUnitCreated", {deadUnit = deadUnit, player = player})
 end
 
 function WonkShipWorld.cl_playEffect( self , data )
+	data.effect = "Blueprint - Close"
+	data.type = "audio"
 	if data.type == "effect" then
 		sm.effect.playHostedEffect(data.effect, sm.localPlayer.getPlayer().character)
 	elseif data.type == "audio" then 
@@ -759,11 +761,11 @@ function WonkShipWorld.sv_createCharacterOnWonkShip( self, params )
 	local spawnNode = nodes[1]
 	local yaw = 0
 	
-	for i,v in ipairs(nodes) do
-		if v.params.name == "PLAYER_SPAWN" .. tostring(params.nodeId) then
-			spawnNode = v
-		end
-	end
+	--for i,v in ipairs(nodes) do
+		--if v.params.name == "PLAYER_SPAWN" .. tostring(params.nodeId) then
+	spawnNode = nodes[1]
+		--end
+	--end
 		spawnPosition = spawnNode.position + sm.vec3.new( 0, 0, 1 ) * 0.7
 		spawnDirection = spawnNode.rotation * sm.vec3.new( 0, 0, 1 )
 	

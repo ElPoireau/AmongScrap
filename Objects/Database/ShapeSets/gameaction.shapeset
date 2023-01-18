@@ -31,6 +31,22 @@
             "filename" : "$CONTENT_DATA/Scripts/game/Interactables/StartBlock.lua"
          },
          "uuid" : "281fe90c-f456-4b29-b9d0-50165374d3f6"
+      },
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 7,
+            "z" : 3
+         },
+         "name" : "obj_interactive_meeting_block",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_beacon.rend",
+         "rotationSet" : "Default",
+         "scripted" : {
+            "classname" : "MeetingBlock",
+            "filename" : "$CONTENT_DATA/Scripts/game/Interactables/MeetingBlock.lua"
+         },
+         "uuid" : "b0a3d6c8-ff94-4ae3-9059-947004c2d151"
       }
    ]
 }

@@ -185,11 +185,14 @@ end
 
 ---
 function MettingManager.cl_openMettingGui( self , data )
-	sm.gui.displayAlertText("EMERGENCY METTING", 2)
-	sm.event.sendToWorld(sm.localPlayer.getPlayer().character:getWorld(), "cl_playEffect", {effect = "Horn", type = "audio" })
-	
-	self.cl.betterTimer:createNewTimer(40, self, MettingManager.cl_delayed_1_openMettingGui, data )
-	self.cl.betterTimer:createNewTimer(60, self, MettingManager.cl_delayed_2_openMettingGui, data )
+	if self.cl.isInit == true then
+		if self.cl.isOpen == false then
+			sm.gui.displayAlertText("EMERGENCY METTING", 2)
+			sm.event.sendToWorld(sm.localPlayer.getPlayer().character:getWorld(), "cl_playEffect", {effect = "Horn", type = "audio" })
+			self.cl.betterTimer:createNewTimer(40, self, MettingManager.cl_delayed_1_openMettingGui, data )
+			self.cl.betterTimer:createNewTimer(60, self, MettingManager.cl_delayed_2_openMettingGui, data )
+		end
+	end
 end
 
 function MettingManager.cl_delayed_1_openMettingGui( self , data )

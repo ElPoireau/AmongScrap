@@ -24,14 +24,14 @@ dofile( "$CONTENT_DATA/Scripts/util/BetterTimer.lua" )
 
 
 
----@class SurvivalGame : GameClass
----@field sv table
----@field cl table
----@field warehouses table
+--- @class SurvivalGame : GameClass
+--- @field sv table
+--- @field cl table
+--- @field warehouses table
 SurvivalGame = class( nil )
-SurvivalGame.defaultInventorySize = 10
-SurvivalGame.enableLimitedInventory = true -- !!!!! FALSE ONLY FOR DEV !!!!! -- (default to true)
-SurvivalGame.enableRestrictions = true -- set true to have good game
+SurvivalGame.defaultInventorySize = 40
+SurvivalGame.enableLimitedInventory = false -- !!!!! FALSE ONLY FOR DEV !!!!! -- (default to true)
+SurvivalGame.enableRestrictions = false -- set true to have good game
 SurvivalGame.enableFuelConsumption = true
 SurvivalGame.enableAmmoConsumption = true
 SurvivalGame.enableUpgrade = false
@@ -56,6 +56,11 @@ function SurvivalGame.server_onCreate( self )
 		self.sv.saved.gameOptions.null = false
 		self.sv.saved.optionsMenu = settings.menu 
 		for i,v in ipairs(self.sv.saved.optionsMenu) do
+			if not v.optionsVarRef then
+				v.optionsVarRef = "null"
+				self.sv.saved.optionsMenu[i].optionsVarRef = "null"
+			end
+
 			self.sv.saved.optionsMenu[i].value = self.sv.saved.gameOptions[v.optionsVarRef]
 		end
 
@@ -104,7 +109,6 @@ function SurvivalGame.server_onCreate( self )
 	self.sv.syncTimer = Timer()
 	self.sv.syncTimer:start( 0 )
 	
-	
 	-- content -- 
 	g_taskManager = TaskManager()
 	g_taskManager:sv_onCreate()
@@ -116,9 +120,11 @@ function SurvivalGame.server_onCreate( self )
 	g_mettingManager:sv_onCreate()
 
 	self.sv.deadUnits = {}
-	self.sv.optionBlocks = {}
 	self.sv.optionsMenu = {}
 	self.sv.gameOptions = {}
+
+	self.sv.optionBlocks = {}
+	self.sv.meetingBlocks = {}
 	
 	self.sv.betterTimer = BetterTimer()
 	self.sv.betterTimer:onCreate()
@@ -344,9 +350,11 @@ function SurvivalGame.sv_updateClientData( self )
 end
 
 function SurvivalGame.client_onFixedUpdate( self )
+	--sm.localPlayer.getPlayer().character:setMovementSpeedFraction( 0.1)
 	-- content -- 
 	self.cl.betterTimer:onFixedUpdate()
 	g_mettingManager.cl.betterTimer:onFixedUpdate()
+	--print(sm.localPlayer.getPlayer().character:getCharacterType())
 end
 
 function SurvivalGame.client_onUpdate( self, dt )
@@ -650,8 +658,9 @@ function SurvivalGame.sv_onChatCommand( self, params, player )
 		self:sv_onResetRound()
 
 	elseif params[1] == "/impostornum" then
-		print(params[2])
-		g_impostorManager:sv_changeImpostorNumber(params[2])
+		--print(params[2])
+		--g_impostorManager:sv_changeImpostorNumber(params[2])
+		sm.event.sendToWorld(self.sv.wonkShipWorld, "sv_onPlayerKilled", player)
 
 	elseif params[1] == "/spawnship" then
 		self:sv_onGoToOverworld()
@@ -1270,9 +1279,6 @@ end
 ]]
 
 
-
-
-
 -- METTING --
 
 -------
@@ -1305,16 +1311,21 @@ function SurvivalGame.sv_e_onEndingVote( self , data )
 	end
 	self.network:sendToClients('cl_e_onEndingVote', data)
 	self:sv_onResetDeadUnit()
+	self.sv.betterTimer:createNewTimer(400, self, SurvivalGame.sv_e_setMeetingCooldown, {state = true})
 end
 
 function SurvivalGame.cl_e_onEndingVote( self , data )
-	self.cl.betterTimer:createNewTimer(320, self, SurvivalGame.cl_setLockedControls, false)
+	self.cl.betterTimer:createNewTimer(360, self, SurvivalGame.cl_setLockedControls, false)
 	g_mettingManager:cl_onEndingVote(data)
 end
 ------
 
 ------
 function SurvivalGame.sv_e_onResetMetting( self )
+	for i,v in ipairs(self.sv.meetingBlocks) do
+		sm.event.sendToInteractable(v, "sv_onResetMeeting")
+	end
+
 	g_mettingManager:sv_onResetMetting()
 	self.network:sendToClients("cl_e_onResetMetting")
 end
@@ -1326,6 +1337,10 @@ end
 
 ------
 function SurvivalGame.sv_e_onInitMetting( self )
+	for i,v in ipairs(self.sv.meetingBlocks) do
+		sm.event.sendToInteractable(v, "sv_onInitMeeting")
+	end
+
 	data = g_mettingManager:sv_onInitMetting()
 	self.network:sendToClients("cl_e_onInitMetting", data)
 end
@@ -1359,6 +1374,30 @@ function SurvivalGame.cl_e_openMettingGui( self , data )
 	self.cl.betterTimer:createNewTimer(10, self, SurvivalGame.cl_setLockedControls, true)
 	g_mettingManager:cl_openMettingGui(data)
 end
+
+-- meeting block --
+
+function SurvivalGame.sv_onInitMeetingBlock( self , data )
+	table.insert( self.sv.meetingBlocks, data )
+	sm.event.sendToInteractable(data,"sv_onInitMeetingBlock", self.sv.isRoundStarted)
+	sm.event.sendToInteractable(data,"sv_setMeetingCooldownTime", self.sv.saved.gameOptions["meetingCooldownTime"])
+end
+
+function SurvivalGame.sv_e_setMeetingCooldown( self , data )
+	for i,v in ipairs(self.sv.meetingBlocks) do 
+		sm.event.sendToInteractable(v,"sv_setMeetingCooldown", data)
+	end
+end
+
+function SurvivalGame.sv_onDestroyMeetingBlock( self , data )
+	for i,v in ipairs(self.sv.meetingBlocks) do
+		if v == data then
+			table.remove( self.sv.meetingBlocks, i )
+		end
+	end
+end
+	
+
 
 
 
@@ -1534,15 +1573,17 @@ function SurvivalGame.sv_e_setGameOptions( self , data )
 		for i,v in ipairs(self.sv.saved.optionsMenu) do 
 			self.sv.saved.gameOptions[v.optionsVarRef] = v.value
 		end
-		for i,v in ipairs(self.sv.optionBlocks) do
-			sm.event.sendToInteractable(v, "sv_setOptionsMenu", self.sv.saved.optionsMenu)
-		end
+	end
+	for i,v in ipairs(self.sv.optionBlocks) do
+		sm.event.sendToInteractable(v, "sv_setOptionsMenu", self.sv.saved.optionsMenu)
 	end
 	
 	self:sv_o_setHowManyImpostor(self.sv.saved.gameOptions["howManyImpostor"])
 	self:sv_o_setWhichMap(self.sv.saved.gameOptions["whichMap"])
 	self:sv_o_setHowManyTasks(self.sv.saved.gameOptions)
 	self:sv_o_setKillCooldownTime(self.sv.saved.gameOptions["killCooldownTime"])
+	self:sv_o_setMeetingCooldownTime(self.sv.saved.gameOptions["meetingCooldownTime"])
+	self:sv_o_setPlayerSpeed(self.sv.saved.gameOptions["playerSpeed"] / 4)
 	self.storage:save( self.sv.saved )
 end
 
@@ -1582,5 +1623,17 @@ end
 function SurvivalGame.sv_o_setKillCooldownTime( self , data )
 	for i,v in ipairs(sm.player.getAllPlayers()) do
 		sm.event.sendToPlayer(v, "sv_setKillCooldownTime", data )
+	end
+end
+
+function SurvivalGame.sv_o_setMeetingCooldownTime( self , data )
+	for i,v in ipairs(self.sv.meetingBlocks) do 
+		sm.event.sendToInteractable(v,"sv_setMeetingCooldownTime", data)
+	end
+end
+
+function SurvivalGame.sv_o_setPlayerSpeed( self , data )
+	for i,v in ipairs(sm.player.getAllPlayers()) do
+		sm.event.sendToPlayer(v, "sv_setPlayerSpeed", data )
 	end
 end

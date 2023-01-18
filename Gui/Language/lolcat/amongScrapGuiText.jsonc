@@ -59,6 +59,9 @@
         "OPTION_HOW_MANY_SHORT_TASK" : "Lorem Ipsum",
         "OPTION_HOW_MANY_LONG_TASK" : "Lorem Ipsum",
 
+        // Meeting
+        "OPTION_MEETING_COOLDOWN_TIME" : "Lorem Ipsum",
+
         // Unit 
         "UNIT_SECOND" : "Lorem Ipsum",
 
