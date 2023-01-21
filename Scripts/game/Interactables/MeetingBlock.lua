@@ -21,7 +21,7 @@ function MeetingBlock.server_onCreate( self )
 end
 
 function MeetingBlock.server_onDestroy( self )
-    sm.event.sendToGame("sv_onResetMeetingBlock", self.interactable)
+    sm.event.sendToGame("sv_onDestroyMeetingBlock", self.interactable)
 end
 
 function MeetingBlock.server_onRefresh( self )

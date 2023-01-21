@@ -6,7 +6,7 @@
         "playerSpeed" : 15,
         
         // Impostor
-        "howManyImpostor" : 1,
+        "howManyImpostor" : 0,
         "killCooldownTime" : 30,
 
         // Tasks

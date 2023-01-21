@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <MyGUI type="Layout" version="3.2.0">
+        <Widget type="Widget" skin="PanelEmpty" position_real="0 0 1 1">
+            <Widget type="Widget" skin="BackgroundPopup" name="MainPanelBg" position_real="0.2 0.1 0.6 0.77">
+            
+            <Widget type="Widget" skin="PanelEmpty" name="Slider1" position_real="0.1 0.2 0.14 0.7">
+            </Widget>
+
+            <Widget type="Widget" skin="PanelEmpty" name="Slider2" position_real="0.3 0.2 0.14 0.7">
+            </Widget>
+
+            <Widget type="Widget" skin="PanelEmpty" name="Slider3" position_real="0.56 0.2 0.14 0.7">
+            </Widget>
+
+            <Widget type="Widget" skin="PanelEmpty" name="Slider4" position_real="0.76 0.2 0.14 0.7">
+            </Widget>
+
+            <Widget type="Widget" skin="LogbookBeaconIconBG" position_real="0.47 0.07 0.071 0.1">
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship-5" position_real="0.22 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship-4" position_real="0.27 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship-3" position_real="0.32 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship-2" position_real="0.37 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship-1" position_real="0.42 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship0" position_real="0.47 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship1" position_real="0.52 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship2" position_real="0.57 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship3" position_real="0.62 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship4" position_real="0.67 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+            <Widget type="ImageBox" skin="ImageBox" name="Ship5" position_real="0.72 0.07 0.071 0.1">
+                <Property key="Visible" value="false" /> 
+                <Property key="ImageResource" value="WaypointIconMap" />
+                <Property key="ImageName" value="crashedship" />
+            </Widget>
+
+
+            </Widget>
+	    </Widget>
+    <CodeGeneratorSettings />
+</MyGUI>

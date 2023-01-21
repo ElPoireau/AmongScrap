@@ -83,17 +83,47 @@ end
 function BaseTaskInterface.client_onCreate( self )
 	print("[AMONG SCRAP] BaseTaskInterface.client_onCreate")
 	self.cl = {}
+
+	self.cl.betterTimer = BetterTimer()
+	self.cl.betterTimer:onCreate()
+
 	self.cl.taskState = false
 	self.cl.taskId = ""
+
+
+	self.cl.isSliderFinish = {false, false, false, false} -- temp
 
 	self.cl.TaskInterfaceIcon = sm.gui.createWorldIconGui(50, 50, "$GAME_DATA/Gui/Layouts/Hud/Hud_WorldIcon.layout")
 	self.cl.TaskInterfaceIcon:setWorldPosition(self.shape:getWorldPosition())
 	self.cl.TaskInterfaceIcon:setImage("Icon", "gui_icon_popup_alert.png")
 	---!!! can be nice to add becon icon (with the thing on cl_onRefresh) for wold icon !!!!---
 
-	self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Interactable/Interactable_CraftBot.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
-	self.cl.TaskInterfaceGui:setButtonCallback("Craft","cl_onHudTaskButton")
-	self.cl.TaskInterfaceGui:setText("Craft", "FINISH TASK")
+	self.cl.TaskInterfaceGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Tasks/Tasks_Template.layout", false, {isHud = false, isInteractive = true, needsCursor = true})
+	self.cl.TaskInterfaceGui:createVerticalSlider("Slider1", 50, 41 ,"cl_onSlider1Callback")
+	self.cl.TaskInterfaceGui:createVerticalSlider("Slider2", 50, 21 ,"cl_onSlider2Callback")
+	self.cl.TaskInterfaceGui:createVerticalSlider("Slider3", 50, 7 ,"cl_onSlider3Callback")
+	self.cl.TaskInterfaceGui:createVerticalSlider("Slider4", 50, 30 ,"cl_onSlider4Callback")
+
+	--self.cl.TaskInterfaceGui:setVisible("Ship-5", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship-4", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship-3", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship-2", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship-1", true)
+	self.cl.TaskInterfaceGui:setVisible("Ship0", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship1", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship2", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship3", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship4", true)
+	--self.cl.TaskInterfaceGui:setVisible("Ship5", true)
+
+	--self.cl.TaskInterfaceGui:setButtonCallback("Craft","cl_onHudTaskButton")
+	--self.cl.TaskInterfaceGui:setText("Craft", "FINISH TASK")
+
+
+end
+
+function BaseTaskInterface.client_onFixedUpdate( self )
+	self.cl.betterTimer:onFixedUpdate()
 end
 
 function BaseTaskInterface.client_onInteract( self , character , state )
@@ -198,6 +228,8 @@ function BaseTaskInterface.cl_onResetTask( self )
 	self.cl.playerTasks = nil
 	self.cl.taskState = false
 
+	self.cl.isSliderFinish = {false, false, false, false}  -- temp
+
 	self.cl.TaskInterfaceIcon:close()
 end
 
@@ -237,4 +269,45 @@ end
 
 function BaseTaskInterface.cl_onHudTaskButton( self )
 	self:cl_onTaskFinished()
+end
+
+function BaseTaskInterface.cl_onSlider1Callback( self , value ) -- temp
+	if value == 49 then
+		self.cl.isSliderFinish[1] = true
+		self:cl_onAllSliderCallback()
+	end
+end
+
+function BaseTaskInterface.cl_onSlider2Callback( self , value ) -- temp
+	if value == 49 then
+		self.cl.isSliderFinish[2] = true
+		self:cl_onAllSliderCallback()
+	end
+end
+
+function BaseTaskInterface.cl_onSlider3Callback( self , value ) -- temp
+	if value == 49 then
+		self.cl.isSliderFinish[3] = true
+		self:cl_onAllSliderCallback()
+	end
+end
+
+function BaseTaskInterface.cl_onSlider4Callback( self , value ) -- temp
+	if value == 49 then
+		self.cl.isSliderFinish[4] = true
+		self:cl_onAllSliderCallback()
+	end
+end
+
+function BaseTaskInterface.cl_onAllSliderCallback( self )
+	local sliderFinish = 0
+	
+	for i,v in ipairs(self.cl.isSliderFinish) do
+		if v == true then
+			sliderFinish = sliderFinish + 1
+		end
+	end
+	if sliderFinish == 4 then 
+		self.cl.betterTimer:createNewTimer(15, self, BaseTaskInterface.cl_onTaskFinished)
+	end
 end

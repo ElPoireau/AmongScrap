@@ -773,6 +773,16 @@ function SurvivalPlayer.sv_n_fireMsg( self ) end
 --CONTENT
 
 
+--------
+function SurvivalPlayer.sv_setPlayerSpeed( self , data )
+	self.network:sendToClients("cl_setPlayerSpeed", data)
+end
+
+function SurvivalPlayer.cl_setPlayerSpeed( self , data )
+	self.cl.playerSpeedKm_h = data
+end
+-------
+
 --- METTING --
 function SurvivalPlayer.cl_i_onReport( self , data )
 	sm.event.sendToGame("cl_e_onReport", data)
@@ -809,16 +819,6 @@ function SurvivalPlayer.cl_setKillCooldown( self , data )
 	self.cl.killCooldown = data
 end
 
-
---------
-function SurvivalPlayer.sv_setPlayerSpeed( self , data )
-	self.network:sendToClients("cl_setPlayerSpeed", data)
-end
-
-function SurvivalPlayer.cl_setPlayerSpeed( self , data )
-	self.cl.playerSpeedKm_h = data
-end
--------
 
 
 

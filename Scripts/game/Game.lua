@@ -164,6 +164,8 @@ function SurvivalGame.client_onCreate( self )
 	self.cl.betterTimer = BetterTimer()
 	self.cl.betterTimer:onCreate()
 
+	g_beaconManager = {cl_getBeacons = function(self) return {} end}
+
 	if not sm.isHost then
 		self:loadCraftingRecipes()
 		g_enableCollisionTumble = true
@@ -204,7 +206,7 @@ function SurvivalGame.client_onCreate( self )
 	g_mettingManager:cl_onCreate()
 
 	-- Music effect
-	g_survivalMusic = sm.effect.createEffect("ElevatorWall")
+	g_survivalMusic = sm.effect.createEffect("")
 	assert(g_survivalMusic)
 
 	-- content --
@@ -936,10 +938,34 @@ function SurvivalGame.sv_e_onPlayerKilled( self , data )
 	publicData.isAlive = false
 	data.player:setPublicData(publicData)
 
-	self:sv_onGoToWonkShipDead(data.player)
-	--self:sv_onCreateNewPlayerOnWonkShip(self.sv.wonkShipWorld, 0, 0, data.player, {nodeId = 69, onDeadWorld = true})
-	--sm.event.sendToWorld(self.sv.wonkShipWorld, "sv_onPlayerKilled", data.player) -- only if im alone :=(
+	local impostorAlive = 0
+	local crewmateAlive = 0
 
+	for i,v in ipairs(sm.player.getAllPlayers()) do
+		local pd = v:getPublicData() or {}
+		print(pd)
+		if pd.isAlive == true then
+			if pd.isImpostor == true then
+				impostorAlive = impostorAlive + 1
+			elseif pd.isImpostor == false then
+				crewmateAlive = crewmateAlive + 1
+			end
+		end
+	end
+
+	local gameOverTime = 20
+	if data.onMeeting == true then
+		gameOverTime = 420
+	end
+
+	if impostorAlive == 0 then 
+		self.sv.betterTimer:createNewTimer(gameOverTime, self, SurvivalGame.sv_onGameOver, {gameOverReason = "crewmateEjectAll"})
+		
+	elseif impostorAlive >= crewmateAlive then
+		self.sv.betterTimer:createNewTimer(gameOverTime, self, SurvivalGame.sv_onGameOver, {gameOverReason = "impostorKillAll"})	
+	end	
+
+	self:sv_onGoToWonkShipDead(data.player)
 	g_mettingManager:sv_onPlayerKilled(data)
 	self.network:sendToClients("cl_e_onPlayerKilled", data)
 end
@@ -991,9 +1017,17 @@ function SurvivalGame.sv_onGameOver( self , data )
 	end
 end
 
-function SurvivalGame.cl_onGameOver( self )
+function SurvivalGame.cl_onGameOver( self , data)
+	local message = ""
+	if data.gameOverReason == "allTaskFinished" then
+		message = "All tasks fininised"
+	elseif data.gameOverReason == "impostorKillAll" then
+		message = "Impostor kill everyone"
+	elseif data.gameOverReason == "crewmateEjectAll" then
+		message = "crewmate eject all impostor"
+	end
 	--m.gui.startFadeToBlack( 4, 2 )
-	sm.gui.displayAlertText( "GAME OVER", 4 )
+	sm.gui.displayAlertText(message, 4 )
 	sm.event.sendToWorld(sm.localPlayer.getPlayer().character:getWorld(), "cl_playEffect", {effect = "Builderguide - Stagecomplete", type = "effect" })
 	self.cl.betterTimer:createNewTimer(80, self, SurvivalGame.cl_delayed_1_onGameOver)
 	self.cl.betterTimer:createNewTimer(80, self, SurvivalGame.cl_setLockedControls, true)
@@ -1307,7 +1341,7 @@ end
 ------
 function SurvivalGame.sv_e_onEndingVote( self , data )
 	if data.killedIndex < 11 then
-		self:sv_e_onPlayerKilled({player = data.killed})
+		self:sv_e_onPlayerKilled({player = data.killed, onMeeting = true})
 	end
 	self.network:sendToClients('cl_e_onEndingVote', data)
 	self:sv_onResetDeadUnit()
@@ -1453,7 +1487,7 @@ function SurvivalGame.cl_e_onImpostorKill( self , data )
 end
 
 function SurvivalGame.sv_e_onImpostorKill( self , data )
-	--data.playerVictim:setDowned(true) -- !!! should be only for dev !! --
+
 	sm.event.sendToWorld(self.sv.wonkShipWorld, "sv_onPlayerKilled", data.player)
 	self:sv_e_onPlayerKilled({player = data.player})
 	self.network:sendToClient(data.player, "cl_e_onKillByImpostor", data)

@@ -745,8 +745,8 @@ function WonkShipWorld.sv_onPlayerKilled( self , player ) --36fe0ade-9352-43e4-9
 end
 
 function WonkShipWorld.cl_playEffect( self , data )
-	data.effect = "Blueprint - Close"
-	data.type = "audio"
+	--data.effect = "CelebrationBot - Audio"
+	--data.type = "effect"
 	if data.type == "effect" then
 		sm.effect.playHostedEffect(data.effect, sm.localPlayer.getPlayer().character)
 	elseif data.type == "audio" then 

@@ -88,10 +88,6 @@ function UselessBaseCharacter.client_onCreate( self )
 			-- if setNameTag is called here you will be able to see your own name, can be changed during runtime
 		end
 	end
-
-
-
-
 end
 
 
