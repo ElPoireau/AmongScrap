@@ -31,7 +31,7 @@ function Create( xMin, xMax, yMin, yMax, seed, data )
 		end
 	end
 
-	local jWorld = sm.json.open( "$CONTENT_DATA/Terrain/Worlds/example.world") --WonkShip  ---!!DEV CHANGE
+	local jWorld = sm.json.open( "$CONTENT_DATA/Terrain/Worlds/WonkShipWorld_02.world") --WonkShip  ---!!DEV CHANGE
 	for _, cell in pairs( jWorld.cellData ) do
 		if cell.path ~= "" then
 			local uid = sm.terrainTile.getTileUuid( cell.path )

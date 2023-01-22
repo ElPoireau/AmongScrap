@@ -1,0 +1,16 @@
+{  
+   //Presets Menu
+    "menu": [
+        // Page 1
+        {
+            "type" : "Label",
+            "textTag" : "OPTION_PRESET_GENERAL"
+        },
+
+        {
+            "type" : "buttonList",
+            "database" : "$CONTENT_DATA/"
+        }
+       
+    ]
+}

@@ -61,7 +61,10 @@ function OptionBlock.client_onCreate( self )
     self.cl.hasInit = false
     self.cl.hasFirstInit = false
     self.cl.isOpen = false
+
     self.cl.pageMenu = 1
+    self.cl.pagePresets = 1
+    self.cl.isPresetsOpen = false 
 
     self.cl.optionWorldText = sm.gui.createNameTagGui(false)
 	self.cl.optionWorldText:setWorldPosition(self.shape:getWorldPosition())
@@ -202,9 +205,9 @@ function OptionBlock.cl_setGameOptions( self )
 end
 
 
+
+
 -- GUI CALLBACK --
-
-
 
 -- General -- 
 
@@ -520,3 +523,38 @@ function OptionBlock.cl_onInitLabel( self , index , data )
 end
 
 function OptionBlock.cl_onRefreshLabel( self , index , data ) end
+
+
+
+
+---- PRESETS MENU ----
+
+function OptionBlock.cl_initPresetsGui( self )
+    self.cl.tempGui:setText("PresetsTextPage", g_Language:cl_getTraduction("UNIT_PAGE") .. " ".. self.cl.pagePresets)
+
+    cl_initSliderFunction(self.cl.optionsMenu)
+    self.cl.optionGui:setOnCloseCallback("cl_onCloseOptionGuiCallback")
+    
+    self.cl.optionGui:setText("PresetsTextHeader", g_Language:cl_getTraduction("OPTION_PRESETS_HEADER"))
+    self.cl.optionGui:setText("PresetTextPage", g_Language:cl_getTraduction("UNIT_PAGE") .. " ".. self.cl.pagePresets)
+    self.cl.optionGui:setButtonCallback("PresetsMinusPage", "cl_onMinusPageCallback")
+    self.cl.optionGui:setButtonCallback("PresetsPlusPage", "cl_onPlusPageCallback")
+    
+    for i1 = 1,11 do
+        local i2 = i1 + ((10 * self.cl.pagePresets) - 10) 
+        v = self.cl.optionsMenu[i2] 
+
+        if v then 
+            if v.type ~= "Empty" then 
+                
+            end
+            
+        elseif not v then
+            break
+        end
+    end
+    self.cl.hasInit = true
+    if self.cl.hasFirstInit == false then
+        self.cl.hasFirstInit = true
+    end
+end

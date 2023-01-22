@@ -1,0 +1,117 @@
+{
+    // info about the settings
+    "metadata" : {
+        "tag" : "TAG",
+        "label" : "Template"
+    },
+    
+    //Game Options
+    "options" : {
+        // General
+        "whichMap" : 1, 
+        "playerSpeed" : 15,
+        
+        // Impostor
+        "howManyImpostor" : 0,
+        "killCooldownTime" : 30,
+
+        // Tasks
+        "howManyShortTasks" : 1,
+        "howManyNormalTasks" : 1,
+        "howManyLongTasks" : 1,
+
+        // Metting
+        "meetingCooldownTime" : 15
+    },
+
+    //Options Menu
+    "menu": [
+        
+        // Page 1
+
+        { // Pos 1
+            "type" : "Label",
+            "textTag" : "OPTION_GENERAL"
+        },
+
+        { // Pos 2
+            "type" : "Multiple1Button",
+            "textTag" : ["OPTION_ON_WHICH_MAP", "OPTION_MAP_WONK_SHIP"],
+            "optionsVarRef" : "whichMap"
+        },
+
+        { // Pos 3
+        "type" : "Slider",
+        "maxValue" : 40,
+        "unit" : "UNIT_KM_H",
+        "textTag" : "OPTION_PLAYER_SPEED",
+        "optionsVarRef" : "playerSpeed",
+        "divider" : 4
+        },
+
+        { // Pos 4
+            "type" : "Label",
+            "textTag" : "OPTION_IMPOSTOR"
+        },
+
+        { // Pos 5
+            "type" : "Slider",
+            "maxValue" : 10,
+            "textTag" : "OPTION_HOW_MANY_IMPOSTOR",
+            "optionsVarRef" : "howManyImpostor"
+        },
+
+        { // Pos 6
+            "type" : "Slider",
+            "maxValue" : 60,
+            "unit" : "UNIT_SECOND",
+            "textTag" : "OPTION_KILL_COOLDOWN_TIME",
+            "optionsVarRef" : "killCooldownTime"
+        },
+
+        { // Pos 7
+            "type" : "Label",
+            "textTag" : "OPTION_TASK"
+        },
+
+        { // Pos 8
+            "type" : "Slider",
+            "maxValue" : 7,
+            "textTag" : "OPTION_HOW_MANY_SHORT_TASK",
+            "optionsVarRef" : "howManyShortTasks"
+        },
+
+        { // Pos 9
+            "type" : "Slider",
+            "maxValue" : 2,
+            "textTag" : "OPTION_HOW_MANY_NORMAL_TASK",
+            "optionsVarRef" : "howManyNormalTasks"
+        },
+
+        { // Pos 10
+            "type" : "Slider",
+            "maxValue" : 1,
+            "textTag" : "OPTION_HOW_MANY_LONG_TASK",
+            "optionsVarRef" : "howManyLongTasks"
+        },
+
+        { // Pos 11
+        "type" : "Empty"
+        },
+
+        // Page 2
+
+        { // Pos 1
+        "type" : "Label",
+        "textTag" : "OPTION_MEETING"
+        },
+
+        { // Pos 2
+        "type" : "Slider",
+        "maxValue" : 60,
+        "unit" : "UNIT_SECOND",
+        "textTag" : "OPTION_MEETING_COOLDOWN_TIME",
+        "optionsVarRef" : "meetingCooldownTime"
+        }
+    ]
+}

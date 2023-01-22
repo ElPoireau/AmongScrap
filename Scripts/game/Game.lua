@@ -18,9 +18,10 @@ dofile( "$GAME_DATA/Scripts/game/managers/EventManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/game/managers/TaskManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/game/managers/ImpostorManager.lua" )
 dofile( "$CONTENT_DATA/Scripts/game/managers/MettingManager.lua" )
+-- util
 dofile( "$CONTENT_DATA/Scripts/util/Language.lua" )
 dofile( "$CONTENT_DATA/Scripts/util/BetterTimer.lua" )
-
+dofile( "$CONTENT_DATA/Scripts/util/Options.lua" )
 
 
 
@@ -41,6 +42,9 @@ local IntroFadeDuration = 1.1
 local IntroEndFadeDuration = 1.1
 local IntroFadeTimeout = 5.0
 
+
+--- ON CREATE FUNC ---
+----------------------------------------------
 function SurvivalGame.server_onCreate( self )
 	print( "[AMONG SCRAP] Game.server_onCreate" )
 	self.sv = {}
@@ -52,18 +56,8 @@ function SurvivalGame.server_onCreate( self )
 		
 		--content--
 		local settings = sm.json.open("$CONTENT_DATA/AmongScrapSettings/BaseSettings.jsonc")
-		self.sv.saved.gameOptions = settings.options
-		self.sv.saved.gameOptions.null = false
-		self.sv.saved.optionsMenu = settings.menu 
-		for i,v in ipairs(self.sv.saved.optionsMenu) do
-			if not v.optionsVarRef then
-				v.optionsVarRef = "null"
-				self.sv.saved.optionsMenu[i].optionsVarRef = "null"
-			end
-
-			self.sv.saved.optionsMenu[i].value = self.sv.saved.gameOptions[v.optionsVarRef]
-		end
-
+		self.sv.saved.gameOptions, self.sv.saved.optionsMenu = loadAmongScrapSettingsFile("$CONTENT_DATA/AmongScrapSettings/BaseSettings.jsonc")
+		
 		self.storage:save( self.sv.saved )
 	end
 	self.data = nil
@@ -108,8 +102,12 @@ function SurvivalGame.server_onCreate( self )
 	
 	self.sv.syncTimer = Timer()
 	self.sv.syncTimer:start( 0 )
+
 	
-	-- content -- 
+
+	--- CONTENT --- 
+
+	-- manager --
 	g_taskManager = TaskManager()
 	g_taskManager:sv_onCreate()
 	
@@ -118,38 +116,34 @@ function SurvivalGame.server_onCreate( self )
 
 	g_mettingManager = MettingManager()
 	g_mettingManager:sv_onCreate()
-
+	
+	-- better timer --
+	self.sv.betterTimer = BetterTimer()
+	self.sv.betterTimer:onCreate()
+	
+	-- table --
 	self.sv.deadUnits = {}
 	self.sv.optionsMenu = {}
 	self.sv.gameOptions = {}
 
 	self.sv.optionBlocks = {}
 	self.sv.meetingBlocks = {}
-	
-	self.sv.betterTimer = BetterTimer()
-	self.sv.betterTimer:onCreate()
-	
+
+	-- var --
 	self.sv.isRoundStarted = false
 	self.sv.isWonkShipWorldExist = false
 	self.sv.isWonkShipDeadWorldExist = false
 	self.sv.witchWorldPlayersAre = "Overworld"
 	self.sv.whichWorld = "WonkShip" 
 
-	for i,v in ipairs(self.sv.saved.optionsMenu) do
-		if self.sv.saved.optionsMenu[i].value ~= self.sv.saved.gameOptions[v.optionsVarRef] then
-			self.sv.saved.optionsMenu[i].value = self.sv.saved.gameOptions[v.optionsVarRef]
-		end
+	-- settings --
+	for i,v in ipairs(self.sv.saved.optionsMenu) do -- just a security
+		self.sv.saved.optionsMenu[i].value = self.sv.saved.gameOptions[v.optionsVarRef]
 	end
 	self:sv_e_setGameOptions(nil)
 end
 
-function SurvivalGame.server_onRefresh( self )
-	print("[AMONG SCRAP] Game.server_onRefresh")
-	--g_craftingRecipes = nil
-	--g_refineryRecipes = nil
-	--g_taskManager:sv_onRefresh()
-	--self:loadCraftingRecipes()
-end
+---------------
 
 function SurvivalGame.client_onCreate( self )
 
@@ -209,7 +203,10 @@ function SurvivalGame.client_onCreate( self )
 	g_survivalMusic = sm.effect.createEffect("")
 	assert(g_survivalMusic)
 
-	-- content --
+
+
+	--- CONTENT ---
+
 	g_Language = Language()
 	g_Language:cl_loadLanguage()
 
@@ -255,6 +252,9 @@ function SurvivalGame.client_onCreate( self )
 	
 	assert(g_survivalHudImpostor)
 end
+-------------------------------------------------
+
+
 
 function SurvivalGame.bindChatCommands( self )
 
@@ -282,6 +282,14 @@ function SurvivalGame.bindChatCommands( self )
 		sm.game.bindChatCommand( "/spawnship", {}, "cl_onChatCommand", "Go to spawn" )
 		sm.game.bindChatCommand( "/wonkship", {}, "cl_onChatCommand", "Go to Wonk ship" )
 	end
+end
+
+function SurvivalGame.server_onRefresh( self )
+	print("[AMONG SCRAP] Game.server_onRefresh")
+	--g_craftingRecipes = nil
+	--g_refineryRecipes = nil
+	--g_taskManager:sv_onRefresh()
+	--self:loadCraftingRecipes()
 end
 
 function SurvivalGame.client_onClientDataUpdate( self, clientData, channel )
@@ -1635,6 +1643,7 @@ end
 
 
 -- SETTINGS --
+
 function SurvivalGame.sv_o_setHowManyImpostor( self , value )
 	g_impostorManager:sv_changeImpostorNumber(value)
 end

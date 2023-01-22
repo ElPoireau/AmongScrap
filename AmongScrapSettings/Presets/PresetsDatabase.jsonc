@@ -1,0 +1,9 @@
+{   
+    // All settings file path here
+   "settingsFile" : [
+    
+    "$CONTENT_DATA/AmongScrapSettings/presets/PresetsSettings_TAG.jsonc"
+
+    ]
+
+}
